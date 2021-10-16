@@ -1,31 +1,17 @@
-// const http = require('http');
-
-// const hostname = '127.0.0.1';
-// const port = 3000;
-
-// const server = http.createServer((req, res) => {
-//   res.statusCode = 200;
-//   res.setHeader('Content-Type', 'text/plain');
-//   res.end('Hello World');
-// });
-
-// server.listen(port, hostname, () => {
-//   console.log(`Server running at http://${hostname}:${port}/`);
-// });
-
 const { Pool, Client } = require('pg')
+
 const uname = "laundry-online-db-user";
 const pword = "2NVtfbx4sGdd0TL7gzSlGCrQnl8BO7Ekx1n86zjaj4";
-const conectionString = `postgressql://${uname}:${pword}@1509.ddns.net:5432/online_laundry`
-const client = new Client({
-	connectionString: conectionString
+
+const client= new Client({
+	user: `${uname}`,
+	password: `${pword}`,
+	database: "online_laundry",
+	port: 5432,
+	host: "1509.ddns.net",
+	ssl: { rejectUnauthorized: false }
 })
 client.connect()
-
-//client.query('select * from point',(err,res)=>{
-//    console.log(err,res)
-//    client.end()
-//})
 
 // hiện tại chỉ có bảng conn_test
 client.query('SELECT * FROM conn_test', function (err, res) {
@@ -39,6 +25,6 @@ client.query('SELECT * FROM conn_test', function (err, res) {
 	client.end()
 });
 
-clinet.query(`CREATE TABLE [IF NOT EXISTS] user(
-	ID string
-)`)
+// clinet.query(`CREATE TABLE [IF NOT EXISTS] user(
+// 	ID string
+// )`)
