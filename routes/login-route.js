@@ -6,6 +6,7 @@ module.exports = function (app, root_path) {
     })
         .post('/login', async (req, res) => {
             const { username, password } = req.body;
+            
             console.log(username, password);
             // const user = await User.findOne({ username }).lean()
 

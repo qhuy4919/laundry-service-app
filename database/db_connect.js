@@ -3,7 +3,7 @@ const { Pool, Client } = require('pg')
 const uname = "laundry-online-db-user";
 const pword = "2NVtfbx4sGdd0TL7gzSlGCrQnl8BO7Ekx1n86zjaj4";
 
-const client= new Client({
+const client = new Client({
 	user: `${uname}`,
 	password: `${pword}`,
 	database: "online_laundry",
@@ -25,6 +25,3 @@ client.query('SELECT * FROM conn_test', function (err, res) {
 	client.end()
 });
 
-// clinet.query(`CREATE TABLE [IF NOT EXISTS] user(
-// 	ID string
-// )`)
