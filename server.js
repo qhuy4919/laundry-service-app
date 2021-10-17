@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const login_route = require('./routes/login-route');
+const signup_route = require('./routes/register-route');
 require("dotenv").config();
 
 // Middleware
@@ -13,5 +14,6 @@ app.use('/', express.static(path.join(__dirname, 'static')))
 
 //
 login_route(app, __dirname);
+signup_route(app, __dirname);
 
 app.listen(4000, () => { console.log('server running on 4000 port') })
