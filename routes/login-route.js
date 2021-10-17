@@ -10,19 +10,17 @@ module.exports = function (app, root_path) {
             if (!username || !password) {
                 throw new Error("username or password invalid")
             } else {
-                pool.query(`SELECT * FROM "user" WHERE nickname = '${username}'`),
-                    (err, result) => {
+                pool.query(
+                    `SELECT * FROM "user" WHERE nickname = $1`,
+                    [username],
+                    (err, results) => {
                         if (err) {
-                            throw new Error("query user fail");
-                        }
-                        else {
-                            console.log(result.rows);
-                            res.json({ status: 'ok', error: "let's go" })
-                        }
-                    }
+                            res.json({ status: 'error', error: 'Invalid username/password' })
 
+                        }
+                        console.log(results.rows);
+                        res.json({ status: 'ok', title: 'server was recieved' });
+                    })
             }
-            res.json({ status: 'ok', error: "let's go" })
-            // res.json({ status: 'error', error: 'Invalid username/password' })
         })
 }

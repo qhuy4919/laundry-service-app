@@ -13,11 +13,12 @@ form.onsubmit = async function (e) {
             password
         })
     }).then(res => res.json());
+    console.log(result)
     if (result.status === 'ok') {
         // everything went fine
         console.log('Got the token: ', result.data)
-        alert(result.error);
+        alert(result.title);
     } else {
-        alert("error")
+        alert(result.error)
     }
 }

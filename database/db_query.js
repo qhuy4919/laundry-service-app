@@ -30,7 +30,7 @@ async function tryQuery(sqlcommand, msg) {
 		});
 }
 
-tryQuery(`SELECT * FROM "user" WHERE nickname = 'admin'`,
+tryQuery(`SELECT * FROM "user" WHERE nickname = 'qhuy'`,
 	"1. Tất cả user trong bảng user:");
 
 
