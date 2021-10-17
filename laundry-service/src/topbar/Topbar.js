@@ -1,6 +1,8 @@
 import { Navbar, Nav, Container, Form, FormControl, Button } from 'react-bootstrap';
 import './Topbar.css';
 
+import ModalButton from './modal/ModalButton';
+
 function Topbar() {
 	return (
 		<Navbar bg="light" expand="lg">
@@ -18,9 +20,10 @@ function Topbar() {
 				</Form>
 			</Nav>
 
-			<Navbar.Text>
+			<ModalButton/>
+			{/* <Navbar.Text>
 			<a href="#login">Sign In</a>
-			</Navbar.Text>
+			</Navbar.Text> */}
 
 		</Container>
 		</Navbar>

@@ -65,7 +65,7 @@ function RecommendedSection() {
 					)} 
 				</Row>
 				<div className='see-more-box'>
-					<a href=''>See more...</a>
+					<a href='#'>See more...</a>
 				</div>
 			</Card.Body>
 		</Card>
