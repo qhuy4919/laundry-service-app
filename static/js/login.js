@@ -14,11 +14,10 @@ form.onsubmit = async function (e) {
         })
     }).then(res => res.json());
     if (result.status === 'ok') {
-        // everythign went fine
+        // everything went fine
         console.log('Got the token: ', result.data)
-        localStorage.setItem('token', result.data)
-        alert('Success')
+        alert(result.error);
     } else {
-        alert("hiu")
+        alert("error")
     }
 }

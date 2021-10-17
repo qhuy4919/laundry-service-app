@@ -1,9 +1,12 @@
+// Import thư viện
 const { Pool, Client } = require('pg')
 
+// Thông tin user database, đừng để lộ ra ngoài
 const uname = "laundry-online-db-user";
 const pword = "2NVtfbx4sGdd0TL7gzSlGCrQnl8BO7Ekx1n86zjaj4";
 
-const client = new Client({
+// Tạo đối tượng client để giao tiếp với DB
+const client= new Client({
 	user: `${uname}`,
 	password: `${pword}`,
 	database: "online_laundry",
@@ -13,7 +16,10 @@ const client = new Client({
 })
 client.connect()
 
-// hiện tại chỉ có bảng conn_test
+// -- Từ đây trở lên không nên sửa gì hết
+// -- --------------------------------------
+
+// Thử kết nối đến DB và truy vấn bảng conn_test:
 client.query('SELECT * FROM conn_test', function (err, res) {
 	if (err) {
 		console.log("Đã xảy ra lỗi, chụp ảnh log và liên hệ nvat");
