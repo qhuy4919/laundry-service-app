@@ -3,17 +3,23 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const login_route = require('./routes/signin-route');
-const signup_route = require('./routes/register-route');
 require("dotenv").config();
+
+// Setting up Project Root Dir
+process.env.ROOT_DIR = __dirname
+
+// Get routes from index
+const {sign_in_route, sign_up_route, sign_out_route} = require('./routes/account/index')
 
 // Middleware
 const app = express();
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, 'static')))
 
-//
-login_route(app, __dirname);
-signup_route(app, __dirname);
+sign_in_route(app, __dirname);
+sign_up_route(app, __dirname);
 
-app.listen(4000, () => { console.log('server running on 4000 port') })
+// Start the Server
+app.listen(process.env.SERVER_PORT, () => { 
+	console.log('Server running on port ' + `${process.env.SERVER_PORT}` + '...') 
+})
