@@ -1,7 +1,7 @@
-import {SIGN_UP_URL, SERVER_URL} from 'const/api-url'
+import {SIGN_UP_URL} from 'const/api-url'
 
 export async function callSignUp(params) {
-	const fullurl =  `${SERVER_URL}${SIGN_UP_URL}`;
+	const fullurl =  `${process.env.REACT_APP_API_SERVER}${SIGN_UP_URL}`;
 	let statuscode = 500;
 
 	await fetch(fullurl, {

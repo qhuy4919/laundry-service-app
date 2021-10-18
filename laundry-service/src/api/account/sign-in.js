@@ -1,8 +1,8 @@
-import {SIGN_IN_URL, SERVER_URL} from 'const/api-url'
+import {SIGN_IN_URL} from 'const/api-url'
 import {SIGNED_IN_USER} from 'const/local-storage-key'
 
 export async function callSignIn(params) {
-	const fullurl =  `${SERVER_URL}${SIGN_IN_URL}`;
+	const fullurl =  `${process.env.REACT_APP_API_SERVER}${SIGN_IN_URL}`;
 	let statuscode = 600;
 
 	// console.log(fullurl)
