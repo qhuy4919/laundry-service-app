@@ -3,7 +3,7 @@ form.onsubmit = async function (e) {
     e.preventDefault();
     const username = document.querySelector("#username").value;
     const password = document.querySelector("#password").value;
-    const result = await fetch('/login', {
+    const result = await fetch('/signin', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -17,8 +17,8 @@ form.onsubmit = async function (e) {
     if (result.status === 'ok') {
         // everything went fine
         console.log('Got the token: ', result.data)
-        alert(result.title);
+        alert("server was recieved");
     } else {
-        alert(result.error)
+        alert("error");
     }
 }
