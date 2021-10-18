@@ -1,0 +1,1 @@
+export const SIGNED_IN_USER = 'signed_in_user_data';
