@@ -1,8 +1,24 @@
-// import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import './Login.css';
 
+import {callSignIn} from 'api/account/sign-in';
+
+
 function Login({handleClose, onRegisClick, onPwRsClick}) {
+    const [nickname, setNickname] = useState('')
+    const [password, setPassword] = useState('')
+
+    const onSubmitHandler = async (e) => {
+        e.preventDefault();
+        const succeed = await callSignIn({nickname, password})
+        if (succeed) {
+            handleClose();
+        } else {
+            alert("Sign In Failed.")
+        }
+    }
+
     return (
         <div>
             <Modal show={true} onHide={handleClose}>
@@ -10,17 +26,17 @@ function Login({handleClose, onRegisClick, onPwRsClick}) {
                     <Modal.Title>Sign In</Modal.Title>
                 </Modal.Header>
                 <Modal.Body className='login-modal-body'>
-                    <Form>
+                    <Form onSubmit={onSubmitHandler}>
                         <Form.Group controlId="formBasicEmail" className='modal-field'>
-                            <Form.Label>Mail Address</Form.Label>
-                            <Form.Control type="text" placeholder="Username" />
+                            <Form.Label>Nickname</Form.Label>
+                            <Form.Control type="text" placeholder="Nickname" onChange={(e)=>setNickname(e.target.value)}/>
                             <Form.Text className="text-muted">
                             </Form.Text>
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword" className='modal-field'>
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control type="password" placeholder="Password" onChange={(e)=>setPassword(e.target.value)}/>
                         </Form.Group>
                         <Form.Group controlId="formBasicButton" className='modal-field'>
 							<Button className="login-button" variant="primary" type="submit">

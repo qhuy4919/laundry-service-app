@@ -39,7 +39,7 @@ function getShop() {
 function Recommendation({shop}) {
 	const {name, description, imgsrc} = shop;
 	return (
-		<Card style={{ 'max-height': '20vh', 'overflow': 'hidden' }}>
+		<Card style={{ 'maxHeight': '20vh', 'overflow': 'hidden' }}>
 			<Card.Img variant="top" src={imgsrc}/>
 			<Card.ImgOverlay>
 				<Card.Title>{name}</Card.Title>
@@ -59,13 +59,13 @@ function RecommendedSection() {
 			<Card.Body id='scroll-bar-style'>
 				<Row xs={2} md={3} className="g-4">
 					{ shops.map((shop, idx) => 
-						<Col md={idx === 0 ? 8 : -1}>
+						<Col md={idx === 0 ? 8 : -1} key={`rcm-sc-cn-${idx}`}>
 							<Recommendation shop={shop}/>
 						</Col>
 					)} 
 				</Row>
 				<div className='see-more-box'>
-					<a href='#'>See more...</a>
+					<a href='https://example.org/'>See more...</a>
 				</div>
 			</Card.Body>
 		</Card>

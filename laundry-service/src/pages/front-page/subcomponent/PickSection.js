@@ -30,7 +30,7 @@ function PickSection() {
 					<Row xs={5} md={2} className="g-4">
 						{
 							locations.map((loc, idx) => (
-								<Choice loc={loc}/>
+								<Choice loc={loc} key={`p-sc-cn-${idx}`}/>
 							))
 						} 
 					</Row>
