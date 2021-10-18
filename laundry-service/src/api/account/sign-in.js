@@ -13,10 +13,8 @@ export async function callSignIn(params) {
 		},
 		body: JSON.stringify(params)
 	}).then((res) => {
-		res.json()
-		console.log(res)
 		statuscode = res.status;
-		return res;
+		return res.json()
 	}).then((data) => {
 		localStorage.setItem(SIGNED_IN_USER, JSON.stringify(data));
 	}).catch((err) => {

@@ -35,7 +35,7 @@ function ModalButton() {
                 signed_in_user_cred.nickname
             }!`}</Button>
             <Button variant="light" style={{lineheight: '1.5'}} onClick={()=>{
-                signed_in_user_cred=undefined; localStorage.removeItem(SIGNED_IN_USER);
+                signed_in_user_cred=undefined; localStorage.removeItem(SIGNED_IN_USER); window.location.reload();
             }}> Sign-Out</Button>
         </>
     );
