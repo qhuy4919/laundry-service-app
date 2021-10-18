@@ -5,6 +5,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require("dotenv").config();
 
+// Enable cross origin request
+var cors = require('cors')
+
 // Setting up Project Root Dir
 process.env.ROOT_DIR = __dirname
 
@@ -13,6 +16,7 @@ const {sign_in_route, sign_up_route, sign_out_route} = require('./routes/account
 
 // Middleware
 const app = express();
+app.use(cors())
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, 'static')))
 
