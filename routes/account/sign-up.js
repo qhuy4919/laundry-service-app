@@ -6,9 +6,9 @@ const { SIGN_UP_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
 const { error_msg_constructor } = require(`${ROOT_DIR}/helper/res-msg-constructor`)
 
 function params_validate(params, err) {
-    const { username, email, password, confirm_password } = params;
+    const { nickname, email, password, confirm_password } = params;
     
-    if (!username || !email || !password) {
+    if (!nickname || !email || !password) {
         err.push("Username or Email or Password is invalid")
     }
     if (password != confirm_password) {
@@ -24,7 +24,7 @@ module.exports = function (app, root_path) {
         res.sendFile(path.join(root_path, 'static/register.html'))
     })
         .post(SIGN_UP_URL, async (req, res) => {
-            const { username, email, password, confirm_password } = req.body;
+            const { nickname, email, password, confirm_password } = req.body;
             let err = []
 
             if (! params_validate(req.body, err)) {
@@ -35,7 +35,7 @@ module.exports = function (app, root_path) {
             } else {
                     pool.query(
                         `INSERT INTO "user" (nickname, email, "password", "role")
-                        VALUES	('${username}', '${email}', '${password}', 'User')`
+                        VALUES	('${nickname}', '${email}', '${password}', 'User')`
                     ).then((result) => {
                         return res.status(201).json({
                             data: {},
