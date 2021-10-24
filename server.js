@@ -1,6 +1,5 @@
 const express = require('express');
 const path = require('path');
-const bodyParser = require('body-parser');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require("dotenv").config();
@@ -22,6 +21,8 @@ app.use('/', express.static(path.join(__dirname, 'static')))
 
 sign_in_route(app, __dirname);
 sign_up_route(app, __dirname);
+
+
 
 // Start the Server
 app.listen(process.env.SERVER_PORT, () => { 
