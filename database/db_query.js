@@ -18,7 +18,7 @@ const pool = new Pool({
 
 // Hàm Test câu lệnh SQL. Thử truy vấn lên server và in ra kết quả vào màn hình.
 async function tryQuery(sqlcommand, msg) {
-	pool.query(sqlcommand,
+	await pool.query(sqlcommand,
 		function (err, res) {
 			if (err) {
 				console.log("Đã xảy ra lỗi, chụp ảnh log và liên hệ nvat");
@@ -30,10 +30,12 @@ async function tryQuery(sqlcommand, msg) {
 		});
 }
 
-// tryQuery(`SELECT * FROM "user" WHERE nickname = 'admin'`,
 // 	"1. Tất cả user trong bảng user:");
+// tryQuery(`SELECT * FROM "user"`);
+tryQuery(`SELECT * FROM "user" WHERE "email"='nvatuan2000@gmail.com'`);
+// tryQuery(`DELETE FROM "user" WHERE nickname='hashuser'`, 'Test');
 
-tryQuery(`SELECT * FROM "user"`);
+
 
 // tryQuery('SELECT shop_name FROM "laundry_shop"',
 // 	"2. Tất cả shop trong bảng laundry_shop:");
