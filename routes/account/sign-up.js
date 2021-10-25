@@ -29,7 +29,8 @@ module.exports = function (app, root_path) {
             const { username, email, password, confirm_password } = req.body;
             let err = []
 
-            if (!params_validate(req.body, err)) {
+
+            if (! params_validate(req.body, err)) {
                 return res.status(400).json({
                     error: err,
                     msg: 'Bad Request'
