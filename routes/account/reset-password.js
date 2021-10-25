@@ -75,7 +75,13 @@ module.exports = function (app, root_path) {
             } else {
                 try {
                     const user = await filter_by({ email });
-                    console.log(user);
+                    if (!user.active) {
+                        return res.status(401).json({
+                            error: 'Please Confirm Mail', 
+                            msg: 'Please Confirm your Registration before Resetting Password',
+                        });
+                    }
+
                     if (!user) {
                         res.status(404).json({
                             error: 'Invalid email',

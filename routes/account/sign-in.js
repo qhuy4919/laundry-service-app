@@ -54,7 +54,6 @@ module.exports = function (app, root_path) {
                 });
             }
             var user = results.rows[0]; // First result
-            console.log(user);
 
             // Check if active
             if (!user.active) {
