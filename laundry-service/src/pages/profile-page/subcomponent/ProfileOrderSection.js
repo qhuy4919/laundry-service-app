@@ -1,6 +1,49 @@
 import './ProfileOrderSection.css'
+import { Card, Table } from "react-bootstrap";
 
-const { Card, Row, Col } = require("react-bootstrap");
+function ProfileOrder({ order }) {
+  const { id, time, cost, status } = order;
+  return (
+    <tr>
+      <td>{id}</td>
+      <td>{time}</td>
+      <td>{cost}</td>
+      <td>{status}</td>
+    </tr>
+  );
+}
+
+function ProfileOrderSection() {
+  return (
+    <Card className="profile-order-container">
+      <Card.Header>
+        <Card.Title>注文</Card.Title>
+      </Card.Header>
+      <Card.Body>
+        <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>時間</th>
+              <th>合計金額</th>
+              <th>注文状態</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <ProfileOrder order={order} />
+            ))}
+          </tbody>
+        </Table>
+        <div className='see-more-box'>
+					<a href='https://example.org/'>もっと見る</a>
+				</div>
+      </Card.Body>
+    </Card>
+  );
+}
+export default ProfileOrderSection;
+
 const orders = [
   {
     id: "1",
@@ -21,54 +64,3 @@ const orders = [
     status: "1",
   },
 ];
-
-function ProfileOrder({ order }) {
-  const { id, time, cost, status } = order;
-  return (
-    <Row>
-      <Col>{id}</Col>
-      <Col>{time}</Col>
-      <Col>{cost}</Col>
-      <Col>{status}</Col>
-    </Row>
-  );
-}
-
-function ProfileOrderSection() {
-  return (
-    <Card className="profile-order-container">
-      <Card.Header>
-        <Card.Title>注文</Card.Title>
-      </Card.Header>
-      <Card.Body>
-        <Card>
-          <Card.Header>
-            <Row>
-              <Col>
-                <Card.Title>ID</Card.Title>
-              </Col>
-              <Col>
-                <Card.Title>時間</Card.Title>
-              </Col>
-              <Col>
-                <Card.Title>合計金額</Card.Title>
-              </Col>
-              <Col>
-                <Card.Title>注文状態</Card.Title>
-              </Col>
-            </Row>
-          </Card.Header>
-          <Card.Body>
-            {orders.map((order) => (
-              <ProfileOrder order={order} />
-            ))}
-          </Card.Body>
-        </Card>
-        <div className='see-more-box'>
-					<a href='https://example.org/'>もっと見る</a>
-				</div>
-      </Card.Body>
-    </Card>
-  );
-}
-export default ProfileOrderSection;

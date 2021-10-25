@@ -6,6 +6,7 @@
 }
 .user-information-container .card-header .card-title {
 	font-weight: bold;
+	border-bottom: 3px solid var(--mycolor-accent);
 }
 .user-information-container {
 	border: transparent !important;
@@ -14,6 +15,7 @@
 /* Body */
 .user-information-container .card-body {
 	padding-top: 0;
+	padding-bottom: 0;
 }
 .user-information-form .row {
 	margin-top: auto;

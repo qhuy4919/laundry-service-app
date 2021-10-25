@@ -13,15 +13,18 @@
 	position: relative;
 	width: 200px;
 	height: 200px;
+
 	/* overflow: hidden; */
 }
 .profile-pic .card-img img {
 	width: auto;
 	height: 100%;
 	margin-left: -50px;
+	margin-bottom: 5px;
 }
 .profile-pic .card-title {
-	text-align: center
+	text-align: center;
+	margin: 5px !important;
 }
 
 /* Order Count */
@@ -37,7 +40,7 @@
 }
 .order-count-section .order-count-text {
 	text-align: center;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	white-space: nowrap;
 }
 .order-count-section .order-count-title {
@@ -60,7 +63,7 @@
 }
 .shop-follow-count-section .shop-follow-count-text {
 	text-align: center;
-	border: 1px solid black;
+	/* border: 1px solid black; */
 	white-space: nowrap;
 }
 .shop-follow-count-section .shop-follow-count-title {

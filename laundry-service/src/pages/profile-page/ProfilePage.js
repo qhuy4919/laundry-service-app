@@ -7,7 +7,7 @@ import "./ProfilePage.css"
 
 function ProfilePage() {
   return (
-		<Container className='page-container profile-container'>
+		<Container className='page-container profile-container scroll-bar-style'>
         <ProfileHeader/>
         <ProfileInformation/>
         <ProfileOrderSection/>
