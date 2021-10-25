@@ -23,10 +23,10 @@ function Choice({loc}) {
 
 function PickSection() {
 	return (
-		<Card className='pick-section-container'>
+		<Card className='pick-section-container' >
 			<Card.Header>場所から選ぶ</Card.Header>
 			<Card.Body id='scroll-bar-style'>
-				<div className='pick-choice-wrapper'>
+				<div className='pick-choice-wrapper' style={{marginBottom:'50px'}}>
 					<Row xs={5} md={2} className="g-4">
 						{
 							locations.map((loc, idx) => (
