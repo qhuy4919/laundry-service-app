@@ -37,12 +37,16 @@ async function filter_by(filter) {
         throw new Error('user not found')
     }
 }
+
+const { BCRYPT_SALT } = require(`${ROOT_DIR}/const/values.js`)
 async function update_password(props) {
     const { new_password, email } = props;
     try {
+        const passwd_hash = require('bcryptjs').hashSync(new_password, BCRYPT_SALT);
+
         const response = await pool.query(
             `UPDATE "user" set password = $1 WHERE email = $2`,
-            [new_password, email],
+            [passwd_hash, email],
         );
         if (response) {
             return true
