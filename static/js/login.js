@@ -16,11 +16,9 @@ form.onsubmit = async function (e) {
     }).then(res => res.json());
 
     console.log(result)
-    if (result.status === 'ok') {
+    if (result.status === 200) {
         // everything went fine
         console.log('Got the token: ', result.data)
         alert("server was recieved");
-    } else {
-        alert("error");
     }
 }
