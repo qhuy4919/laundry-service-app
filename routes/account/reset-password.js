@@ -58,6 +58,7 @@ function create_new_password() {
     var new_password = crypto.randomBytes(16).toString('hex');
     return new_password
 }
+
 module.exports = function (app, root_path) {
     app.get(RESET_PASSWORD_URL, function (req, res) {
         res.sendFile(path.join(root_path, 'static/reset-password.html'));
@@ -85,7 +86,10 @@ module.exports = function (app, root_path) {
                             var new_password = create_new_password();
                             var isResetSuccess = update_password({ new_password, email });
                             if (isResetSuccess) {
-                                emailController.sendMail(req, res, new_password);
+                                emailController.sendMail(req, res, 
+                                    {   subject: RESET_PASSWORD_URL, 
+                                        content: `Your new Password is: "${new_password}". Please change it now.`
+                                    });
                                 return res.status(201).json({
                                     data: {},
                                     msg: 'Check your mail',

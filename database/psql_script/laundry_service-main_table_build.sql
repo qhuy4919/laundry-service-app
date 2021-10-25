@@ -143,3 +143,11 @@ CREATE TABLE follower
 
 CREATE INDEX __constraint_idx__follower__user_id ON follower ( user_id );
 CREATE INDEX __constraint_idx__follower__shop_id ON follower ( shop_id );
+
+----------------------------------- Alter USER, add TOKEN to it 
+ALTER TABLE "user"
+ADD "token" VARCHAR(256);
+ALTER TABLE "user"
+ADD	"token_created_at" TIMESTAMP;
+ALTER TABLE "user"
+ADD is_persistent BOOLEAN NOT NULL DEFAULT FALSE;
