@@ -9,6 +9,7 @@ const pool = new Pool({
     port: `${process.env.DB_PORT}`,
     host: `${process.env.DB_HOST}`,
     ssl: { rejectUnauthorized: false },
+    max: 10,
 })
 
 
