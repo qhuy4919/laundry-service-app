@@ -23,6 +23,7 @@ sign_in_route(app, __dirname);
 sign_up_route(app, __dirname);
 reset_password(app, __dirname);
 
+
 // Start the Server
 app.listen(process.env.SERVER_PORT, () => {
 	console.log('Server running on port ' + `${process.env.SERVER_PORT}` + '...')

@@ -5,6 +5,7 @@ const adminPassword = process.env.EMAIL_PASSWORD;
 const mailHost = 'smtp.gmail.com'
 const mailPort = 587
 
+
 const sendMail = (to, sub) => {
     const transporter = nodeMailer.createTransport({
         host: mailHost,
