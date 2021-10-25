@@ -1,4 +1,6 @@
-const { Card, Container, Col, Row } = require("react-bootstrap");
+import './ProfileHeader.css'
+
+import { Card, Container, Col, Row } from "react-bootstrap";
 
 const profile = {
   name: "Ông tổ giặt ủi",
@@ -7,52 +9,45 @@ const profile = {
 
 const orderIcon = process.env.PUBLIC_URL + "/images/store.png";
 const followShopIcon = process.env.PUBLIC_URL + "images/follow.png";
-
-const orderNum = 5;
+const ORDER_COUNT = 5;
 const followShopNum = 5;
 
-function Profile() {
+function ProfilePicture() {
   return (
-    <Card>
-      <Card.Img src={profile.img} width={200} height={200} />
+    <Card className='profile-pic clear-fix'>
+      <Card.Img src={profile.img} />
       <Card.Title>{profile.name}</Card.Title>
     </Card>
   );
 }
 
-function Order() {
+function Order({orderCount}) {
   return (
-    <Card>
-      <Card.Img src={orderIcon} width={200} height={200} />
-      <Card.Title>総注文数: {orderNum}</Card.Title>
+    <Card className='order-count-section'>
+      <Card.Body className='order-count-text h1'>{orderCount} 📦</Card.Body>
+      <Card.Title className='order-count-title'>総注文数</Card.Title>
     </Card>
   );
 }
 
 function FollowShop() {
   return (
-    <Card>
-      <Card.Img src={followShopIcon} width={200} height={200} />
-      <Card.Title>総注文数: {followShopNum}</Card.Title>
+    <Card className='shop-follow-count-section'>
+      <Card.Body className='shop-follow-count-text h1'>{followShopNum} 🏪</Card.Body>
+      <Card.Title className='shop-follow-title'>フォローしている店舗数</Card.Title>
     </Card>
   );
 }
 
 function ProfileHeader() {
   return (
-    <Container>
-      <Row>
-        <Col>
-          <Profile />
-        </Col>
-        <Col>
-          <Order />
-        </Col>
-        <Col>
+    <Card className='profile-header-container'>
+      <Card.Body className='profile-header'>
+          <ProfilePicture />
+          <Order orderCount={ORDER_COUNT}/>
           <FollowShop />
-        </Col>
-      </Row>
-    </Container>
+      </Card.Body>
+    </Card>
   );
 }
 

@@ -1,7 +1,9 @@
 import Topbar from "./topbar/Topbar";
 import FrontPage from "./pages/front-page/FrontPage";
 
-import { Navbar, Nav, Container, Form, FormControl, Button } from 'react-bootstrap';
+import React from "react";
+import {BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+
 import Footer from "./foooter/Footer";
 import ProfilePage from "pages/profile-page/ProfilePage";
 
@@ -10,13 +12,20 @@ function App() {
     <>
       <Topbar/>
     
-      <FrontPage/>
+      <Router>
+        <Link to="/profile">Profile</Link>
+        <Link to="/">Home</Link>
+        <Switch>
+          <Route exact path="/profile">
+            <ProfilePage/>
+          </Route>
+          <Route exact path="/">
+            <FrontPage/>
+          </Route>
+        </Switch>
+      </Router>
       <Footer/>
-
-      {/* <ProfilePage/> */}
-      {/* <FrontPage/> */}
       <Footer/>
-
     </>
   );
 }

@@ -36,7 +36,7 @@ function ProfileOrder({ order }) {
 
 function ProfileOrderSection() {
   return (
-    <Card>
+    <Card className="profile-order-container">
       <Card.Header>
         <Card.Title>注文</Card.Title>
       </Card.Header>

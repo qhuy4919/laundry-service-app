@@ -1,17 +1,20 @@
 import { useState } from "react";
-import './InforUser.css'
+import './ProfileInformation.css'
 
-const { default: Button } = require("@restart/ui/esm/Button");
-const { Card, Form, Row, Col } = require("react-bootstrap");
+import { Button } from "react-bootstrap";
+import { Card, Form, Row, Col } from "react-bootstrap";
+
+import 'react-phone-number-input/style.css'
+import PhoneInput from 'react-phone-number-input';
 
 const infor = {
   email: "11@gmail.com",
   name: "1",
   address: "1",
   birthday: "2021-10-07",
-  phoneNum: "115",
+  phoneNum: "",
 };
-function InforUser() {
+function ProfileInformation() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
@@ -19,12 +22,12 @@ function InforUser() {
   const [phoneNum, setPhoneNum] = useState("");
 
   return (
-    <Card>
+    <Card className="user-information-container">
       <Card.Header>
         <Card.Title>情報</Card.Title>
       </Card.Header>
       <Card.Body>
-        <Form>
+        <Form className="user-information-form">
           <Row>
             <Col xs={3}>
               <Form.Label>メールアドレス</Form.Label>
@@ -45,7 +48,7 @@ function InforUser() {
             </Col>
             <Col xs={9}>
               <Form.Control
-                type="Text"
+                type="text"
                 defaultValue={infor.name}
                 onChange={(e) => {
                   setName(e.target.value);
@@ -59,7 +62,7 @@ function InforUser() {
             </Col>
             <Col xs={9}>
               <Form.Control
-                type="Text"
+                type="text"
                 defaultValue={infor.address}
                 onChange={(e) => {
                   setAddress(e.target.value);
@@ -86,19 +89,24 @@ function InforUser() {
               <Form.Label>電話番号</Form.Label>
             </Col>
             <Col xs={9}>
-              <Form.Control
+              <PhoneInput
+                defaultCountry="vn"
+                placeholder="Enter your Phone Number"
+                value={infor.phoneNum}
+                onChange={setPhoneNum}
+              />
+              {/* <Form.Control
                 type="tel"
                 defaultValue={infor.phoneNum}
                 onChange={(e) => {
                   setPhoneNum(e.target.value);
                 }}
-              ></Form.Control>
+              ></Form.Control> */}
             </Col>
           </Row>
           <Row>
-            <Col xs={11}></Col>
-            <Col xs={1}>
-              <Button type="reset">変更</Button>
+            <Col>
+              <Button className="form-submit-btn" type="submit">変更</Button>
             </Col>
           </Row>
         </Form>
@@ -107,4 +115,4 @@ function InforUser() {
   );
 }
 
-export default InforUser;
+export default ProfileInformation;
