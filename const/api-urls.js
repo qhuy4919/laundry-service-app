@@ -2,8 +2,8 @@ const SIGN_IN_URL = '/sign-in';
 const SIGN_UP_URL = '/sign-up';
 const SIGN_OUT_URL = '/sign-out';
 const RESET_PASSWORD_URL = '/reset-password';
-const TOKEN_TEST_URL = '/token-test';
 
+const TOKEN_TEST_URL = '/token-test';
 const MAIL_CONFIRM_URL = '/mail-confirm'
 
 module.exports = {

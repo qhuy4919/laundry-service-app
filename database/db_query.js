@@ -31,10 +31,9 @@ async function tryQuery(sqlcommand, msg) {
 }
 
 // 	"1. Tất cả user trong bảng user:");
-// tryQuery(`SELECT * FROM "user"`);
-tryQuery(`SELECT * FROM "user" WHERE "email"='nvatuan2000@gmail.com'`);
+tryQuery(`SELECT * FROM "user"`);
+// tryQuery(`SELECT * FROM "user" WHERE "email"='nvatuan2000@gmail.com'`);
 // tryQuery(`DELETE FROM "user" WHERE nickname='hashuser'`, 'Test');
-
 
 
 // tryQuery('SELECT shop_name FROM "laundry_shop"',

@@ -28,7 +28,6 @@ token_test(app, __dirname);
 const { mail_confirm } = require('./routes/mail/index')
 mail_confirm(app, __dirname);
 
-
 // Start the Server
 app.listen(process.env.SERVER_PORT, () => {
 	console.log('Server running on port ' + `${process.env.SERVER_PORT}` + '...')
