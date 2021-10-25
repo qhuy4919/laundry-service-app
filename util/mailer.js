@@ -6,7 +6,7 @@ const mailHost = 'smtp.gmail.com'
 const mailPort = 587
 
 
-const sendMail = (to, sub) => {
+const sendMail = (to, body) => {
     const transporter = nodeMailer.createTransport({
         host: mailHost,
         port: mailPort,
@@ -17,11 +17,15 @@ const sendMail = (to, sub) => {
         }
     })
 
-    const options = {
+    var options = {
         from: adminEmail,
         to: to,
-        subject: 'TXP laundry app',
-        text: sub ? `Your new password is ${sub}` : 'register successful'
+        subject: 'ITJP2 - Online Laundry App',
+        text: "",
+    }
+    if (body) {
+        options.subject += " | " + body.subject;
+        options.text = body.content;
     }
 
     return transporter.sendMail(options)
