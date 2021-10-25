@@ -43,12 +43,13 @@ function ProfileHeader() {
 
 export default ProfileHeader;
 
-const profile = {
-  name: "Ông tổ giặt ủi",
-  img: "https://picsum.photos/200/200",
-};
-
 const orderIcon = process.env.PUBLIC_URL + "/images/store.png";
-const followShopIcon = process.env.PUBLIC_URL + "images/follow.png";
+// const followShopIcon = process.env.PUBLIC_URL + "images/follow.png";
 const ORDER_COUNT = 5;
 const followShopNum = 5;
+
+const profile = {
+  name: "Ông tổ giặt ủi",
+  // img: "https://picsum.photos/200/200",
+  img: "https://cdn4.iconfinder.com/data/icons/user-people-2/48/6-512.png",
+};

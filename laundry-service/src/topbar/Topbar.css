@@ -1,9 +1,12 @@
-.navbar-brand {
+.navbar-brand a{
   display: flex;
   align-items: center;
   font-weight: 700;
+
+  color: inherit;
+  text-decoration: inherit;
 }
-.navbar-brand>img {
+.navbar-brand a>img {
   padding: 7px 14px;
   width: 80px;
   height: auto;

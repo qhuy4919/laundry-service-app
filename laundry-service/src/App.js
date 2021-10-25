@@ -13,26 +13,26 @@ import "./styles/misc.css"
 function App() {
   return (
     <>
-      <Topbar/>
+      <Router>
+        <Topbar/>
 
-      <div className="upmost-container">
-        <Router>
-          <Link to="/profile">Profile</Link>
-          <Link to="/">Home</Link>
-          <Switch>
-            <Route exact path="/profile">
-              <ProfilePage/>
-            </Route>
-            <Route exact path="/">
-              <FrontPage/>
-            </Route>
-            <Route path="/">
-              <NotFoundPage/>
-            </Route>
-          </Switch>
-        </Router>
-      </div>
+        <div className="upmost-container">
+            {/* <Link to="/profile">Profile</Link>
+            <Link to="/">Home</Link> */}
+            <Switch>
+              <Route exact path="/profile">
+                <ProfilePage/>
+              </Route>
+              <Route exact path="/">
+                <FrontPage/>
+              </Route>
+              <Route path="/">
+                <NotFoundPage/>
+              </Route>
+            </Switch>
+        </div>
 
+      </Router>
       <Footer/>
     </>
   );
