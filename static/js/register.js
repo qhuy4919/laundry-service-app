@@ -17,10 +17,11 @@ form.onsubmit = async function (e) {
             confirm_password
         })
     }).then(res => res.json());
+    console.log(result);
     if (result.status === 'ok') {
         // everything went fine
-        alert(result.error);
     } else {
-        alert("error")
+        alert("register error");
+
     }
 }
