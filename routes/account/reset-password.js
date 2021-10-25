@@ -1,4 +1,6 @@
 const path = require('path');
+var crypto = require("crypto");
+
 const ROOT_DIR = process.env.ROOT_DIR;
 
 const { pool } = require(`${ROOT_DIR}/database/db-config`);
@@ -51,6 +53,11 @@ async function update_password(props) {
     }
 
 }
+
+function create_new_password() {
+    var new_password = crypto.randomBytes(16).toString('hex');
+    return new_password
+}
 module.exports = function (app, root_path) {
     app.get(RESET_PASSWORD_URL, function (req, res) {
         res.sendFile(path.join(root_path, 'static/reset-password.html'));
@@ -75,7 +82,7 @@ module.exports = function (app, root_path) {
                         })
                     } else {
                         try {
-                            var new_password = '123456789';
+                            var new_password = create_new_password();
                             var isResetSuccess = update_password({ new_password, email });
                             if (isResetSuccess) {
                                 emailController.sendMail(req, res, new_password);
