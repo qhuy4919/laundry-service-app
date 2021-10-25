@@ -1,11 +1,11 @@
 const mailer = require('./mailer')
 
-let sendMail = async (req, res) => {
+let sendMail = async (req, res, sub) => {
     try {
-        const { email } = req.body
-        console.log(email);
+        const { email } = req.body;
+        console.log(sub);
+        await mailer.sendMail(email, sub);
 
-        await mailer.sendMail(email)
     } catch (error) {
 
         console.log(error)

@@ -44,6 +44,7 @@ module.exports = function (app, root_path) {
                         data: {},
                         msg: 'User Created',
                     });
+                    
                 }).catch((err) => {
                     return res.status(500).json({
                         error: error_msg_constructor('Internal Error', err),

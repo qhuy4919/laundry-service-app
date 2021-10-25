@@ -5,7 +5,7 @@ const adminPassword = process.env.EMAIL_PASSWORD;
 const mailHost = 'smtp.gmail.com'
 const mailPort = 587
 
-const sendMail = (to) => {
+const sendMail = (to, sub) => {
     const transporter = nodeMailer.createTransport({
         host: mailHost,
         port: mailPort,
@@ -19,8 +19,8 @@ const sendMail = (to) => {
     const options = {
         from: adminEmail,
         to: to,
-        subject: 'Sending Email using Node.js',
-        text: 'Đỉnh rứa bây'
+        subject: 'TXP laundry app',
+        text: sub ? `Your new password is ${sub}` : 'register successful'
     }
 
     return transporter.sendMail(options)
