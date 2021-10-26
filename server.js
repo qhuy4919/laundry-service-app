@@ -13,6 +13,7 @@ process.env.ROOT_DIR = __dirname
 
 // Get routes from index
 const {sign_in_route, sign_up_route, sign_out_route} = require('./routes/account/index')
+const {profile_route} = require('./routes/profile/index')
 
 // Middleware
 const app = express();
@@ -22,6 +23,7 @@ app.use('/', express.static(path.join(__dirname, 'static')))
 
 sign_in_route(app, __dirname);
 sign_up_route(app, __dirname);
+profile_route(app, __dirname);
 
 // Start the Server
 app.listen(process.env.SERVER_PORT, () => { 
