@@ -1,13 +1,16 @@
-import { Container, Row } from "react-bootstrap";
-import InforUser from "./subcomponent/InforUser";
+import ProfileInformation from "./subcomponent/ProfileInformation";
 import ProfileHeader from "./subcomponent/ProfileHeader";
 import ProfileOrderSection from "./subcomponent/ProfileOrderSection";
+import { Container } from 'react-bootstrap';
+
+import "./ProfilePage.css"
+
 function ProfilePage() {
   return (
-    <Container>
-      <Row><ProfileHeader/></Row>
-      <Row><InforUser/></Row>
-      <Row><ProfileOrderSection/></Row>
+		<Container className='page-container profile-container scroll-bar-style'>
+        <ProfileHeader/>
+        <ProfileInformation/>
+        <ProfileOrderSection/>
     </Container>
   );
 }

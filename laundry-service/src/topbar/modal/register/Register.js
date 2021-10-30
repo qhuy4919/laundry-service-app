@@ -3,8 +3,9 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import './Register.css';
 
 import {callSignUp} from 'api/account/sign-up';
+import {MdOutlineMarkEmailRead} from 'react-icons/md';
 
-function Register({handleClose, onLoginClick, onPwRsClick}) {
+function Register({handleClose, onLoginClick, onPwRsClick, onMailConfClick}) {
     const [formData, setFormData] = useState({nickname:'', email:'', password:'', confirm_password:''})
 
     const onSubmitHandler = async (e) => {
@@ -22,8 +23,8 @@ function Register({handleClose, onLoginClick, onPwRsClick}) {
         const succeed = await callSignUp({...formData, username: nickname});
         // const res = await callSignUp(formData);
         if (succeed) {
-            alert("Sign Up Successfully!")
-            handleClose();
+            alert("Sign Up Successfully! Please Confirm your Mail")
+            onMailConfClick();
             return true;
         } else {
             alert("Sign Up Failed..")
@@ -66,7 +67,7 @@ function Register({handleClose, onLoginClick, onPwRsClick}) {
                                 onChange={(e)=>setFormData({...formData, confirm_password: e.target.value})}/>
                         </Form.Group>
 
-                        <Form.Group controlId="formBasicButton" className='modal-field'>
+                        <Form.Group controlId="formBasicButton" className='modal-field button-panel'>
 							<Button className="login-button" variant="primary" type="submit">
                                 Sign Up
 							</Button>
@@ -77,6 +78,9 @@ function Register({handleClose, onLoginClick, onPwRsClick}) {
                 <Modal.Footer>
                     <Button onClick={onLoginClick}>Sign In Here</Button>
                     <Button onClick={onPwRsClick}>Password Reset Here</Button>
+                    <Button className="login-button" onClick={onMailConfClick} variant="primary">
+                        <MdOutlineMarkEmailRead/>
+                    </Button>
                 </Modal.Footer>
             </Modal>
 

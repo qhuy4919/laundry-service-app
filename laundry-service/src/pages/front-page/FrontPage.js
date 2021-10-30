@@ -6,8 +6,8 @@ import PickSection from './subcomponent/PickSection';
 function FrontPage() {
 	return (
 		<Container className='page-container'>
-				<RecommendedSection/>
-				<PickSection/>
+			<RecommendedSection/>
+			<PickSection/>
 		</Container>
 	);
 }

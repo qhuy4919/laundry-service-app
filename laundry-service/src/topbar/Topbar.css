@@ -1,3 +1,31 @@
+.navbar-brand a{
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+
+  color: inherit;
+  text-decoration: inherit;
+}
+.navbar-brand a>img {
+  padding: 7px 14px;
+  width: 80px;
+  height: auto;
+}
+
+
 .navbarInputSearch {
 	margin-right: 10px;
+}
+
+.btn-outline-success {
+    color: var(--mycolor-accent-highlight) !important;
+    border-color: var(--mycolor-accent-highlight) !important;
+}
+.btn-outline-success:hover {
+    color: var(--mycolor-accent-highlight) !important;
+    border-color: var(--mycolor-accent-highlight) !important;
+	background-color: var(--mycolor-accent-highlight) !important;
+}
+.btn-outline-success:focus {
+	outline-color: var(--mycolor-accent-dark) !important;
 }

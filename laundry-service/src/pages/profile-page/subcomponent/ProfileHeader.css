@@ -1,0 +1,85 @@
+.profile-header-container {
+	border: transparent !important;
+}
+.profile-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 20px;
+} 
+
+.profile-pic {
+	display: inline-block;
+	position: relative;
+	width: 200px;
+	height: 200px;
+
+	/* overflow: hidden; */
+}
+.profile-pic .card-img img {
+	width: auto;
+	height: 100%;
+	margin-left: -50px;
+	margin-bottom: 5px;
+}
+.profile-pic .card-title {
+	text-align: center;
+	margin: 5px !important;
+}
+
+/* Order Count */
+.order-count-section {
+	border: transparent !important;
+	display: block !important;
+	margin: auto
+}
+.order-count-section .card-body {
+	margin-top: auto;
+	margin-bottom: auto;
+	width: 100%;
+}
+.order-count-section .order-count-text {
+	text-align: center;
+	/* border: 1px solid black; */
+	white-space: nowrap;
+}
+.order-count-section .order-count-title {
+	text-align: center;
+}
+/* .order-count-section .order-count-text::after {
+	content: " 📦";
+} */
+
+/* Shop Follow Count */
+.shop-follow-count-section {
+	border: transparent !important;
+	display: block !important;
+	margin: auto
+}
+.shop-follow-count-section .card-body {
+	margin-top: auto;
+	margin-bottom: auto;
+	width: 100%;
+}
+.shop-follow-count-section .shop-follow-count-text {
+	text-align: center;
+	/* border: 1px solid black; */
+	white-space: nowrap;
+}
+.shop-follow-count-section .shop-follow-count-title {
+	text-align: center;
+}
+/* .shop-follow-count-section .shop-follow-count-text::after {
+	content: " 🏪";
+} */
+/* Fix overflow: hidden */
+.clearfix:before,
+.clearfix:after {
+    content: ".";    
+    display: block;    
+    height: 0;    
+    overflow: hidden; 
+}
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; } /* IE < 8 */
+/* Done Fix overflow: hidden */
