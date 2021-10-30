@@ -1,13 +1,9 @@
-import Topbar from "./topbar/Topbar";
 import FrontPage from "./pages/front-page/FrontPage";
-
-import React from "react";
+import Shop from "./pages/shop/shop";
+import { Footer, Topbar } from "./components/index";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-
-import Footer from "./components/footer/Footer";
 import ProfilePage from "pages/profile-page/ProfilePage";
-
-import NotFoundPage from "./pages/NotFoundPage";
+import NotFoundPage from "./pages/not-found/NotFoundPage";
 import "./styles/misc.css";
 
 function App() {
@@ -20,14 +16,17 @@ function App() {
           {/* <Link to="/profile">Profile</Link>
             <Link to="/">Home</Link> */}
           <Switch>
-            <Route exact path="/profile">
+            <Route exact path="/profile" exact>
               <ProfilePage />
             </Route>
-            <Route exact path="/">
+            <Route exact path="/" exact>
               <FrontPage />
             </Route>
-            <Route path="/">
+            <Route path="/not-found" exact>
               <NotFoundPage />
+            </Route>
+            <Route path="/shop" exact>
+              <Shop />
             </Route>
           </Switch>
         </div>

@@ -1,0 +1,25 @@
+.shop-container {
+  display: grid;
+  grid: auto/ 75% 25%;
+
+  .left-panel {
+    display: grid;
+    border-right: 1px solid black;
+
+    .shop-item {
+      display: flex;
+      border-top: 1px solid black;
+
+      .shop-item__title {
+        flex: 1;
+      }
+      .shop-item__detail {
+        flex: 3;
+      }
+    }
+
+    .shop-feedback {
+      border-top: 1px solid black;
+    }
+  }
+}
