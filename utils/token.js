@@ -12,7 +12,7 @@ function tokenValidate(token, userObj) {
 }
 
 function tokenGenerate(leng=64) {
-    var token = require('crypto').randomBytes(leng).toString('hex');
+    var token = require('crypto').randomBytes(leng/2).toString('hex');
     return token
 }
 
@@ -20,4 +20,3 @@ module.exports = {
 	tokenValidate,
 	tokenGenerate,
 }
-

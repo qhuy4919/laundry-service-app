@@ -1,26 +1,17 @@
+const ROOT_DIR = process.env.ROOT_DIR;
 const path = require('path');
 var crypto = require("crypto");
 
-const ROOT_DIR = process.env.ROOT_DIR;
+// DAO
+const {sequelize} = require(`${ROOT_DIR}/database/sequelize_object`)
+var Models = require(`${ROOT_DIR}/models/init-models`)(sequelize);
 
-const { pool } = require(`${ROOT_DIR}/database/db-config`);
+//
 const { RESET_PASSWORD_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
 const { error_msg_constructor } = require(`${ROOT_DIR}/helper/res-msg-constructor`);
 
-const emailController = require('../../util/email-controller');
-
-function params_validate(params, err) {
-    const { email } = params;
-
-    if (!email) {
-        err.push('Please eneter all Fields');
-    }
-    if (email.length < 6) {
-        err.push('Email is invalid');
-    }
-    if (err.length > 0) return false;
-    return true;
-}
+// Mail
+const mailer = require(`${ROOT_DIR}/utils/mailer`);
 
 async function filter_by(filter) {
     const { email } = filter;
@@ -63,59 +54,72 @@ module.exports = function (app, root_path) {
     app.get(RESET_PASSWORD_URL, function (req, res) {
         res.sendFile(path.join(root_path, 'static/reset-password.html'));
     })
-        .post(RESET_PASSWORD_URL, async function (req, res) {
-            const { email } = req.body;
-            let error = [];
+    .post(RESET_PASSWORD_URL, async function (req, res) {
+        const { email } = req.body;
+        let error = [];
 
-            if (!params_validate(req.body, error)) {
-                return res.status(400).json({
-                    error: error,
-                    msg: 'Bad Resquest'
-                })
-            } else {
-                try {
-                    const user = await filter_by({ email });
-                    if (!user.active) {
-                        return res.status(401).json({
-                            error: 'Please Confirm Mail', 
-                            msg: 'Please Confirm your Registration before Resetting Password',
-                        });
-                    }
-
-                    if (!user) {
-                        res.status(404).json({
-                            error: 'Invalid email',
-                            msg: 'User not found'
-                        })
-                    } else {
-                        try {
-                            var new_password = create_new_password();
-                            var isResetSuccess = update_password({ new_password, email });
-                            if (isResetSuccess) {
-                                emailController.sendMail(req, res, 
-                                    {   subject: RESET_PASSWORD_URL, 
-                                        content: `Your new Password is: "${new_password}". Please change it now.`
-                                    });
-                                return res.status(201).json({
-                                    data: {},
-                                    msg: 'Check your mail',
-                                });
-                            }
-                        } catch (error) {
-                            return res.status(500).json({
-                                data: {},
-                                msg: 'mailing fail',
-                            });
-
-                        }
-                    }
-
-                } catch (error) {
-                    return res.status(500).json({
-                        error: error_msg_constructor('Internal Error', err),
-                        msg: 'Error while reset password',
+        if (!params_validate(req.body, error)) {
+            return res.status(400).json({
+                error: error,
+                msg: 'Bad Resquest'
+            })
+        } else {
+            try {
+                const user = await filter_by({ email });
+                if (!user.active) {
+                    return res.status(401).json({
+                        error: 'Please Confirm Mail', 
+                        msg: 'Please Confirm your Registration before Resetting Password',
                     });
                 }
+
+                if (!user) {
+                    res.status(404).json({
+                        error: 'Invalid email',
+                        msg: 'User not found'
+                    })
+                } else {
+                    try {
+                        var new_password = create_new_password();
+                        var isResetSuccess = update_password({ new_password, email });
+                        if (isResetSuccess) {
+                            emailController.sendMail(req, res, 
+                                {   subject: RESET_PASSWORD_URL, 
+                                    content: `Your new Password is: "${new_password}". Please change it now.`
+                                });
+                            return res.status(201).json({
+                                data: {},
+                                msg: 'Check your mail',
+                            });
+                        }
+                    } catch (error) {
+                        return res.status(500).json({
+                            data: {},
+                            msg: 'mailing fail',
+                        });
+
+                    }
+                }
+
+            } catch (error) {
+                return res.status(500).json({
+                    error: error_msg_constructor('Internal Error', err),
+                    msg: 'Error while reset password',
+                });
             }
-        })
+        }
+    })
+}
+
+function params_validate(params, err) {
+    const { email } = params;
+
+    if (!email) {
+        err.push('Please eneter all Fields');
+    }
+    if (email.length < 6) {
+        err.push('Email is invalid');
+    }
+    if (err.length > 0) return false;
+    return true;
 }
