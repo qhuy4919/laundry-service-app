@@ -1,3 +1,23 @@
+/* Header */
+.profile-order-container .card-header {
+	background-color: unset;
+	border: transparent !important;
+	padding-bottom: 0;
+}
+.profile-order-container .card-header .card-title {
+	font-weight: bold;
+	border-bottom: 3px solid var(--mycolor-accent);
+}
+.profile-order-container {
+	border: transparent !important;
+}
+
+.profile-order-container .card-body{
+	padding-bottom: 0px;
+}
+/* Body */
+
+/* */
 .see-more-box a {
 	padding: 4px;
 	float: right;

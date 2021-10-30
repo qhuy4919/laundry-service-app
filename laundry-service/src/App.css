@@ -1,0 +1,9 @@
+.upmost-container {
+	height: max-content;
+	overflow: auto;
+}
+
+.page-container {
+	height: max-content;
+	padding-bottom: 15px;
+}

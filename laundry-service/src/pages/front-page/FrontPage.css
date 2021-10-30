@@ -1,3 +1,4 @@
 .page-container {
-	height: 60vh;
+	height: max-content;
+	padding-bottom: 15px;
 }

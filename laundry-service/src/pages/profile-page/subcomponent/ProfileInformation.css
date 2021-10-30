@@ -1,0 +1,57 @@
+/* Header */
+.user-information-container .card-header {
+	background-color: unset;
+	border: transparent !important;
+	padding-bottom: 0;
+}
+.user-information-container .card-header .card-title {
+	font-weight: bold;
+	border-bottom: 3px solid var(--mycolor-accent);
+}
+.user-information-container {
+	border: transparent !important;
+}
+
+/* Body */
+.user-information-container .card-body {
+	padding-top: 0;
+	padding-bottom: 0;
+}
+.user-information-form .row {
+	margin-top: auto;
+	margin-bottom: auto;
+}
+.user-information-form .col-3 {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+	flex-direction: column;
+}
+.user-information-form .col-3 label{
+	margin: 0;
+}
+.user-information-form .col-9 input {
+	border-top: transparent;
+	border-left: transparent;
+	border-right: transparent;
+	border-bottom: 1px solid #ced4da;
+	border-radius: 0;
+
+	transition: background-color .2s;
+}
+input.PhoneInputInput {
+	padding: .375rem .75rem;
+}
+
+.user-information-form .col-9 input:focus{
+	/* border: 1px solid #ced4da; */
+	background-color: #dceaff;
+	outline: none !important;
+	box-shadow: none !important;
+}
+.user-information-form .form-submit-btn {
+	margin-top: 16px;
+	float: right;
+}
+
+

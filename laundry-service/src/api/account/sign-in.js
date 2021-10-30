@@ -18,6 +18,7 @@ export async function callSignIn(params) {
 	}).then((data) => {
 		localStorage.setItem(SIGNED_IN_USER, JSON.stringify(data));
 	}).catch((err) => {
+		alert("Something went Wrong");
 		console.log("Error while Logging In...")
 		console.log(err)
 		localStorage.removeItem(SIGNED_IN_USER);
