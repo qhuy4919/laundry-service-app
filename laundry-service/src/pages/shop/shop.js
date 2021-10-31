@@ -3,7 +3,10 @@ import {
   ShopInfo,
   ShopItemDetail,
   ShopFeedback,
+  OrderItem,
 } from "../../components/index";
+
+import { Button } from "react-bootstrap";
 
 import "./shop.scss";
 export default function Shop() {
@@ -23,7 +26,21 @@ export default function Shop() {
           <ShopFeedback />
         </div>
       </div>
-      <div className="right-panel">ご注文</div>
+      <div className="right-panel">
+        <div className="right-panel-header">ご注文</div>
+        <div>
+          <form action="" className="order-list">
+            <OrderItem />
+            <div className="order-quantity">
+              <div className="order-quantity__label">総量</div>
+              <div className="order-quantity__value">10</div>
+            </div>
+            <Button variant="secondary" type="submit" className="submit-btn">
+              次
+            </Button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
