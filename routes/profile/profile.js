@@ -12,7 +12,7 @@ async function ProfileUser(profile) {
     console.log(user_id);
     try {
         const profile_value = await pool.query(`SELECT nickname, "name", address, birthday, phone_number, "profile_pic" FROM "user" WHERE id = ${user_id}`)
-        return res.status(200).json(profile_value[0])
+        return profile_value;
     } catch (error) {
         throw new Error('Error')
     }
@@ -23,7 +23,7 @@ async function Follower(follower) {
     console.log(user_id);
     try {
         const follower_value = await pool.query(`SELECT COUNT(shop_id) AS follower FROM follower GROUP BY follower.user_id HAVING user_id = ${user_id}`)
-        return res.json(follower_value);
+        return follower_value;
     } catch (error) {
         throw new Error('Error')
     }
@@ -34,7 +34,7 @@ async function OrderList(order) {
     console.log(user_id);
     try {
         const order_value = await pool.query(`SELECT order_time, total_cost, order_status FROM "order" WHERE user_id = ${user_id}`)
-        return res.json(order_value);
+        return order_value;
     } catch (error) {
         throw new Error('Error')
     }
@@ -45,7 +45,7 @@ async function TotalOrder(total) {
     console.log(user_id);
     try {
         const total_value = await pool.query(`SELECT COUNT(user_id) AS total_orders FROM "order" GROUP BY user_id HAVING user_id = ${user_id}`)
-        return res.json(total_value);
+        return total_value;
     } catch (error) {
         throw new Error('Error')
     }
