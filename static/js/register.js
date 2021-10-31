@@ -11,16 +11,12 @@ form.onsubmit = async function (e) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            username,
+            nickname: username, // Backend uses "nickname" instead of "username"
             email,
             password,
             confirm_password
         })
     }).then(res => res.json());
-    if (result.status === 'ok') {
-        // everything went fine
-        alert(result.error);
-    } else {
-        alert("error")
-    }
+    console.log(result);
+
 }

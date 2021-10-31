@@ -1,6 +1,6 @@
 {
   "name": "laundry-service-app",
-  "version": "1.0.0",
+  "version": "0.4.0",
   "description": "",
   "main": "app.js",
   "scripts": {
@@ -29,6 +29,8 @@
     "express-validator": "^6.13.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
+    "nodemailer": "^6.7.0",
+    "nodemailer-express-handlebars": "^4.0.0",
     "pg": "^8.7.1"
   }
 }
