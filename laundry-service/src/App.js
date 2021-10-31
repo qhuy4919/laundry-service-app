@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProfilePage from "pages/profile-page/ProfilePage";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
 import "./styles/misc.css";
+import InfoPage from "pages/info/InfoPage";
 
 function App() {
   return (
@@ -27,6 +28,9 @@ function App() {
             </Route>
             <Route path="/shop" exact>
               <Shop />
+            </Route>
+            <Route path="/info" exact>
+              <InfoPage />
             </Route>
           </Switch>
         </div>
