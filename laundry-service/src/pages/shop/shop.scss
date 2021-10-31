@@ -1,16 +1,16 @@
 .shop-container {
   display: grid;
-  grid: auto/ 75% 25%;
+  grid: auto 40% auto/ 75% 25%;
   padding: 1rem 5rem;
   margin: 0 auto;
 
   .left-panel {
     display: grid;
-    border-right: 1px solid black;
-
+    border: 2px solid gray;
+    border-radius: 16px;
     .shop-item {
       display: flex;
-      border-top: 1px solid black;
+      border-top: 2px solid gray;
 
       .shop-item__title {
         flex: 1;
@@ -22,7 +22,7 @@
     }
 
     .shop-feedback {
-      border-top: 1px solid black;
+      border-top: 2px solid gray;
     }
   }
 
