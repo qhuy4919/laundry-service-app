@@ -18,7 +18,9 @@ const verifyToken = async (req, res, next) => {
 	try {
 		const results = await Models.user.findAll(
 			{
-				attributes: ["nickname", "token_created_at", "is_persistent"],
+				attributes: {
+					exclude: ["password"],
+				},
 				where : {
 					"token": token
 				}
@@ -44,7 +46,7 @@ const verifyToken = async (req, res, next) => {
 		// 		msg: "Invalid Token"
 		// 	})
 		// }
-
+		req.auth_user = results[0];
 		return next(); // forward
 	} catch (err) {
 		return res.status(500).json({

@@ -21,12 +21,16 @@ app.use('/', express.static(path.join(__dirname, 'static')))
 const { sign_in_route , sign_up_route, reset_password, /*token_test*/ } = require('./routes/account/index')
 sign_in_route(app, __dirname);
 sign_up_route(app, __dirname);
+
 reset_password(app, __dirname);
 // token_test(app, __dirname);
 
 // -- MAIL routes
 const { mail_confirm } = require('./routes/mail/index')
 mail_confirm(app, __dirname);
+
+const {profile_route} = require('./routes/profile/index')
+profile_route(app, __dirname);
 
 // Start the Server
 app.listen(process.env.SERVER_PORT, () => {

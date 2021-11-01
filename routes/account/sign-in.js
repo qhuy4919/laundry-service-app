@@ -19,14 +19,14 @@ module.exports = function (app, root_path) {
     app.get(SIGN_IN_URL, function (req, res) {
         res.sendFile(path.join(root_path, 'static/login.html'))
     })
-    .post(SIGN_IN_URL, async (req, res) => {
+    .post(SIGN_IN_URL, async (req, response) => {
         try {
             const { email, password } = req.body;
             let errors = [];
 
             // Validate inputs
             if (! params_validate(req.body, errors)) {
-                return res.status(400).json({
+                return response.status(400).json({
                     error: errors,
                     msg: 'Bad Request'
                 });
@@ -41,12 +41,12 @@ module.exports = function (app, root_path) {
 
             // Check if user exist and user is active
             if (user === null) 
-                return res.status(404).json({
+                return response.status(404).json({
                     error: "User doesn't exist",
                     msg: 'Invalid Email or Password',
                 });
             if (user.active === false) 
-                return res.status(400).json({
+                return response.status(400).json({
                     error: "User is not active",
                     msg: 'Please check your mail and confirm your registration.'
                 });
@@ -58,7 +58,7 @@ module.exports = function (app, root_path) {
                 }
                 if (res) {
                 } else {
-                    return res.status(404).json({
+                    return response.status(404).json({
                         error: "User doesn't exist",
                         msg: 'Invalid Password',
                     });
@@ -68,20 +68,26 @@ module.exports = function (app, root_path) {
             // Generate Token
             // TODO: Refresh token creation timestampt to keep all logged in devices remain log in
             const newTok = tokenGenerate(AUTH_TOKEN_LENGTH);
-            await user.update({
-                token: newTok,
-                token_created_at: sequelize.fn('NOW'),
-            })
+            await (
+                await user.update({
+                    token: newTok,
+                    token_created_at: sequelize.fn('NOW'),
+                })
+            ).reload()
+
+            var userObj = user.get({plain: true});
+            delete userObj.password
+            console.log(userObj);
             
-            return res.status(200).json({
+            return response.status(200).json({
                 data: {
-                    token: newTok
+                    user: userObj,
                 },
                 msg: 'Sign-in Successful'
             });
         } catch(err) {
             console.log(err);
-            return res.status(500).json({
+            return response.status(500).json({
                 error: err.toJSON(),
                 msg: 'Internal Error',
             });
