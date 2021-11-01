@@ -14,7 +14,7 @@ export function ShopFeedbackDetail(props) {
               <div className="col col-3">時間: {when}</div>
               <div className="col col-4">レーティング: {rating}</div>
             </li>
-            <li class="table-row">
+            <li className="table-row">
               <div className="table-content">
                 <Accordion>
                   <Accordion.Item eventKey="1">

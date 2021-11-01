@@ -26,7 +26,7 @@ function App() {
             <Route path="/not-found" exact>
               <NotFoundPage />
             </Route>
-            <Route path="/shop" exact>
+            <Route path="/shop/:id" exact>
               <Shop />
             </Route>
             <Route path="/info" exact>

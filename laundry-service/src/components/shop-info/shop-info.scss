@@ -1,7 +1,7 @@
 .avatar-container {
   display: flex;
   flex-direction: column;
-  height: 40%;
+  height: 60%;
   .avatar-wrapper {
     position: relative;
     height: 250px;
@@ -68,13 +68,13 @@
 .shop-info {
   margin-top: 50px;
   width: 100%;
-  padding: 0 40%;
   .shop-info__body {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    margin: 0 10rem;
     .shop-info__title {
-      font-size: 1.1rem;
-      font-weight: bold;
+      font-size: 0.9rem;
+      font-weight: 700;
     }
   }
 }

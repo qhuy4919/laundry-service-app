@@ -16,8 +16,8 @@ export function ShopFeedback() {
     <div>
       <div className="feedback-header">フィードバック</div>
       <div className="feedback-detail">
-        {feedBack.map((item) => (
-          <ShopFeedbackDetail feedBack={item} />
+        {feedBack.map((item, index) => (
+          <ShopFeedbackDetail key={index} feedBack={item} />
         ))}
       </div>
     </div>
