@@ -17,14 +17,14 @@ app.use(express.json());
 app.use('/', express.static(path.join(__dirname, 'static')))
 
 // Get routes from index
-// ACCOUNT routes
-const { sign_in_route , sign_up_route, /*reset_password, token_test*/ } = require('./routes/account/index')
+// -- ACCOUNT routes
+const { sign_in_route , sign_up_route, reset_password, /*token_test*/ } = require('./routes/account/index')
 sign_in_route(app, __dirname);
 sign_up_route(app, __dirname);
-// reset_password(app, __dirname);
+reset_password(app, __dirname);
 // token_test(app, __dirname);
 
-// MAIL routes
+// -- MAIL routes
 const { mail_confirm } = require('./routes/mail/index')
 mail_confirm(app, __dirname);
 

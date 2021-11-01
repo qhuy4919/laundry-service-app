@@ -35,9 +35,10 @@ let sendMail = async (req, res, sub) => {
         const { email } = req.body;
         await __sendMail(email, sub);
     } catch (error) {
-
         console.log(error)
-        res.send(error)
+        res.status(500).json({
+            error,
+        })
     }
 }
 
