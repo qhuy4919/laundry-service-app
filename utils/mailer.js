@@ -5,8 +5,7 @@ const adminPassword = process.env.EMAIL_PASSWORD;
 const mailHost = 'smtp.gmail.com'
 const mailPort = 587
 
-
-const sendMail = (to, body) => {
+const __sendMail = (to, body) => {
     const transporter = nodeMailer.createTransport({
         host: mailHost,
         port: mailPort,
@@ -31,6 +30,18 @@ const sendMail = (to, body) => {
     return transporter.sendMail(options)
 }
 
+let sendMail = async (req, res, sub) => {
+    try {
+        const { email } = req.body;
+        await __sendMail(email, sub);
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            error,
+        })
+    }
+}
+
 module.exports = {
-    sendMail: sendMail
+    sendMail
 }

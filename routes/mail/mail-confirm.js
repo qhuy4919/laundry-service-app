@@ -1,50 +1,75 @@
 const ROOT_DIR = process.env.ROOT_DIR;
 
-const { pool } = require(`${ROOT_DIR}/database/db-config`);
-const { MAIL_CONFIRM_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
-const { error_msg_constructor } = require(`${ROOT_DIR}/helper/res-msg-constructor`);
+// DAO
+const {sequelize} = require(`${ROOT_DIR}/database/sequelize_object`)
+var Models = require(`${ROOT_DIR}/models/init-models`)(sequelize);
 
-const emailController = require('../../util/email-controller');
+// --
+const { MAIL_CONFIRM_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
+const { error_msg_constructor } = require(`${ROOT_DIR}/utils/res-msg-constructor`);
+const { ACTIVATION_TOKEN_LENGTH, AUTH_TOKEN_LENGTH } = require(`${ROOT_DIR}/const/values.js`)
+
+const mailer = require(`${ROOT_DIR}/utils/mailer`);
 
 function params_validate(params, err) {
-    const { email, token } = params;
-    if (!token || !email) {
-        err.push('Please Input all Required Fields');
+    const { token } = params;
+    if (!token) {
+        err.push('Missing token key');
+    } else
+    if (token.length !== ACTIVATION_TOKEN_LENGTH) {
+        console.log(token.length)
+        err.push('Invalid Token');
     }
     if (err.length > 0) return false;
     return true;
 }
 
 module.exports = function (app) {
-    app.post(MAIL_CONFIRM_URL, async function (req, res) {
-        const { email, token } = req.body;
+    app.get(MAIL_CONFIRM_URL, async function (req, res) {
         let error = [];
-
-        if (!params_validate(req.body, error)) {
+        console.log(req.query)
+        if (!params_validate(req.query, error)) {
             return res.status(400).json({
                 error: error,
                 msg: 'Bad Request'
             })
         }
-
+        const { token } = req.query;
         try {
-            var results;
-            results = await pool.query(`SELECT "email", "nickname", "token_created_at", \
-                                "is_persistent" FROM "user" WHERE "token" = $1 AND "email" = $2`, [token, email])
-            if (results.rows.length <= 0) {
+            var user = await Models.user.findOne({
+                attributes: ['id', 'email', 'nickname', 'active', 'token', 'token_created_at', 'is_persistent', ],
+                where : {
+                    'token': token,
+                    'active': false,
+                }
+            })
+            console.log(user)
+
+            if (user === null) {
                 return res.status(400).json({
-                    error: "Invalid Token or Invalid Email",
-                    msg: "Invalid Token or Invalid Email"
+                    error: "Result not found",
+                    msg: "Invalid Token",
                 })
             }
-            const row = results.rows[0];
 
-            results = await pool.query(`UPDATE "user" SET "active" = TRUE WHERE "nickname"=$1`, [row.nickname]);
-            return res.status(200).json({
-                data: "Your account has been activated! You can now Sign-In",
-                msg: "Mail Confirmation Succeeded"
+            // results = await pool.query(`UPDATE "user" SET "active" = TRUE WHERE "nickname"=$1`, [row.nickname]);
+            user.update({
+                'active': true,
+                'token': null,
+            }).then(() => {
+                return res.status(200).json({
+                    data: "Your account has been activated! You can now Sign-In",
+                    msg: "Mail Confirmation Succeeded"
+                })
+            }).catch((err) => {
+                console.log("OK2")
+                return res.status(500).json({
+                    error: err.toJSON(),
+                    msg: 'Error while Confirming Mail',
+                });
             })
         } catch (err) {
+            console.log("OK1")
             return res.status(500).json({
                 error: err,
                 msg: 'Error while Confirming Mail',

@@ -94,7 +94,7 @@ CREATE TABLE "order"
  order_address 	json,
  order_status  	varchar(256) NOT NULL DEFAULT '',
  "total_cost"	DECIMAL NOT NULL DEFAULT 0.0,
- note			TEXT NOT NULL DEFAULT '',
+ "note"			TEXT NOT NULL DEFAULT '',
   
  deleted_at	  TIMESTAMP,
  updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP

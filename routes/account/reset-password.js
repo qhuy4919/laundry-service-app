@@ -1,13 +1,86 @@
 const path = require('path');
-var crypto = require("crypto");
-
 const ROOT_DIR = process.env.ROOT_DIR;
+var bcrypt = require("bcryptjs");
 
-const { pool } = require(`${ROOT_DIR}/database/db-config`);
+// DAO
+const {sequelize} = require(`${ROOT_DIR}/database/sequelize_object`)
+var Models = require(`${ROOT_DIR}/models/init-models`)(sequelize);
+
+//
 const { RESET_PASSWORD_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
-const { error_msg_constructor } = require(`${ROOT_DIR}/helper/res-msg-constructor`);
+const { BCRYPT_SALT } = require(`${ROOT_DIR}/const/values.js`)
 
-const emailController = require('../../util/email-controller');
+// Mail
+const mailer = require(`${ROOT_DIR}/utils/mailer`);
+
+function generate_password() {
+    var new_password = require("crypto").randomBytes(16).toString('hex');
+    return new_password
+}
+
+module.exports = function (app, root_path) {
+    app.get(RESET_PASSWORD_URL, function (req, res) { 
+        res.sendFile(path.join(root_path, 'static/reset-password.html'));
+    })
+    .post(RESET_PASSWORD_URL, async function (req, res) { // reset password
+        let error = [];
+        params_validate(req.body, error);
+        if (error.length > 0) {
+            return res.status(404).json({
+                error: error,
+                msg: 'User not found',
+            });
+        }
+        //
+        const { email } = req.body;
+        var user = null;
+
+        await Models.user.findOne({
+            where: { email: email },
+        }).then((result) => {
+            user = result;
+            if (! user.active) {
+                return res.status(400).json({
+                    error: 'Unactivated user',
+                    msg: 'Please activate your account first',
+                });
+            }
+        }).catch((err) => {
+            console.log(`Error occurred at ModelUserFindone: ${err}`);
+            return res.status(404).json({
+                error: err,
+                msg: 'User not found',
+            });
+        })
+
+        const new_pw = generate_password();
+        const hash_new_pw = bcrypt.hashSync(new_pw, BCRYPT_SALT);
+
+        user.update({
+            password: hash_new_pw
+        }).then((result) => {
+            console.log("Reset password: OK Updated")
+            mailer.sendMail(req, res, 
+                {   subject: RESET_PASSWORD_URL, 
+                    content: `Password reset successful. ` +
+                            `Here is your new password:\n\n` +
+                            `${new_pw}\n\n`
+                }
+            )
+
+            return res.status(200).json({
+                data: "OK",
+                msg: 'Password is Reset. Please check your mail for your new password.',
+            });
+        }).catch((err) => {
+            console.log(err)
+            return res.status(500).json({
+                error: err.toJSON(),
+                msg: 'Internal Error',
+            });
+        })
+    })
+}
 
 function params_validate(params, err) {
     const { email } = params;
@@ -20,106 +93,4 @@ function params_validate(params, err) {
     }
     if (err.length > 0) return false;
     return true;
-}
-
-async function filter_by(filter) {
-    const { email } = filter;
-    try {
-        const response = await pool.query(
-            `SELECT * FROM "user" WHERE email = $1`,
-            [email]
-        )
-        if (response) {
-            return response.rows[0];
-        }
-        return false;
-    } catch (error) {
-        throw new Error('user not found')
-    }
-}
-
-const { BCRYPT_SALT } = require(`${ROOT_DIR}/const/values.js`)
-async function update_password(props) {
-    const { new_password, email } = props;
-    try {
-        const passwd_hash = require('bcryptjs').hashSync(new_password, BCRYPT_SALT);
-
-        const response = await pool.query(
-            `UPDATE "user" set password = $1 WHERE email = $2`,
-            [passwd_hash, email],
-        );
-        if (response) {
-            return true
-        }
-        return false;
-    } catch (error) {
-        throw new Error('update password fail')
-    }
-
-}
-
-function create_new_password() {
-    var new_password = crypto.randomBytes(16).toString('hex');
-    return new_password
-}
-
-module.exports = function (app, root_path) {
-    app.get(RESET_PASSWORD_URL, function (req, res) {
-        res.sendFile(path.join(root_path, 'static/reset-password.html'));
-    })
-        .post(RESET_PASSWORD_URL, async function (req, res) {
-            const { email } = req.body;
-            let error = [];
-
-            if (!params_validate(req.body, error)) {
-                return res.status(400).json({
-                    error: error,
-                    msg: 'Bad Resquest'
-                })
-            } else {
-                try {
-                    const user = await filter_by({ email });
-                    if (!user.active) {
-                        return res.status(401).json({
-                            error: 'Please Confirm Mail', 
-                            msg: 'Please Confirm your Registration before Resetting Password',
-                        });
-                    }
-
-                    if (!user) {
-                        res.status(404).json({
-                            error: 'Invalid email',
-                            msg: 'User not found'
-                        })
-                    } else {
-                        try {
-                            var new_password = create_new_password();
-                            var isResetSuccess = update_password({ new_password, email });
-                            if (isResetSuccess) {
-                                emailController.sendMail(req, res, 
-                                    {   subject: RESET_PASSWORD_URL, 
-                                        content: `Your new Password is: "${new_password}". Please change it now.`
-                                    });
-                                return res.status(201).json({
-                                    data: {},
-                                    msg: 'Check your mail',
-                                });
-                            }
-                        } catch (error) {
-                            return res.status(500).json({
-                                data: {},
-                                msg: 'mailing fail',
-                            });
-
-                        }
-                    }
-
-                } catch (error) {
-                    return res.status(500).json({
-                        error: error_msg_constructor('Internal Error', err),
-                        msg: 'Error while reset password',
-                    });
-                }
-            }
-        })
 }

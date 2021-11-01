@@ -1,13 +1,16 @@
 const path = require('path');
 const ROOT_DIR = process.env.ROOT_DIR
 
-const { pool } = require(`${ROOT_DIR}/database/db-config`);
-const { SIGN_UP_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
-const { BCRYPT_SALT } = require(`${ROOT_DIR}/const/values.js`)
-const { error_msg_constructor } = require(`${ROOT_DIR}/helper/res-msg-constructor`)
-const { tokenGenerate } = require(`${ROOT_DIR}/helper/token`)
+// DAO
+const {sequelize} = require(`${ROOT_DIR}/database/sequelize_object`)
+var Models = require(`${ROOT_DIR}/models/init-models`)(sequelize);
 
-const emailController = require(`${ROOT_DIR}/util/email-controller`);
+const { SIGN_UP_URL, MAIL_CONFIRM_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
+const { BCRYPT_SALT, ACTIVATION_TOKEN_LENGTH } = require(`${ROOT_DIR}/const/values.js`)
+const { error_msg_constructor } = require(`${ROOT_DIR}/utils/res-msg-constructor`)
+const { tokenGenerate } = require(`${ROOT_DIR}/utils/token`)
+
+const mailer = require(`${ROOT_DIR}/utils/mailer`);
 const bcrypt = require('bcryptjs');
 
 function params_validate(params, err) {
@@ -24,7 +27,6 @@ function params_validate(params, err) {
 }
 
 module.exports = function (app, root_path) {
-
     app.get(SIGN_UP_URL, function (req, res) {
         res.sendFile(path.join(root_path, 'static/register.html'))
     })
@@ -41,17 +43,19 @@ module.exports = function (app, root_path) {
             // OK - password maches
             // Hash password
             const passwd_hash = bcrypt.hashSync(password, BCRYPT_SALT);
-            const genToken = tokenGenerate(8);
+            const genToken = tokenGenerate(ACTIVATION_TOKEN_LENGTH);
 
-            pool.query(
-                `INSERT INTO "user" (nickname, email, "password", "token", "role", "active")
-                    VALUES	($1, $2, $3, $4, 'User', FALSE)`,
-                [nickname, email, passwd_hash, genToken]
-            ).then((result) => {
-                emailController.sendMail(req, res, 
+            Models.user.create({
+                nickname, email, password: passwd_hash, token: genToken,
+                role: "User", active: false
+            }).then((result) => {
+                const account_activate_url = `${process.env.SERVER_PROTOCOL}://${process.env.DB_HOST}:${process.env.SERVER_PORT}${MAIL_CONFIRM_URL}?token=${genToken}`;
+
+                mailer.sendMail(req, res, 
                     {   subject: SIGN_UP_URL, 
-                        content: `Registration for user "${nickname}" is Successful. ` +
-                                `Your Email Confimation Code is "${genToken}"`
+                        content: `Registration is Successful.\n` +
+                                `Please follow this link to complete your Registration:\n` +
+                                `${account_activate_url}`
                     }
                 )
 
@@ -59,7 +63,6 @@ module.exports = function (app, root_path) {
                     data: {},
                     msg: 'Confirmation Email Sent',
                 });
-
             }).catch((err) => {
                 return res.status(500).json({
                     error: error_msg_constructor('Internal Error', err),
