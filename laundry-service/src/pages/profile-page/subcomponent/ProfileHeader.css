@@ -1,50 +1,50 @@
 .profile-header-container {
-	border: transparent !important;
+  border: transparent !important;
 }
 .profile-header {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	margin-bottom: 20px;
-} 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
 
 .profile-pic {
-	display: inline-block;
-	position: relative;
-	width: 200px;
-	height: 200px;
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  height: 200px;
 
-	/* overflow: hidden; */
+  /* overflow: hidden; */
 }
 .profile-pic .card-img img {
-	width: auto;
-	height: 100%;
-	margin-left: -50px;
-	margin-bottom: 5px;
+  width: auto;
+  height: 100%;
+  margin-left: -50px;
+  margin-bottom: 5px;
 }
 .profile-pic .card-title {
-	text-align: center;
-	margin: 5px !important;
+  text-align: center;
+  margin: 5px !important;
 }
 
 /* Order Count */
 .order-count-section {
-	border: transparent !important;
-	display: block !important;
-	margin: auto
+  border: transparent !important;
+  display: block !important;
+  margin: auto;
 }
 .order-count-section .card-body {
-	margin-top: auto;
-	margin-bottom: auto;
-	width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 100%;
 }
 .order-count-section .order-count-text {
-	text-align: center;
-	/* border: 1px solid black; */
-	white-space: nowrap;
+  text-align: center;
+  /* border: 1px solid black; */
+  white-space: nowrap;
 }
 .order-count-section .order-count-title {
-	text-align: center;
+  text-align: center;
 }
 /* .order-count-section .order-count-text::after {
 	content: " 📦";
@@ -52,22 +52,22 @@
 
 /* Shop Follow Count */
 .shop-follow-count-section {
-	border: transparent !important;
-	display: block !important;
-	margin: auto
+  border: transparent !important;
+  display: block !important;
+  margin: auto;
 }
 .shop-follow-count-section .card-body {
-	margin-top: auto;
-	margin-bottom: auto;
-	width: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
+  width: 100%;
 }
 .shop-follow-count-section .shop-follow-count-text {
-	text-align: center;
-	/* border: 1px solid black; */
-	white-space: nowrap;
+  text-align: center;
+  /* border: 1px solid black; */
+  white-space: nowrap;
 }
 .shop-follow-count-section .shop-follow-count-title {
-	text-align: center;
+  text-align: center;
 }
 /* .shop-follow-count-section .shop-follow-count-text::after {
 	content: " 🏪";
@@ -75,11 +75,46 @@
 /* Fix overflow: hidden */
 .clearfix:before,
 .clearfix:after {
-    content: ".";    
-    display: block;    
-    height: 0;    
-    overflow: hidden; 
+  content: ".";
+  display: block;
+  height: 0;
+  overflow: hidden;
 }
-.clearfix:after { clear: both; }
-.clearfix { zoom: 1; } /* IE < 8 */
+.clearfix:after {
+  clear: both;
+}
+.clearfix {
+  zoom: 1;
+} /* IE < 8 */
 /* Done Fix overflow: hidden */
+
+.avatar-btn {
+  display: block;
+  width: 60vw;
+  max-width: 100px;
+  margin: 0 auto;
+  background-color: slateblue;
+  border-radius: 2px;
+  font-size: 1em;
+  line-height: 2.5em;
+  text-align: center;
+}
+
+label:hover {
+  background-color: cornflowerblue;
+}
+
+label:active {
+  background-color: mediumaquamarine;
+}
+
+.avatar-btn input {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}

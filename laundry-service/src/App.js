@@ -14,14 +14,12 @@ function App() {
         <Topbar />
 
         <div className="upmost-container">
-          {/* <Link to="/profile">Profile</Link>
-            <Link to="/">Home</Link> */}
           <Switch>
-            <Route exact path="/profile" exact>
-              <ProfilePage />
-            </Route>
             <Route exact path="/" exact>
               <FrontPage />
+            </Route>
+            <Route exact path="/profile" exact>
+              <ProfilePage />
             </Route>
             <Route path="/not-found" exact>
               <NotFoundPage />

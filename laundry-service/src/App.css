@@ -1,5 +1,5 @@
 .upmost-container {
-  height: max-content;
+  height: 100vh;
   overflow: auto;
 }
 
@@ -7,5 +7,3 @@
   height: max-content;
   padding-bottom: 15px;
 }
-
-

@@ -1,25 +1,36 @@
 import { useState } from "react";
-import './ProfileInformation.css'
+import "./ProfileInformation.css";
 
 import { Button } from "react-bootstrap";
 import { Card, Form, Row, Col } from "react-bootstrap";
 
-import 'react-phone-number-input/style.css'
-import PhoneInput from 'react-phone-number-input';
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
+import { CommandProfile } from "../../../api/account/profile";
+import { useForm } from "react-hook-form";
 
-const infor = {
-  email: "11@gmail.com",
-  name: "1",
-  address: "1",
-  birthday: "2021-10-07",
-  phoneNum: "",
-};
-function ProfileInformation() {
-  const [email, setEmail] = useState("");
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [phoneNum, setPhoneNum] = useState("");
+function ProfileInformation(props) {
+  const { user, handleUpdateProfile } = props;
+  const userInfor = user.info;
+  const [email, setEmail] = useState(userInfor.email || null);
+  const [username, setUsername] = useState(userInfor.nickname || null);
+  const [address, setAddress] = useState(userInfor.address || null);
+  const [birthday, setBirthday] = useState(userInfor.birthday || null);
+  const [phoneNum, setPhoneNum] = useState(userInfor.phone_number || null);
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    const updateProfile = async () => {
+      try {
+        const response = await CommandProfile.profile(data);
+        if (response) {
+          handleUpdateProfile(response.data);
+        }
+      } catch (error) {
+        console.log("put profile fail");
+      }
+    };
+    updateProfile();
+  };
 
   return (
     <Card className="user-information-container">
@@ -27,7 +38,10 @@ function ProfileInformation() {
         <Card.Title>情報</Card.Title>
       </Card.Header>
       <Card.Body>
-        <Form className="user-information-form">
+        <Form
+          onSubmit={handleSubmit(onSubmit)}
+          className="user-information-form"
+        >
           <Row>
             <Col xs={3}>
               <Form.Label>メールアドレス</Form.Label>
@@ -35,10 +49,11 @@ function ProfileInformation() {
             <Col xs={9}>
               <Form.Control
                 type="email"
-                defaultValue={infor.email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                }}
+                defaultValue={email}
+                // onChange={(e) => {
+                //   setEmail(e.target.value);
+                // }}
+                {...register("email")}
               ></Form.Control>
             </Col>
           </Row>
@@ -49,10 +64,11 @@ function ProfileInformation() {
             <Col xs={9}>
               <Form.Control
                 type="text"
-                defaultValue={infor.name}
-                onChange={(e) => {
-                  setName(e.target.value);
-                }}
+                defaultValue={username}
+                // onChange={(e) => {
+                //   setUsername(e.target.value);
+                // }}
+                {...register("nickname")}
               ></Form.Control>
             </Col>
           </Row>
@@ -63,10 +79,11 @@ function ProfileInformation() {
             <Col xs={9}>
               <Form.Control
                 type="text"
-                defaultValue={infor.address}
-                onChange={(e) => {
-                  setAddress(e.target.value);
-                }}
+                defaultValue={address}
+                // onChange={(e) => {
+                //   setAddress(e.target.value);
+                // }}
+                {...register("address")}
               ></Form.Control>
             </Col>
           </Row>
@@ -77,10 +94,11 @@ function ProfileInformation() {
             <Col xs={9}>
               <Form.Control
                 type="date"
-                defaultValue={infor.birthday}
-                onChange={(e) => {
-                  setBirthday(e.target.value);
-                }}
+                defaultValue={birthday}
+                // onChange={(e) => {
+                //   setBirthday(e.target.value);
+                // }}
+                {...register("birthday")}
               ></Form.Control>
             </Col>
           </Row>
@@ -89,24 +107,19 @@ function ProfileInformation() {
               <Form.Label>電話番号</Form.Label>
             </Col>
             <Col xs={9}>
-              <PhoneInput
-                defaultCountry="vn"
+              <Form.Control
                 placeholder="Enter your Phone Number"
-                value={infor.phoneNum}
+                value={phoneNum}
                 onChange={setPhoneNum}
-              />
-              {/* <Form.Control
-                type="tel"
-                defaultValue={infor.phoneNum}
-                onChange={(e) => {
-                  setPhoneNum(e.target.value);
-                }}
-              ></Form.Control> */}
+                {...register("phone_number")}
+              ></Form.Control>
             </Col>
           </Row>
           <Row>
             <Col>
-              <Button className="form-submit-btn" type="submit">変更</Button>
+              <Button className="form-submit-btn" type="submit">
+                変更
+              </Button>
             </Col>
           </Row>
         </Form>

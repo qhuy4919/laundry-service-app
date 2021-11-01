@@ -1,5 +1,5 @@
 import React from "react";
-import "./InfoPage.css";
+// import "./InfoPage.css";
 const InfoPage = () => {
   return (
     <div className="section section-tabs">
