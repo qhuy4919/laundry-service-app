@@ -29,10 +29,13 @@ module.exports = function (app) {
         let error = [];
         console.log(req.query)
         if (!params_validate(req.query, error)) {
-            return res.status(400).json({
-                error: error,
-                msg: 'Bad Request'
-            })
+            // return res.status(400).json({
+            //     error: error,
+            //     msg: 'Bad Request'
+            // })
+            return res.status(400).sendFile(
+                `${ROOT_DIR}/static/reaction/bad.html`
+            );
         }
         const { token } = req.query;
         try {
@@ -46,10 +49,13 @@ module.exports = function (app) {
             console.log(user)
 
             if (user === null) {
-                return res.status(400).json({
-                    error: "Result not found",
-                    msg: "Invalid Token",
-                })
+                //return res.status(400).json({
+                //    error: "Result not found",
+                //    msg: "Invalid Token",
+                //})
+                return res.status(404).sendFile(
+                    `${ROOT_DIR}/static/reaction/notfound.html`
+                );
             }
 
             // results = await pool.query(`UPDATE "user" SET "active" = TRUE WHERE "nickname"=$1`, [row.nickname]);
@@ -57,23 +63,32 @@ module.exports = function (app) {
                 'active': true,
                 'token': null,
             }).then(() => {
-                return res.status(200).json({
-                    data: "Your account has been activated! You can now Sign-In",
-                    msg: "Mail Confirmation Succeeded"
-                })
+                // return res.status(200).json({
+                //     data: "Your account has been activated! You can now Sign-In",
+                //     msg: "Mail Confirmation Succeeded"
+                // })
+                return res.status(200).sendFile(
+                    `${ROOT_DIR}/static/reaction/ok.html`
+                );
             }).catch((err) => {
-                console.log("OK2")
-                return res.status(500).json({
-                    error: err.toJSON(),
-                    msg: 'Error while Confirming Mail',
-                });
+                console.log("Error", err)
+                // return res.status(500).json({
+                //     error: err.toJSON(),
+                //     msg: 'Error while Confirming Mail',
+                // });
+                return res.status(500).sendFile(
+                    `${ROOT_DIR}/static/reaction/failed.html`
+                );
             })
         } catch (err) {
             console.log("OK1")
-            return res.status(500).json({
-                error: err,
-                msg: 'Error while Confirming Mail',
-            });
+            // return res.status(500).json({
+            //     error: err,
+            //     msg: 'Error while Confirming Mail',
+            // });
+            return res.status(500).sendFile(
+                `${ROOT_DIR}/static/reaction/failed.html`
+            );
         }
     })
 }

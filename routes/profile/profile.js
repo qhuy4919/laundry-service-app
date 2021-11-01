@@ -16,6 +16,7 @@ const { error_msg_constructor } = require(`${ROOT_DIR}/utils/res-msg-constructor
 const token_auth = require(`${ROOT_DIR}/middleware/token-verify`)
 
 module.exports = function (app, root_path) {
+    // ---------------- GET method
     app.get(PROFILE_URL, token_auth, async (req, res) => {
         let err = [];
 
@@ -42,11 +43,17 @@ module.exports = function (app, root_path) {
             })
         }
     })
-}
-module.exports = function (app, root_path) {
-    app.put(PROFILE_URL, async (request, response) => {
-        console.log(request.body);
-        response.sendFile('../../static/ok.html')
+    // ---------- PUT method
+    .put(PROFILE_URL, token_auth, async (request, response) => {
+        const FIELDS = ['email', 'name', 'address', 'birthday', 'phone_number'];
+
+        var user = request.auth_user;
+        
+
+        console.log(request.body)
+        return response.status(501).json({
+            msg: "Not Implemented",
+        });
     })
 }
 

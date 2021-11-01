@@ -2,23 +2,39 @@
 <html>
     <head>
         <style>
+            * {
+                font-family: 'Courier New', Courier, monospace;
+            }
             body {
                 overflow: hidden;
-                background: rgba(0,0,0,0.99);
             }
             .center {
                 display: flex;
+                flex-direction: row;
                 justify-content: center;
                 align-items: center;
-                height: 100vh;
+                height: 90vh;
                 border: 3px transparent;
-            }
 
+                text-align: center;
+            }
+            .child {
+                background-color: rgba(255, 143, 143, 0.5);
+                padding: 20px 80px;
+            }
         </style>
     </head>
     <body>
         <div class="center">
-            <img src="img/empty.gif" h="400" height="auto">
+            <div class="child">
+                <h1> Something went wrong.. </h1>
+                <p>We were not able to handle your request</p>
+                <hr>
+                <img src="../img/empty.gif" height="200">
+                <div>
+                    <a href="/" style="float: left">&lt;&lt; Home</a>
+                </div>
+            </div>
         </div>
     </body>
 </html>
