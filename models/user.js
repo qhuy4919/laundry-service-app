@@ -78,6 +78,8 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
+    freezeTableName: true,
+    underscored: true,
     tableName: 'user',
     schema: 'public',
     timestamps: false,
@@ -103,6 +105,6 @@ module.exports = function(sequelize, DataTypes) {
           { name: "id" },
         ]
       },
-    ]
+    ],
   });
 };

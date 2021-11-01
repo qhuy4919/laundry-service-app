@@ -56,6 +56,8 @@ module.exports = function(sequelize, DataTypes) {
     }
   }, {
     sequelize,
+    freezeTableName: true,
+    underscored: true,
     tableName: 'laundry_shop',
     schema: 'public',
     timestamps: false,

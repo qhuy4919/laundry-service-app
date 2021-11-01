@@ -4,15 +4,20 @@ module.exports = function(sequelize, DataTypes) {
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      references: 'user',
+      referencesKey: 'id',
     },
     shop_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      references: 'laundry_shop',
+      referencesKey: 'id',
     }
   }, {
     sequelize,
+    freezeTableName: true,
     tableName: 'follower',
     schema: 'public',
     timestamps: false,
@@ -38,5 +43,6 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
     ]
-  });
+  }
+  );
 };
