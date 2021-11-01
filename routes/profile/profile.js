@@ -45,15 +45,50 @@ module.exports = function (app, root_path) {
     })
     // ---------- PUT method
     .put(PROFILE_URL, token_auth, async (request, response) => {
-        const FIELDS = ['email', 'name', 'address', 'birthday', 'phone_number'];
+        try {
+            const FIELDS = ['email', 'name', 'address', 'birthday', 'phone_number'];
+            const params = request.body;
+            var user = request.auth_user;
 
-        var user = request.auth_user;
-        
+            let err = []
+            if (! params_validate(params, err)) {
+                return response.status(400).json({
+                    error: err,
+                    msg: "Bad Request",
+                });
+            }
+            // console.log(err)
 
-        console.log(request.body)
-        return response.status(501).json({
-            msg: "Not Implemented",
-        });
+            for (var i=0; i<FIELDS.length; i++) {
+                if (params[FIELDS[i]]) {
+                    user.set({
+                        [FIELDS[i]]: params[FIELDS[i]]
+                    })
+                }
+            }
+
+            // console.log(request.body)
+            await (await user.save()).reload();
+            // console.log(user);
+            return response.status(204).json({
+                data: {},
+                msg: "Updated",
+            });
+        } catch (error) {
+            try {
+                if (error.parent.routine === "DateTimeParseError")
+                    return response.status(400).json({
+                        error: "Invalid Date",
+                        msg: "Bad Request",
+                    });
+            } catch (error) {
+            }
+            console.log(error);
+            return response.status(500).json({
+                error,
+                msg: "Internal Error",
+            });
+        }
     })
 }
 
@@ -86,3 +121,20 @@ async function getOrderList(props, err) {
         err.add(error)
     }
 };
+
+function params_validate(params, err) {
+    if (params.email) {
+        var re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!re.test(params.email)) err.push('Invalid Email')
+    }
+    if (params.phone_number) {
+        var re = /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/
+        if (!re.test(params.phone_number)) err.push('Invalid Phone Number')
+    }
+    //if (params.birth_day) {
+    //    if (!moment(params.birth_day, "YYYY/MM/DD", true).isValid())
+    //        err.push('Invalid Birthday')
+    //}
+    if (err.length > 0) return 0;
+    return 1;
+}
