@@ -1,5 +1,6 @@
 const { error } = require('console');
 const { errorMonitor } = require('events');
+const { response } = require('express');
 const path = require('path');
 const ROOT_DIR = process.env.ROOT_DIR
 
@@ -13,6 +14,41 @@ const { PROFILE_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
 const { error_msg_constructor } = require(`${ROOT_DIR}/utils/res-msg-constructor`)
 
 const token_auth = require(`${ROOT_DIR}/middleware/token-verify`)
+
+module.exports = function (app, root_path) {
+    app.get(PROFILE_URL, token_auth, async (req, res) => {
+        let err = [];
+
+        const auth_user = req.auth_user;
+        const user_id = auth_user.id;
+
+        var result = { 'info': null, 'order': null, 'following': null };
+        result['info'] = auth_user;
+        result['order'] = (await getOrderList({ user_id }, err));
+        result['following'] = (await getFollowing({ user_id }, err));
+        // res.sendFile(path.join(root_path, 'static/profile.html'));
+        // console.log(result)
+
+        if (err.length > 0) {
+            return res.status(200).json({
+                error: err,
+                data: result,
+                msg: "Some Errors have occurred while fetching data at /profile"
+            })
+        } else {
+            return res.status(200).json({
+                data: result,
+                msg: "OK"
+            })
+        }
+    })
+}
+module.exports = function (app, root_path) {
+    app.put(PROFILE_URL, async (request, response) => {
+        console.log(request.body);
+        response.sendFile('../../static/ok.html')
+    })
+}
 
 async function getFollowing(props, err) {
     const { user_id } = props;
@@ -43,33 +79,3 @@ async function getOrderList(props, err) {
         err.add(error)
     }
 };
-
-
-module.exports = function (app, root_path) {
-    app.get(PROFILE_URL, token_auth, async (req, res) => {
-        let err = [];
-
-        const auth_user = req.auth_user;
-        const user_id = auth_user.id;
-
-        var result = { 'info': null, 'order': null, 'following': null };
-        result['info'] = auth_user;
-        result['order'] = (await getOrderList({ user_id }, err));
-        result['following'] = (await getFollowing({ user_id }, err));
-        // res.sendFile(path.join(root_path, 'static/profile.html'));
-        // console.log(result)
-
-        if (err.length > 0) {
-            return res.status(200).json({
-                error: err,
-                data: result,
-                msg: "Error occurred while fetching data at /profile"
-            })
-        } else {
-            return res.status(200).json({
-                data: result,
-                msg: "OK"
-            })
-        }
-    })
-}
