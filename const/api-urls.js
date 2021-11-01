@@ -1,7 +1,7 @@
 const SIGN_IN_URL = '/sign-in';
 const SIGN_UP_URL = '/sign-up';
 const SIGN_OUT_URL = '/sign-out';
-const PROFILE_URL = '/profile/:id';
+const PROFILE_URL = '/profile';
 const RESET_PASSWORD_URL = '/reset-password';
 
 const TOKEN_TEST_URL = '/token-test';
