@@ -16,12 +16,13 @@ export function ShopFeedbackDetail(props) {
             </li>
             <li className="table-row">
               <div className="table-content">
-                <Accordion>
+                {content}
+                {/* <Accordion>
                   <Accordion.Item eventKey="1">
                     <Accordion.Header> フィードバックの内容</Accordion.Header>
                     <Accordion.Body>{content}</Accordion.Body>
                   </Accordion.Item>
-                </Accordion>
+                </Accordion> */}
               </div>
             </li>
           </ul>

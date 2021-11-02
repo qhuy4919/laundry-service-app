@@ -30,7 +30,7 @@ function Login({ handleClose, onRegisClick, onPwRsClick }) {
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="email"
+                placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
               />
               <Form.Text className="text-muted"></Form.Text>

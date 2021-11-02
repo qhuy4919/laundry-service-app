@@ -1,5 +1,8 @@
 .profile-container {
 	border: 1px solid rgba(0,0,0,.125);
 	height: max-content;
-	padding-bottom: 15px;
+	margin-top: 15px;
+	padding: 0 !important;
+	/* padding-top: 15px;
+	padding-bottom: 15px; */
 }

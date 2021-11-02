@@ -7,18 +7,18 @@ export function ShopItem(props) {
   const [category, setCategory] = useState([
     {
       id: 0,
-      shop_id: 0,
-      category_name: "Vest",
+      shop_id: 1,
+      category_name: "Normal Clothes",
     },
     {
       id: 1,
-      shop_id: 0,
+      shop_id: 1,
       category_name: "Sneaker",
     },
     {
       id: 2,
-      shop_id: 0,
-      category_name: "Underware",
+      shop_id: 1,
+      category_name: "Jean",
     },
   ]);
   const [isLoading, setIsloading] = useState(false);

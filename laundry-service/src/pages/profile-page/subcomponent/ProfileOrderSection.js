@@ -2,18 +2,18 @@ import './ProfileOrderSection.css'
 import { Card, Table } from "react-bootstrap";
 
 function ProfileOrder({ order }) {
-  const { id, time, cost, status } = order;
+  const { id, order_time, total_cost, order_status } = order;
   return (
     <tr>
       <td>{id}</td>
-      <td>{time}</td>
-      <td>{cost}</td>
-      <td>{status}</td>
+      <td>{(new Date(order_time)).toLocaleString()}</td>
+      <td>{total_cost}</td>
+      <td>{order_status}</td>
     </tr>
   );
 }
 
-function ProfileOrderSection() {
+function ProfileOrderSection({ orders }) {
   return (
     <Card className="profile-order-container">
       <Card.Header>
@@ -30,9 +30,17 @@ function ProfileOrderSection() {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
-              <ProfileOrder order={order} />
-            ))}
+            {
+              orders.length > 0 
+                ?
+              orders.map((order, idx) => (
+                <ProfileOrder key={`profile-order-${idx}`} order={order} />
+              ))
+                :
+              <tr>
+                <td colSpan={4}> このユーザーには現在注文がありません </td>
+              </tr>
+            }
           </tbody>
         </Table>
         <div className='see-more-box'>
@@ -43,24 +51,3 @@ function ProfileOrderSection() {
   );
 }
 export default ProfileOrderSection;
-
-const orders = [
-  {
-    id: "1",
-    time: "00:00:00",
-    cost: "1",
-    status: "1",
-  },
-  {
-    id: "2",
-    time: "00:00:00",
-    cost: "2",
-    status: "1",
-  },
-  {
-    id: "3",
-    time: "00:00:00",
-    cost: "3",
-    status: "1",
-  },
-];

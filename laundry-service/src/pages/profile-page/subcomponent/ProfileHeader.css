@@ -89,23 +89,20 @@
 /* Done Fix overflow: hidden */
 
 .avatar-btn {
-  display: block;
-  width: 60vw;
-  max-width: 100px;
-  margin: 0 auto;
-  background-color: slateblue;
-  border-radius: 2px;
-  font-size: 1em;
-  line-height: 2.5em;
+  display: block; 
+  margin: 0 auto; 
+  width: 2.5em;
+  background-color: var(--mycolor-accent-light); 
+  border-radius: 4px; 
+  font-size: 1em; 
+  line-height: 2.5em; 
   text-align: center;
 }
-
 label:hover {
-  background-color: cornflowerblue;
+  background-color: var(--mycolor-accent); 
 }
-
 label:active {
-  background-color: mediumaquamarine;
+  background-color: var(--mycolor-accent-dark); 
 }
 
 .avatar-btn input {

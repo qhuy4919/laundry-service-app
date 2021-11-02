@@ -1,8 +1,8 @@
 /* COLORS */
 :root {
+    --mycolor-accent-light:#eaf4ff;
     --mycolor-accent:#dceaff;
     --mycolor-accent-dark:#aecefd;
-
 	--mycolor-accent-highlight: #0d6efd;
 }
 

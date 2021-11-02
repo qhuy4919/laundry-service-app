@@ -24,7 +24,7 @@ function Register({handleClose, onLoginClick, onPwRsClick, onMailConfClick}) {
         // const res = await callSignUp(formData);
         if (succeed) {
             alert("Sign Up Successfully! Please Confirm your Mail")
-            onMailConfClick();
+            // onMailConfClick();
             return true;
         } else {
             alert("Sign Up Failed..")
@@ -78,9 +78,9 @@ function Register({handleClose, onLoginClick, onPwRsClick, onMailConfClick}) {
                 <Modal.Footer>
                     <Button onClick={onLoginClick}>Sign In Here</Button>
                     <Button onClick={onPwRsClick}>Password Reset Here</Button>
-                    <Button className="login-button" onClick={onMailConfClick} variant="primary">
+                    {/* <Button className="login-button" onClick={onMailConfClick} variant="primary">
                         <MdOutlineMarkEmailRead/>
-                    </Button>
+                    </Button> */}
                 </Modal.Footer>
             </Modal>
 

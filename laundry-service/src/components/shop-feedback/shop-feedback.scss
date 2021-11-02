@@ -3,7 +3,9 @@
   font-weight: bold;
 }
 
-.feedback-detail {
-  display: flex;
+.feedback-detail-container {
+  display: block;
   justify-content: center;
+  max-height: 200px;
+  overflow: scroll;
 }
