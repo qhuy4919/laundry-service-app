@@ -1,7 +1,7 @@
 const form = document.querySelector('#login-form');
 form.onsubmit = async function (e) {
     e.preventDefault();
-    const nickname = document.querySelector("#nickname").value;
+    const email = document.querySelector("#email").value;
     const password = document.querySelector("#password").value;
 
     const result = await fetch('/sign-in', {
@@ -10,7 +10,7 @@ form.onsubmit = async function (e) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            nickname,
+            email,
             password
         })
     }).then(res => res.json());

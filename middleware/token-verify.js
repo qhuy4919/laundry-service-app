@@ -1,6 +1,8 @@
 const ROOT_DIR = process.env.ROOT_DIR
-const { pool } = require(`${ROOT_DIR}/database/db-config`);
 const { TOKEN_EXPIRES_AFTER_SECONDS } = require(`${ROOT_DIR}/const/values`)
+
+const {sequelize} = require(`${ROOT_DIR}/database/sequelize_object`)
+var Models = require(`${ROOT_DIR}/models/init-models`)(sequelize);
 
 const verifyToken = async (req, res, next) => {
 	const token =
@@ -14,15 +16,24 @@ const verifyToken = async (req, res, next) => {
 	}
 
 	try {
-		const results = await pool.query(`SELECT "nickname", "token_created_at", \
-							"is_persistent" FROM "user" WHERE "token" = $1`, [token])
-		if (results.rows.length <= 0) {
+		const results = await Models.user.findAll(
+			{
+				attributes: {
+					exclude: ["password"],
+				},
+				where : {
+					"token": token
+				}
+			}
+		);
+
+		if (results.length <= 0) {
 			return res.status(400).json({
 				error: "Invalid Token",
 				msg: "Invalid Token"
 			})
 		}
-		const row = results.rows[0];
+		// const row = results[0];
 
 		// -- BUG: Difference in Timezone makes expiration checking not possible
 		// -- TODO: Change DB server timezone to GMT+7 Asia/Ho_Chi_Minh
@@ -35,7 +46,7 @@ const verifyToken = async (req, res, next) => {
 		// 		msg: "Invalid Token"
 		// 	})
 		// }
-
+		req.auth_user = results[0];
 		return next(); // forward
 	} catch (err) {
 		return res.status(500).json({

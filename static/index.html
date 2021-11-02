@@ -5,14 +5,20 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Development Landing Page</title>
+    <style>
+        .list-heading {
+            font-weight: normal;
+        }
+    </style>
 </head>
 
 <body>
-    <h1> Hello </h1>
-    <hr>
-    <div align='center' style="display: flex; flex-direction: row; justify-content: space-around;">
+    <div align='center' style="margin-top: 100px; display: flex; flex-direction: row; justify-content: space-around; font-family: 'Courier New', Courier, monospace;">
         <div align='left'>
+            <h1> Endpoint </h1>
+            <hr>
+            <h3 class="list-heading">Accounts</h3>
             <ul>
                 <li>
                     <a href="/sign-in">Sign-In</a>
@@ -24,6 +30,24 @@
                     <a href="/reset-password">Reset Password</a>
                 </li>
             </ul>
+            <h3 class="list-heading">Mail</h3>
+            <ul>
+                <li>
+                    <a href="/mail-confirm">Mail Confirm</a> (need param <code>token</code>)
+                </li>
+            </ul>
+            <h3 class="list-heading">User Info</h3>
+            <ul>
+                <li>
+                    <a href="/profile">Profile</a> (need Header) (GET, PUT)
+                </li>
+                <li>
+                    <a href="/profile-pic-form">Profile Pic Form</a> (test api)
+                </li>
+                <li>
+                    <a href="/profile-pic">Profile Pic</a> (GET, POST need Auth)
+                </li>
+            </ul> 
         </div>
         <div>
             <img src='./img/sip.gif' width="200" height="auto"/>
