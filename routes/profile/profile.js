@@ -1,7 +1,5 @@
-const { error } = require('console');
-const { errorMonitor } = require('events');
-const { response } = require('express');
 const path = require('path');
+const multer = require('multer')
 const ROOT_DIR = process.env.ROOT_DIR
 
 // DAO
@@ -113,7 +111,7 @@ async function getOrderList(props, err) {
     console.log(user_id);
     try {
         const order_value = await pool.query(
-            `SELECT order_time, total_cost, order_status FROM "order" WHERE user_id = $1`, [user_id]
+            `SELECT "id", order_time, total_cost, order_status FROM "order" WHERE user_id = $1`, [user_id]
         )
         return order_value.rows;
     } catch (error) {

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            height: 70vh;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Upload Profile Pic</h3>
+        <form method="POST" action="/profile-pic" enctype="multipart/form-data">
+            <div>
+                <label for="profile_pic">Select your profile picture:</label>
+                <input type="file" name="profile_pic" id="profile_pic"/>
+            </div>
+            <div>
+                <input type="submit" name="btn_upload_profile_pic" value="Upload" />
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
