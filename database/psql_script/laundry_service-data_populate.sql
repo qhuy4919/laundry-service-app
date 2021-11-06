@@ -36,7 +36,11 @@ INSERT INTO item (category_id, item_name, item_detail, item_status, item_price, 
             (3, 'Clothes', 'Washing clothes - Tornado Style', 'Available', 6.9, FALSE),		-- 3
             (6, '服', '普通の服の洗濯', 'Available', 2.0, FALSE),							 -- 4
             (6, '白い服', '白い服だけの洗濯', 'Available', 3.0, FALSE),					   -- 5
-            (6, 'カラフルな服', 'カラフルな服だけの洗濯', 'Available', 9.9, FALSE);			  -- 6
+            (6, 'カラフルな服', 'カラフルな服だけの洗濯', 'Available', 9.9, FALSE),			  -- 6
+            (1, 'Giặt ABC', 'Alj lkjlkajs sjdfk ajsldfkls jfksldf ksfljkasdf', 'Not Available', 0.0, TRUE),
+            (1, 'Giặt DEF', 'wio fnaow owaie foasmd ivoz imovizxmvo mljlajl', 'Not Available', 0.0, TRUE),
+            (1, 'Giặt GHI', 'wio fnaow owaie foasmd ivoz imovizxmvo mljlajl', 'Not Available', 0.0, TRUE),
+            (1, 'Giặt KMN', 'wio fnaow owaie foasmd ivoz imovizxmvo mljlajl', 'Not Available', 0.0, TRUE);
 
 
 INSERT INTO "order" (user_id, shop_id, order_status, "total_cost", note)

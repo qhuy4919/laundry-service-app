@@ -4,6 +4,7 @@ const ROOT_DIR = process.env.ROOT_DIR
 // DAO
 const {sequelize} = require(`${ROOT_DIR}/database/sequelize_object`)
 var Models = require(`${ROOT_DIR}/models/init-models`)(sequelize);
+const { pool } = require(`${ROOT_DIR}/database/_old/db-config`);
 
 // Consts
 const { SHOP_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
@@ -15,7 +16,7 @@ module.exports = function (app, root_path) {
     app.get(SHOP_URL+'/:id', /*token_auth,*/ async (req, res) => {
 		try {
 			var id = req.params.id;
-			console.log(id);
+			// console.log(id);
 
 			if (!isNumeric(id)) {
 				return res.status(400).json({
@@ -25,14 +26,15 @@ module.exports = function (app, root_path) {
 			}
 
 			var Shop = Models.laundry_shop;
-			const shopobj = await Shop.findOne({
+			var shopobj = await Shop.findOne({
 				where: {
 					id: id,
 				}
 			})
 			if (shopobj) {
+				const categories = await getServices({id});
 				return res.status(200).json({
-					data: shopobj,
+					data: {...shopobj.toJSON(), categories},
 					msg: "OK",
 				})
 			}
@@ -48,6 +50,51 @@ module.exports = function (app, root_path) {
 			})
 		} 
     })
+}
+
+async function getServices(props) {
+    const { id } = props;
+    try {
+		console.log("Executing: Get services of shop with id:", id);
+        const services = await pool.query(
+			`SELECT "shop_category"."category_name", "shop_category"."hidden" as "cate_hidden",
+			"item"."id" as "item_id", "item"."category_id", "item"."item_name", "item"."item_detail", "item"."item_status", "item"."item_price", "item"."hidden" as "item_hidden" 
+			FROM "shop_category" JOIN "item" ON "shop_category"."id"="item"."category_id" where "shop_id"=$1;`
+            ,[id]
+        )
+
+		var categories = []
+		var mapper = {}
+		for (var i=0; i<services.rows.length; i++) {
+			const row = services.rows[i];
+			if (mapper[row.category_id] === undefined) {
+				mapper[row.category_id] = categories.length
+				categories.push({})
+			}
+			const idx = mapper[row.category_id]
+
+			categories[idx].category_name = row.category_name
+			categories[idx].hidden = row.cate_hidden
+			categories[idx].category_id = row.category_id
+
+			if (categories[idx].items === undefined)
+				categories[idx].items = []
+			
+			categories[idx].items.push({
+				"item_id": row.item_id,
+				"item_name": row.item_name,
+				"item_detail": row.item_detail,
+				"item_status": row.item_status,
+				"item_price": row.item_price,
+				"item_hidden": row.item_hidden
+			})
+		}
+
+        return categories;
+    } catch (error) {
+        console.log(error);
+        err.add(error)
+    }
 }
 
 function isNumeric(str) {

@@ -15,7 +15,7 @@ app.use(cors())
 
 app.use(express.json());
 app.use('/', express.static(path.join(__dirname, 'public')))
-// app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/static'));
 
 // -- multer form-data
 // Get routes from index
@@ -39,6 +39,10 @@ profile_pic_route(app, __dirname);
 // -- SHOP routes
 const {shop_route} = require('./routes/shop/index')
 shop_route(app, __dirname);
+
+// -- miscellaneous routes (other routes)
+const {images_route} = require('./routes/misc/index')
+images_route(app, __dirname);
 
 // Start the Server
 app.listen(process.env.SERVER_PORT, () => {
