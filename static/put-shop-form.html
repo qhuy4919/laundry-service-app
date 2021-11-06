@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Shop Info</title>
+    <style>
+        .container {
+            display: flex;
+            height: 70vh;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h3>Edit Shop Info</h3>
+        <form method="PUT" action="/shop">
+            <div>
+                <label for="id">Shop ID</label>
+                <input type="input" name="id" id="id"/>
+            </div>
+            <div>
+                <label for="shop_name">Tên cửa hàng</label>
+                <input type="input" name="shop_name" id="shop_name"/>
+            </div>
+            <div>
+                <label for="shop_address">Shop Address</label>
+                <input type="input" name="shop_address" id="shop_address"/>
+            </div>
+            <div>
+                <label for="shop_detail">Shop details:</label>
+                <textarea name="shop_detail" id="shop_detail">
+            </div>
+            <div>
+                <input type="submit" name="btn_upload_profile_pic" value="Upload" />
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
