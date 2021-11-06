@@ -9,14 +9,18 @@ import {
 } from "../../components/index";
 import { Query } from "../../api/query-api";
 import { Button, Spinner } from "react-bootstrap";
-
+import { useDispatch, useSelector } from "react-redux";
+import { itemListSelector } from "../../store/itemSlice";
 import "./shop.scss";
+
 export default function Shop() {
   const { id } = useParams();
   //mock_data
   const [shopInfor, setShopInfo] = useState({});
   const [isLoading, setIsloading] = useState(true);
   const [categoryId, setCategoryId] = useState(null);
+  const { item } = useSelector(itemListSelector);
+  console.log(item);
 
   useEffect(() => {
     const fetchShop = async () => {

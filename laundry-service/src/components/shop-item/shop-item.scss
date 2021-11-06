@@ -1,7 +1,9 @@
 .category-title {
   padding: 20px;
   cursor: pointer;
-  transition: all 0.2 linear;
+  background-color: #fff;
+  transition: all 0.2s ease;
+  border-radius: 10px;
 
   &:hover {
     background-color: gray;

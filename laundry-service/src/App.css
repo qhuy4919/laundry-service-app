@@ -1,6 +1,10 @@
+body {
+  background-color: var(--mycolor-accent-light) !important;
+}
+
 .upmost-container {
-  height: 100vh;
-  overflow: auto;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
 .page-container {

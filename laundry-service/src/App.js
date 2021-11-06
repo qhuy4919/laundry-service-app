@@ -4,9 +4,9 @@ import { Footer, Topbar } from "./components/index";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProfilePage from "pages/profile-page/ProfilePage";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
-import "./styles/misc.css";
-import "./App.css";
 import InfoPage from "pages/info/InfoPage";
+import "./styles/misc.css";
+import './App.css'
 
 function App() {
   return (

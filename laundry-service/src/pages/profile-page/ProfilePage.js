@@ -8,7 +8,7 @@ import { Query } from "../../api/query-api";
 
 import "./ProfilePage.css";
 
-const userData = JSON.parse(localStorage.getItem("signed_in_user_data"));
+const userData = JSON.parse(localStorage.getItem("signed_in_user_data")); // TODO what if userData is null?
 
 function ProfilePage() {
   const [userProfile, setUserProfile] = useState();
@@ -25,11 +25,12 @@ function ProfilePage() {
           setUserProfile(response.data);
         }
       } catch (error) {
-        console.log("fetch profile fail");
+        console.log("Fetch profile fail:", error);
       }
     };
     fetchProfile();
   }, []);
+
   return (
     <>
       {userProfile && (
@@ -39,7 +40,7 @@ function ProfilePage() {
             user={userProfile}
             handleUpdateProfile={handleUpdateProfile}
           />
-          <ProfileOrderSection user={userProfile} />
+          <ProfileOrderSection orders={userProfile.order} />
         </Container>
       )}
     </>

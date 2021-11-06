@@ -3,18 +3,22 @@
   grid: auto / 75% 25%;
   padding: 1rem 5rem;
   margin: 0 auto;
+  // border-top: 2px solid gray;
 
   .left-panel {
     display: grid;
     border: 2px solid gray;
-    border-radius: 16px;
+    background-color: var(--white);
+    // border-radius: 16px;
     .shop-item {
       display: flex;
       border-top: 2px solid gray;
+      padding-bottom: 24px;
 
       .shop-item__title {
         flex: 1;
         border-right: 1px solid black;
+        padding: 10px;
       }
       .shop-item__detail {
         flex: 3;
@@ -27,8 +31,11 @@
   }
 
   .right-panel {
+    background-color: var(--white);
     display: flex;
     flex-direction: column;
+    border: 2px solid gray;
+    border-left: transparent;
     .right-panel-header {
       font-size: 1.1rem;
       font-weight: 700;

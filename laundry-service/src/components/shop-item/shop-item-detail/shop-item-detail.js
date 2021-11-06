@@ -8,23 +8,28 @@ import "./shop-item-detail.scss";
 
 export function ShopItemDetail(props) {
   const { categoryId } = props;
-  const [itemList, setItemList] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [itemList, setItemList] = useState(DATA[categoryId]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchItemList = async () => {
-      try {
-        const response = await Query.item.list({ categoryId });
-        if (response) {
-          setItemList(response);
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.log("fetch item list fail");
-      }
-    };
-    fetchItemList();
+    setItemList(DATA[categoryId]);
   }, [categoryId]);
+
+  // useEffect(() => {
+  //   const fetchItemList = async () => {
+  //     try {
+  //       const response = await Query.item.list({ categoryId });
+  //       if (response) {
+  //         setItemList(response);
+  //         setIsLoading(false);
+  //       }
+  //     } catch (error) {
+  //       console.log("fetch item list fail");
+  //     }
+  //   };
+  //   fetchItemList();
+  // }, [categoryId]);
+
   return (
     <div className="item-list-container">
       {isLoading ? (
@@ -35,7 +40,9 @@ export function ShopItemDetail(props) {
         </div>
       ) : (
         <>
-          <div className="item-list-header">カテゴリ1</div>
+          <div className="item-list-header">
+            <p>カテゴリ {categoryId}</p>
+          </div>
           <div className="item-list__card">
             {itemList.map((item, index) => (
               <div key={index} className="item-card">
@@ -49,11 +56,7 @@ export function ShopItemDetail(props) {
                       <Accordion.Body>
                         Anh Phúc đỉnh rứa bây!!!!Anh Phúc đỉnh rứa bây!!!! Anh
                         Phúc đỉnh rứa bây!!!!Anh Phúc đỉnh rứa bây!!!! Anh Phúc
-                        đỉnh rứa bây!!!!Anh Phúc đỉnh rứa bây!!!! Anh Phúc đỉnh
-                        rứa bây!!!!Anh Phúc đỉnh rứa bây!!!! Anh Phúc đỉnh rứa
-                        bây!!!!Anh Phúc đỉnh rứa bây!!!! Anh Phúc đỉnh rứa
-                        bây!!!!Anh Phúc đỉnh rứa bây!!!! Anh Phúc đỉnh rứa
-                        bây!!!!Anh Phúc đỉnh rứa bây!!!!
+                        đỉnh rứa bây!!!!Anh Phúc đỉnh rứa bây!!!!
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
@@ -78,3 +81,32 @@ export function ShopItemDetail(props) {
     </div>
   );
 }
+
+const DATA = [
+  [
+    {
+      item_name: "Giặt đặc biệt",
+      item_price: "69,000 VNĐ",
+    },
+  ],
+  [
+    {
+      item_name: "Giặt nhẹ",
+      item_price: "10,000 VNĐ",
+    },
+    {
+      item_name: "Giặt vừa",
+      item_price: "15,000 VNĐ",
+    },
+  ],
+  [
+    {
+      item_name: "Giặt tất 1 chiéc",
+      item_price: "5,000 VNĐ",
+    },
+    {
+      item_name: "Giặt tất 3 chiếc",
+      item_price: "13,000 VNĐ",
+    },
+  ],
+];

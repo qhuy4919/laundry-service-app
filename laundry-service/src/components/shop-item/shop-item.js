@@ -1,24 +1,23 @@
 import { useState, useEffect } from "react";
 import { Query } from "../../api/query-api";
-import { ShopItemDetail } from "../shop-item/shop-item-detail/shop-item-detail";
 import "./shop-item.scss";
 export function ShopItem(props) {
   const { shopId, handleFetchItem } = props;
   const [category, setCategory] = useState([
     {
       id: 0,
-      shop_id: 0,
-      category_name: "Vest",
+      shop_id: 1,
+      category_name: "Normal Clothes",
     },
     {
       id: 1,
-      shop_id: 0,
+      shop_id: 1,
       category_name: "Sneaker",
     },
     {
       id: 2,
-      shop_id: 0,
-      category_name: "Underware",
+      shop_id: 1,
+      category_name: "Jean",
     },
   ]);
   const [isLoading, setIsloading] = useState(false);

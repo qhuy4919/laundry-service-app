@@ -7,11 +7,10 @@
   text-decoration: inherit;
 }
 .navbar-brand a>img {
-  padding: 7px 14px;
-  width: 80px;
+  padding: 0px 14px;
+  width: 70px;
   height: auto;
 }
-
 
 .navbarInputSearch {
 	margin-right: 10px;

@@ -1,5 +1,5 @@
 .login-modal-body div {
-	white-space:nowrap
+	white-space: nowrap;
 }
 .login-modal-body .form-label {
 	display: inline;
@@ -8,6 +8,10 @@
 .login-modal-body .modal-field {
 	display: block;
 	margin-bottom: 10px;
+}
+
+.login-modal-body .form-control {
+	text-align: left !important;
 }
 
 .login-modal-body .login-button {
