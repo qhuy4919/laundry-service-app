@@ -1,0 +1,13 @@
+td{
+    border-right: 1px solid black !important;
+}
+a.tap.active{
+    
+    background-color: gray;
+}
+a.tap{
+    display: block;
+    height: 100%;
+    position: relative;
+    padding: 5px;
+}
