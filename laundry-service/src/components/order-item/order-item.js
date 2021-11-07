@@ -25,7 +25,7 @@ export function OrderItem() {
   // console.log(orderItemList);
   return (
     <form action="" className="order-list">
-      <Table borderless hover responsive style={{"border-bottom": "1px solid black"}}>
+      <Table borderless hover responsive style={{"borderBottom": "1px solid black"}}>
         <thead>
           {
             orderItemList.length > 0 

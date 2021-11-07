@@ -20,6 +20,7 @@ export default function Shop() {
   const [isLoading, setIsloading] = useState(true);
   const [categoryId, setCategoryId] = useState(null);
   const { itemInCart } = useSelector(itemListSelector);
+
   useEffect(() => {
     const fetchShop = async () => {
       try {
@@ -28,8 +29,10 @@ export default function Shop() {
           setShopInfo(response.data);
           setIsloading(false);
         }
+        console.log(shopInfor)
       } catch (error) {
-        console.log("fetch fail");
+        console.log(error);
+        console.log("Fetch fail");
       }
     };
     fetchShop();

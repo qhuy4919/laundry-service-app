@@ -1,45 +1,77 @@
 import { useState, useEffect } from "react";
 import { AiOutlineUser, AiOutlineUpload } from "react-icons/ai";
+import {Card, Form} from 'react-bootstrap'
+import {BsUpload} from "react-icons/bs"
+import {AiFillSave} from "react-icons/ai"
 import "./shop-info.scss";
 
 export function ShopInfo(props) {
-  // const { Information } = props;
+  const shop_info = props.Information;
   const [avatar, setAvatar] = useState(null);
 
-  // useEffect(() => {
-  //   if (Information) {
-  //     setAvatar(Information.shop_profile_pic);
-  //   }
-  // }, [Information]);
+  console.log("Shop-info", shop_info)
 
-  const Information = {
-    shop_address: "123 Nguyễn Lương Bằng, Đà Nẵng, Việt Nam",
-    working_time: "8h-20h ngày trong tuần, 9h-15h thứ 7",
-    shop_detail: "Giặt cực nhanh, giặt cực sạch, giặt bay màu",
-    follower: "97",
-    rating: "4.67",
+  useEffect(() => {
+    if (shop_info) {
+      setAvatar(shop_info.shop_profile_pic);
+    }
+  }, [shop_info]);
+
+  const [selectFile, setSelectFile] = useState();
+
+  const onChangeUploadFile = (e) => {
+    setSelectFile(e.target.files[0]);
+  };
+
+  const handleUploadFile = () => {
+    if (selectFile) {
+      const formData = new FormData();
+      formData.append("profile_pic", selectFile);
+      // const updateAvatar = async () => {
+      //   const response = await CommandProfile.avatar(formData);
+      //   if (response) {
+      //     setAvatar(response.data);
+      //     setSelectFile(null);
+      //     window.location.reload();
+      //   }
+      // };
+      // updateAvatar();
+    } else {
+      alert("Please select an image file")
+      return false;
+    }
   };
 
   return (
     <div className="shop-infor-container">
       <div className="avatar-container">
-        <div className="avatar-wrapper">
-          {avatar === null ? (
-            <AiOutlineUser className="profile-pic" />
-          ) : (
-            <img
-              className="profile-pic"
-              src={`${process.env.REACT_APP_API_SERVER}/profile-pic/default.png`}
+          <Card className="profile-pic clear-fix">
+            <Card.Img 
+              src={`${process.env.REACT_APP_API_SERVER}/profile-pic/${avatar}`} 
             />
-          )}
-          <div className="upload-button">
-            <AiOutlineUpload className="fa-arrow-circle-up" />
-          </div>
-          <input className="file-upload" type="file" accept="image/*" />
+          </Card>
+          <Form className="profile-pic-controll">
+              <label htmlFor="apply" className="avatar-btn">
+                <input
+                  type="file" name="" id="apply" accept="image/*"
+                  key={"file-upload" + (selectFile || 'none')}
+                  onChange={(e) => onChangeUploadFile(e)}
+                />
+                <BsUpload/>
+              </label>
+              <label htmlFor="submitbtn" className="avatar-btn">
+              <input
+                id="submitbtn"
+                type="button"
+                onClick={() => handleUploadFile()}
+              />
+                <AiFillSave/>
+              </label>
+          </Form>
         </div>
         {/* shop information panel */}
         <div className="shop-info">
-          <div className="shop-info-name">Lightning Laundry Shop ⚡</div>
+          <div className="shop-info-name">{shop_info.shop_name}</div>
           <hr />
           <div className="shop-info-details">
             {[
@@ -51,12 +83,35 @@ export function ShopInfo(props) {
             ].map((item, index) => (
               <div className="shop-info__body" key={index}>
                 <div className="shop-info__title">{item[1]}</div>
-                <div className="shop-info__content">{Information[item[0]]}</div>
+                <div className="shop-info__content">{
+                  render_shop_info(shop_info[item[0]])
+                }</div>
               </div>
             ))}
           </div>
         </div>
-      </div>
     </div>
   );
+}
+
+function render_shop_info(data) {
+  if (!data) 
+    return <span style={{"fontStyle":"italic","color":"lightgray"}}>利用不可</span>
+  if (typeof(data) !== 'object') 
+    return <span>{data}</span>
+  
+  console.log(data)
+  return (
+    <ul>
+      {Object.keys(data).map((key) => (
+        <li>
+          {capitalize(key)}: {data[key]}
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
