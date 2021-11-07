@@ -13,7 +13,6 @@
     .shop-item {
       display: flex;
       border-top: 2px solid gray;
-      padding-bottom: 24px;
 
       .shop-item__title {
         flex: 1;
@@ -22,6 +21,18 @@
       }
       .shop-item__detail {
         flex: 3;
+      }
+      .shop-item__none-selected {
+        flex: 3;
+
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: column;
+
+        font-size: x-large;
+        color: lightgray;
       }
     }
 
@@ -40,6 +51,7 @@
       font-size: 1.1rem;
       font-weight: 700;
       margin: 10px;
+      border-bottom: 1px solid black;
     }
 
     .order-list {
@@ -53,24 +65,12 @@
       }
     }
 
-    .order-quantity {
-      display: flex;
-      flex-grow: 1;
-      border-top: 1px solid black;
-      margin-left: 170px;
-
-      .order-quantity__label {
-        flex: 2;
-      }
-
-      .order-quantity__value {
-        flex: 1;
-      }
-    }
   }
 }
 
 .spinner {
+  height: 100vh;
   display: flex;
   justify-content: center;
+  align-items: center;
 }

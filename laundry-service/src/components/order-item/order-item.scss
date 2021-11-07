@@ -9,3 +9,22 @@ input {
   position: relative;
   overflow: hidden;
 }
+
+.order-quantity {
+  font-size: 18px;
+  font-weight: 600;
+  margin: auto;
+
+  .order-quantity__label {
+    padding: 0 15px;
+  }
+
+  .order-quantity__value {
+    padding: 0 15px;
+    font-size: 25px;
+    color: red;
+  }
+}
+.currency_vnd::after {
+  content: "₫";
+}

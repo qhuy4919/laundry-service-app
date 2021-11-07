@@ -58,14 +58,18 @@ export default function Shop() {
                   handleFetchItem={handleFetchItem}
                 />
               </div>
-              <div className="shop-item__detail">
-                {categoryId && (
-                  <ShopItemDetail
-                    categoryId={categoryId}
-                    categoryItem={shopInfor.categories[categoryId - 1]}
-                  />
-                )}
-              </div>
+                {
+                  categoryId 
+                  ? 
+                  <div className="shop-item__detail">
+                    <ShopItemDetail
+                      categoryId={categoryId}
+                      categoryItem={shopInfor.categories[categoryId - 1]}
+                    />
+                  </div>
+                  :
+                  <div className="shop-item__none-selected">← カテゴリを1つ選択してください</div> 
+                }
             </div>
             <div className="shop-feedback">
               <ShopFeedback />
@@ -74,20 +78,7 @@ export default function Shop() {
           <div className="right-panel">
             <div className="right-panel-header">ご注文</div>
             <div>
-              <form action="" className="order-list">
-                <OrderItem />
-                <div className="order-quantity">
-                  <div className="order-quantity__label">総量</div>
-                  <div className="order-quantity__value">10</div>
-                </div>
-                <Button
-                  variant="secondary"
-                  type="submit"
-                  className="submit-btn"
-                >
-                  次
-                </Button>
-              </form>
+              <OrderItem />
             </div>
           </div>
         </div>

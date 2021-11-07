@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { Component } from 'react'
-import "./style.css"
+// import "./style.css"
 export default class QuanLyPage extends Component {
     componentDidMount() {
         const script = document.createElement('script')
