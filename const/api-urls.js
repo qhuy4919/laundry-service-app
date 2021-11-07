@@ -9,6 +9,7 @@ const TOKEN_TEST_URL = '/token-test';
 const MAIL_CONFIRM_URL = '/mail-confirm'
 
 const SHOP_URL = '/shop'
+const SHOP_PIC_URL = '/shop-pic'
 
 module.exports = {
 	SIGN_IN_URL,
@@ -21,4 +22,5 @@ module.exports = {
 	MAIL_CONFIRM_URL,
 
 	SHOP_URL,
+	SHOP_PIC_URL,
 }

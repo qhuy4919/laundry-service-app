@@ -37,8 +37,9 @@ profile_route(app, __dirname);
 profile_pic_route(app, __dirname);
 
 // -- SHOP routes
-const {shop_route} = require('./routes/shop/index')
+const {shop_route, shop_pic_route} = require('./routes/shop/index')
 shop_route(app, __dirname);
+shop_pic_route(app, __dirname);
 
 // -- miscellaneous routes (other routes)
 const {images_route} = require('./routes/misc/index')

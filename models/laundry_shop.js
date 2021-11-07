@@ -15,7 +15,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     },
     shop_address: {
-      type: DataTypes.JSON,
+      type: DataTypes.JSONB,
       allowNull: true
     },
     shop_detail: {
@@ -28,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     working_time: {
-      type: DataTypes.JSON,
+      type: DataTypes.JSONB,
       allowNull: true
     },
     follower_count: {

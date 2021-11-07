@@ -1,6 +1,8 @@
 const ROOT_DIR = process.env.ROOT_DIR
 const MEDIA_DIR = process.env.MEDIA_DIR
 
+const { PROFILE_PREFIX, SHOP_PREFIX } = require(`${ROOT_DIR}/const/values.js`);
+
 const path = require('path')
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -10,8 +12,11 @@ const storage = multer.diskStorage({
 
     // By default, multer removes file extensions so let's add them back
     filename: function(req, file, cb) {
-        if (req.auth_user) {
-            cb(null, 'avatar_' + req.auth_user.id + path.extname(file.originalname));
+        if (req.auth_user && req.upload_profile_pic) {
+            cb(null, PROFILE_PREFIX + req.auth_user.id + path.extname(file.originalname));
+        } else 
+        if (req.upload_shop_pic) {
+            cb(null, SHOP_PREFIX + req.shop.id + path.extname(file.originalname));
         } else {
             cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
         }
