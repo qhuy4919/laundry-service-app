@@ -7,6 +7,7 @@ import NotFoundPage from "./pages/not-found/NotFoundPage";
 import InfoPage from "pages/info/InfoPage";
 import "./styles/misc.css";
 import './App.css'
+import QuanLyPage from "pages/quanly/QuanLyPage";
 
 function App() {
   return (
@@ -30,6 +31,9 @@ function App() {
             </Route>
             <Route path="/info" exact>
               <InfoPage />
+            </Route>
+            <Route path="/quanly" exact>
+              <QuanLyPage />
             </Route>
           </Switch>
         </div>
