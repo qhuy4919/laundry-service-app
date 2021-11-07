@@ -9,7 +9,7 @@ import {
 } from "../../components/index";
 import { Query } from "../../api/query-api";
 import { Button, Spinner } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { itemListSelector } from "../../store/itemSlice";
 import "./shop.scss";
 
@@ -19,15 +19,13 @@ export default function Shop() {
   const [shopInfor, setShopInfo] = useState({});
   const [isLoading, setIsloading] = useState(true);
   const [categoryId, setCategoryId] = useState(null);
-  const { item } = useSelector(itemListSelector);
-  console.log(item);
-
+  const { itemInCart } = useSelector(itemListSelector);
   useEffect(() => {
     const fetchShop = async () => {
       try {
         const response = await Query.shop.item({ id });
         if (response) {
-          setShopInfo(response);
+          setShopInfo(response.data);
           setIsloading(false);
         }
       } catch (error) {
@@ -56,11 +54,17 @@ export default function Shop() {
               <div className="shop-item__title">
                 <ShopItem
                   shopId={shopInfor.id}
+                  categoryItem={shopInfor.categories}
                   handleFetchItem={handleFetchItem}
                 />
               </div>
               <div className="shop-item__detail">
-                {categoryId && <ShopItemDetail categoryId={categoryId} />}
+                {categoryId && (
+                  <ShopItemDetail
+                    categoryId={categoryId}
+                    categoryItem={shopInfor.categories[categoryId - 1]}
+                  />
+                )}
               </div>
             </div>
             <div className="shop-feedback">

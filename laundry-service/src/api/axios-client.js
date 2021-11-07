@@ -22,7 +22,7 @@ axiosClient.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log("query error");
+    console.log(error);
   }
 );
 

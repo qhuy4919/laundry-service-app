@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { Query } from "../../api/query-api";
 import "./shop-item.scss";
 export function ShopItem(props) {
-  const { shopId, handleFetchItem } = props;
+  const { shopId, categoryItem, handleFetchItem } = props;
+
   const [category, setCategory] = useState([
     {
       id: 0,
@@ -28,18 +28,11 @@ export function ShopItem(props) {
   };
 
   useEffect(() => {
-    const fetchCategory = async () => {
-      try {
-        const response = await Query.category.list({ shopId });
-        if (response) {
-          setCategory(response);
-          setIsloading(false);
-        }
-      } catch (error) {
-        console.log("fetch category fail");
-      }
-    };
-    fetchCategory();
+    try {
+      setCategory(categoryItem);
+    } catch (error) {
+      console.log(error);
+    }
   }, [shopId]);
   return (
     <>
@@ -48,7 +41,7 @@ export function ShopItem(props) {
           <div
             key={index}
             className="category-title"
-            onClick={() => handleCategoryId(item.id)}
+            onClick={() => handleCategoryId(item.category_id)}
           >
             {item.category_name}
           </div>

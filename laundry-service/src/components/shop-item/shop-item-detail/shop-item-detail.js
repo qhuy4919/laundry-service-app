@@ -1,34 +1,33 @@
 import { useState, useEffect } from "react";
 import { Accordion } from "react-bootstrap";
 import { AiOutlinePlus } from "react-icons/ai";
-import { Query } from "../../../api/query-api";
 import { Spinner } from "react-bootstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { itemListSelector, addToCart } from "../../../store/itemSlice";
 
 import "./shop-item-detail.scss";
 
+function getItemById(itemList, itemId) {
+  const res = itemList.filter((i) => {
+    return i.item_id == itemId;
+  });
+  return res[0];
+}
 export function ShopItemDetail(props) {
-  const { categoryId } = props;
-  const [itemList, setItemList] = useState(DATA[categoryId]);
+  const { categoryId, categoryItem } = props;
+  const [itemList, setItemList] = useState(categoryItem.items);
   const [isLoading, setIsLoading] = useState(false);
+  const itemInCart = useSelector(itemListSelector);
 
+  const dispatch = useDispatch();
   useEffect(() => {
-    setItemList(DATA[categoryId]);
+    setItemList(categoryItem.items);
   }, [categoryId]);
 
-  // useEffect(() => {
-  //   const fetchItemList = async () => {
-  //     try {
-  //       const response = await Query.item.list({ categoryId });
-  //       if (response) {
-  //         setItemList(response);
-  //         setIsLoading(false);
-  //       }
-  //     } catch (error) {
-  //       console.log("fetch item list fail");
-  //     }
-  //   };
-  //   fetchItemList();
-  // }, [categoryId]);
+  function addItem(itemId) {
+    const chossenItem = getItemById(categoryItem.items, itemId);
+    dispatch(addToCart(chossenItem));
+  }
 
   return (
     <div className="item-list-container">
@@ -67,7 +66,7 @@ export function ShopItemDetail(props) {
                     </div>
                   </div>
                 </div>
-                <div className="right">
+                <div className="right" onClick={() => addItem(item.item_id)}>
                   <div>
                     <AiOutlinePlus className="plus-icon" />
                     <p>追加</p>
@@ -82,31 +81,31 @@ export function ShopItemDetail(props) {
   );
 }
 
-const DATA = [
-  [
-    {
-      item_name: "Giặt đặc biệt",
-      item_price: "69,000 VNĐ",
-    },
-  ],
-  [
-    {
-      item_name: "Giặt nhẹ",
-      item_price: "10,000 VNĐ",
-    },
-    {
-      item_name: "Giặt vừa",
-      item_price: "15,000 VNĐ",
-    },
-  ],
-  [
-    {
-      item_name: "Giặt tất 1 chiéc",
-      item_price: "5,000 VNĐ",
-    },
-    {
-      item_name: "Giặt tất 3 chiếc",
-      item_price: "13,000 VNĐ",
-    },
-  ],
-];
+// const DATA = [
+//   [
+//     {
+//       item_name: "Giặt đặc biệt",
+//       item_price: "69,000 VNĐ",
+//     },
+//   ],
+//   [
+//     {
+//       item_name: "Giặt nhẹ",
+//       item_price: "10,000 VNĐ",
+//     },
+//     {
+//       item_name: "Giặt vừa",
+//       item_price: "15,000 VNĐ",
+//     },
+//   ],
+//   [
+//     {
+//       item_name: "Giặt tất 1 chiéc",
+//       item_price: "5,000 VNĐ",
+//     },
+//     {
+//       item_name: "Giặt tất 3 chiếc",
+//       item_price: "13,000 VNĐ",
+//     },
+//   ],
+// ];

@@ -11,13 +11,14 @@ export function ShopInfo(props) {
   //     setAvatar(Information.shop_profile_pic);
   //   }
   // }, [Information]);
+
   const Information = {
-    "shop_address": "123 Nguyễn Lương Bằng, Đà Nẵng, Việt Nam",
-    "working_time": "8h-20h ngày trong tuần, 9h-15h thứ 7",
-    "shop_detail": "Giặt cực nhanh, giặt cực sạch, giặt bay màu",
-    "follower": "97",
-    "rating": "4.67"
-  }
+    shop_address: "123 Nguyễn Lương Bằng, Đà Nẵng, Việt Nam",
+    working_time: "8h-20h ngày trong tuần, 9h-15h thứ 7",
+    shop_detail: "Giặt cực nhanh, giặt cực sạch, giặt bay màu",
+    follower: "97",
+    rating: "4.67",
+  };
 
   return (
     <div className="shop-infor-container">
@@ -26,7 +27,10 @@ export function ShopInfo(props) {
           {avatar === null ? (
             <AiOutlineUser className="profile-pic" />
           ) : (
-            <img className="profile-pic" src={`${process.env.REACT_APP_API_SERVER}/profile-pic/default.png`} />
+            <img
+              className="profile-pic"
+              src={`${process.env.REACT_APP_API_SERVER}/profile-pic/default.png`}
+            />
           )}
           <div className="upload-button">
             <AiOutlineUpload className="fa-arrow-circle-up" />
@@ -36,7 +40,7 @@ export function ShopInfo(props) {
         {/* shop information panel */}
         <div className="shop-info">
           <div className="shop-info-name">Lightning Laundry Shop ⚡</div>
-          <hr/>
+          <hr />
           <div className="shop-info-details">
             {[
               ["shop_address", "ショップ住所"],
