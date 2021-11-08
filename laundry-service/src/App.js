@@ -5,9 +5,10 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProfilePage from "pages/profile-page/ProfilePage";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
 import InfoPage from "pages/info/InfoPage";
-import "./styles/misc.css";
-import './App.css'
 import QuanLyPage from "pages/quanly/QuanLyPage";
+import Paymemt from "pages/payment/payment";
+import "./styles/misc.css";
+import "./App.css";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
             </Route>
             <Route path="/shop/:id" exact>
               <Shop />
+            </Route>
+            <Route path="/payment/:shopName" exact>
+              <Paymemt />
             </Route>
             <Route path="/info" exact>
               <InfoPage />

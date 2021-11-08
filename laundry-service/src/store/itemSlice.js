@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const itemListSlice = createSlice({
   name: "itemList",
   initialState: {
+    shopName: "",
     item: {},
     loading: false,
   },
@@ -16,9 +17,12 @@ export const itemListSlice = createSlice({
       } else state.item[action.payload.item_id].count += 1;
       // state.item = [...state.item, action.payload];
     },
+    getShopName: (state, action) => {
+      state.shopName = action.payload;
+    },
   },
 });
 
-export const { addToCart } = itemListSlice.actions;
+export const { addToCart, getShopName } = itemListSlice.actions;
 
 export const itemListSelector = (state) => state.itemList;

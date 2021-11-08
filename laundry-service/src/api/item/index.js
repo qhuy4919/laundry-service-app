@@ -11,3 +11,5 @@ export const QueryItem = {
     return axiosClient.get(url);
   },
 };
+
+

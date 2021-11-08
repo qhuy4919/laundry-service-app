@@ -8,9 +8,9 @@ import {
   OrderItem,
 } from "../../components/index";
 import { Query } from "../../api/query-api";
-import { Button, Spinner } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { itemListSelector } from "../../store/itemSlice";
+import { Spinner } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { getShopName } from "../../store/itemSlice";
 import "./shop.scss";
 
 export default function Shop() {
@@ -19,7 +19,7 @@ export default function Shop() {
   const [shopInfor, setShopInfo] = useState({});
   const [isLoading, setIsloading] = useState(true);
   const [categoryId, setCategoryId] = useState(null);
-  const { itemInCart } = useSelector(itemListSelector);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchShop = async () => {
@@ -28,8 +28,8 @@ export default function Shop() {
         if (response) {
           setShopInfo(response.data);
           setIsloading(false);
+          dispatch(getShopName(response.data.shop_name));
         }
-        console.log(shopInfor)
       } catch (error) {
         console.log(error);
         console.log("Fetch fail");
@@ -61,18 +61,18 @@ export default function Shop() {
                   handleFetchItem={handleFetchItem}
                 />
               </div>
-                {
-                  categoryId 
-                  ? 
-                  <div className="shop-item__detail">
-                    <ShopItemDetail
-                      categoryId={categoryId}
-                      categoryItem={shopInfor.categories[categoryId - 1]}
-                    />
-                  </div>
-                  :
-                  <div className="shop-item__none-selected">← カテゴリを1つ選択してください</div> 
-                }
+              {categoryId ? (
+                <div className="shop-item__detail">
+                  <ShopItemDetail
+                    categoryId={categoryId}
+                    categoryItem={shopInfor.categories[categoryId - 1]}
+                  />
+                </div>
+              ) : (
+                <div className="shop-item__none-selected">
+                  ← カテゴリを1つ選択してください
+                </div>
+              )}
             </div>
             <div className="shop-feedback">
               <ShopFeedback />
@@ -81,7 +81,7 @@ export default function Shop() {
           <div className="right-panel">
             <div className="right-panel-header">ご注文</div>
             <div>
-              <OrderItem />
+              <OrderItem closeNextButton={false} shopId={shopInfor.id} />
             </div>
           </div>
         </div>
