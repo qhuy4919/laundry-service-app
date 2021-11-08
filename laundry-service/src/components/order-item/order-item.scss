@@ -11,6 +11,7 @@ input {
 }
 
 .order-quantity {
+  justify-content: flex-end;
   font-size: 18px;
   font-weight: 600;
   margin: auto;
@@ -25,6 +26,11 @@ input {
     color: red;
   }
 }
+
+.submit-btn {
+  width: 150px;
+}
+
 .currency_vnd::after {
   content: "₫";
 }

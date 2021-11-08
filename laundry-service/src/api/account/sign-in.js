@@ -1,5 +1,5 @@
 import { SIGN_IN_URL } from "const/api-url";
-import { SIGNED_IN_USER } from "const/local-storage-key";
+import { SIGNED_IN_USER, ITEM_IN_CART } from "const/local-storage-key";
 
 export async function callSignIn(params) {
   const fullurl = `${process.env.REACT_APP_API_SERVER}${SIGN_IN_URL}`;
@@ -20,6 +20,7 @@ export async function callSignIn(params) {
     .then((data) => {
       localStorage.setItem(SIGNED_IN_USER, JSON.stringify(data));
       localStorage.setItem("TOKEN", data.data.user.token);
+      localStorage.setItem(ITEM_IN_CART, "");
     })
     .catch((err) => {
       alert("Something went Wrong");
@@ -27,6 +28,7 @@ export async function callSignIn(params) {
       console.log(err);
       localStorage.removeItem(SIGNED_IN_USER);
       localStorage.removeItem("TOKEN");
+      localStorage.setItem(ITEM_IN_CART);
     });
   if (statuscode < 300) return true;
   return false;
