@@ -35,13 +35,26 @@
             </div>
             <div>
                 <label for="shop_detail">Shop details:</label>
-                <textarea name="shop_detail" id="shop_detail">
+                <textarea name="shop_detail" id="shop_detail"></textarea>
             </div>
             <div>
                 <input type="submit" name="btn_upload_profile_pic" value="Upload" />
             </div>
         </form>
-    </div>
 
+        <hr>
+        <h3>Upload Shop Profile</h3>
+        <form method="POST" action="/shop-pic/1" enctype="multipart/form-data">
+            <div>
+                <label for="shop_pic"> Select your shop pic: </label>
+                <input type="file" name="shop_pic" id="shop_pic"/>
+                <label for="shop_id"> Shop ID: </label>
+                <input type="input" name="shop_id" id="shop_id"/>
+            </div>
+            <div>
+                <input type="submit" name="btn_upload_profile_pic" value="Upload"/>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

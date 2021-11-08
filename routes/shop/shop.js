@@ -8,6 +8,7 @@ const { pool } = require(`${ROOT_DIR}/database/_old/db-config`);
 
 // Consts
 const { SHOP_URL } = require(`${ROOT_DIR}/const/api-urls.js`);
+const { ROLE_ADMIN, ROLE_USER } = require(`${ROOT_DIR}/const/values.js`);
 
 const token_auth = require(`${ROOT_DIR}/middleware/token-verify`)
 
@@ -16,7 +17,6 @@ module.exports = function (app, root_path) {
     app.get(SHOP_URL+'/:id', /*token_auth,*/ async (req, res) => {
 		try {
 			var id = req.params.id;
-			// console.log(id);
 
 			if (!isNumeric(id)) {
 				return res.status(400).json({
@@ -27,9 +27,7 @@ module.exports = function (app, root_path) {
 
 			var Shop = Models.laundry_shop;
 			var shopobj = await Shop.findOne({
-				where: {
-					id: id,
-				}
+				where: { id: id, }
 			})
 			if (shopobj) {
 				const categories = await getServices({id});
@@ -50,6 +48,41 @@ module.exports = function (app, root_path) {
 			})
 		} 
     })
+	.put(SHOP_URL+'/:id', token_auth, perm_check_middleware, async (req, res) => {
+		try {
+			var user = req.auth_user;
+			var shop = req.shop
+
+			// console.log(req.body)
+
+			const FIELDS = ['shop_name', 'shop_address', 'shop_detail', 'working_time']
+
+			// console.log(shop)
+			FIELDS.forEach((value, index) => {
+				if (req.body[value]) 
+					shop.set({ [value]: req.body[value] })
+			})
+
+			shop.save(
+			).then((result) => {
+				// console.log("After\n",shop.dataValues)
+				// console.log("OK\n"+result.toJSON())
+				return res.status(200).json({ data: result, msg: "OK..?", })
+			}).catch((error) => {
+				console.log(error)
+				return res.status(400).json({
+					error: error,
+					msg: "Bad Request - Possibly some fields expect JSON type but String type was passed",
+				})
+			})
+		} catch (error) {
+			console.log(error);
+			return res.status(500).json({
+				error: error,
+				msg: "Something went wrong",
+			})
+		} 
+	})
 }
 
 async function getServices(props) {
@@ -102,3 +135,45 @@ function isNumeric(str) {
   return !isNaN(str) && // use type coercion to parse the _entirety_ of the string (`parseFloat` alone does not do this)...
          !isNaN(parseFloat(str)) // ...and ensure strings of whitespace fail
 }
+
+const perm_check_middleware = async (req, res, next) => {
+	try {
+		var user = req.auth_user;
+		var shop_id = req.params.id;
+
+		if (!shop_id) { // null or undefined or empty list
+			return res.status(400).json({
+				error: "No Shop ID provided", msg: "No Shop ID attached to request.",
+			})
+		}
+		if (isNaN(parseInt(shop_id))) {
+			return res.status(400).json({
+				error: "Invalid Shop ID", msg: "Shop ID cannot be non-integer",
+			})
+		}
+		// parse
+		shop_id = parseInt(shop_id)
+
+		const shop = await Models.laundry_shop.findOne({ where : { id : shop_id } });
+		if (!shop) {
+			return res.status(404).json({
+				error: "Could not find Shop", msg: `No shop with the id=${shop_id}.`,
+			})
+		}
+
+		// check permission
+		if (user.role !== ROLE_ADMIN && user.id !== shop.user_id) { // not admin and not the owner
+			return res.status(401).json({
+				error: "Insufficient permission", msg: "You cannot edit this shop information",
+			})
+		}
+		req.shop = shop;
+		return next(); // forward
+	} catch (err) {
+		console.log(err)
+		return res.status(500).json({
+			error: err,
+			msg: "Internal Error while doing Perm Check",
+		});
+	}
+};

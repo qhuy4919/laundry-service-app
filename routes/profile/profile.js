@@ -111,7 +111,8 @@ async function getOrderList(props, err) {
     console.log(user_id);
     try {
         const order_value = await pool.query(
-            `SELECT "id", order_time, total_cost, order_status FROM "order" WHERE user_id = $1`, [user_id]
+            `SELECT "id", order_time, total_cost, order_status FROM "order" WHERE user_id = $1 `+
+            `ORDER BY "id" DESC`, [user_id]
         )
         return order_value.rows;
     } catch (error) {
