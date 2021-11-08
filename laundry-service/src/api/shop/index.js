@@ -11,3 +11,16 @@ export const QueryShop = {
     return axiosClient.get(url);
   },
 };
+
+export const CommandShopAvatar = {
+  avatar: (data, id) => {
+    const token = localStorage.getItem("TOKEN");
+    let config = {
+      headers: {
+        Authorization: token,
+      },
+    };
+    const url = `${process.env.REACT_APP_API_SERVER}/shop-pic/${id}`;
+    return axiosClient.post(url, data, config);
+  },
+};

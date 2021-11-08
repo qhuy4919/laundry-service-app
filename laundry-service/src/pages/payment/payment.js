@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Card, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { OrderItem } from "../../components/order-item/order-item";
+import { OrderItemInner } from "../../components/order-item/order-item";
+
 import { itemListSelector } from "store/itemSlice";
 import { ITEM_IN_CART, SIGNED_IN_USER } from "../../const/local-storage-key";
 import { CommandOrder } from "../../api/order/index";
@@ -20,23 +21,29 @@ export default function Payment() {
       JSON.parse(localStorage.getItem(SIGNED_IN_USER)).data.user
     );
   }, [JSON.stringify(userInformation)]);
+
   const onSubmit = (data) => {
     let newdata = {
       ...data,
-      ...JSON.parse(localStorage.getItem(ITEM_IN_CART)),
+      order_details: {
+        ...JSON.parse(localStorage.getItem(ITEM_IN_CART)),
+      }
     };
     console.log(newdata);
 
     const sendOrder = async () => {
       try {
-        const response = await CommandOrder.list(data);
+        // console.log("Payment", data)
+        const response = await CommandOrder.list(newdata);
         if (response) {
-          alert("thank you");
+          alert("ご注文でありがとうございました。ショップがemailと電話番号でご連絡いたします。");
         }
       } catch (error) {
-        console.log("Put profile fail");
+        alert("ご注文を登録に失敗しました…管理者に連絡してください。");
+        console.log("Send Order Failed");
       }
     };
+
     sendOrder();
   };
 
@@ -44,7 +51,7 @@ export default function Payment() {
     <div className="">
       <Card className="payment-container">
         <Card.Header>
-          <Card.Title>注文詳細</Card.Title>
+          <Card.Title>注文確認：</Card.Title>
         </Card.Header>
         <Card.Body>
           <Form onSubmit={handleSubmit(onSubmit)} className="payment-form">
@@ -71,7 +78,8 @@ export default function Payment() {
               <Col xs={9}>
                 <Form.Control
                   type="text"
-                  defaultValue={userInformation.nickname}
+                  placeholder="お客様の名前を教えてください"
+                  defaultValue={userInformation.name}
                   {...register("username")}
                 ></Form.Control>
               </Col>
@@ -83,7 +91,8 @@ export default function Payment() {
               <Col xs={9}>
                 <Form.Control
                   type="text"
-                  defaultValue={userInformation.address}
+                  placeholder="お客様の住所を教えてください"
+                  defaultValue={userInformation.address && (userInformation.address.string || '')}
                   // onChange={(e) => {
                   //   setBirthday(e.target.value);
                   // }}
@@ -97,7 +106,7 @@ export default function Payment() {
               </Col>
               <Col xs={9}>
                 <Form.Control
-                  placeholder="Enter your Phone Number"
+                  placeholder="連絡のための電話番号を入力してください"
                   defaultValue={userInformation.phone_number}
                   // value={phoneNum}
                   // onChange={setPhoneNum}
@@ -105,15 +114,20 @@ export default function Payment() {
                 ></Form.Control>
               </Col>
             </Row>
-            <div className="order-item">
-              <OrderItem closeNextButton={true} />
+            <br/>
+            <div className="order-item" style={{"border":"1px solid black"}}>
+              <h5 style={{"margin":"auto", "paddingLeft":"5px"}}>注文</h5>
+              <hr/>
+              <OrderItemInner closeNextButton={true} />
             </div>
+            <br/>
             <Row className="memo-row">
               <Col xs={3}>
                 <Form.Label>注文メモ</Form.Label>
               </Col>
               <Col xs={9}>
                 <Form.Control
+                  type="text"
                   placeholder="..."
                   // value={phoneNum}
                   // onChange={setPhoneNum}

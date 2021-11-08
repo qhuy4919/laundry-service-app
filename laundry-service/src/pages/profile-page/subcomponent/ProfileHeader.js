@@ -5,6 +5,7 @@ import { CommandProfile } from "../../../api/account/profile";
 
 import {BsUpload} from 'react-icons/bs'
 import {AiFillSave} from 'react-icons/ai'
+import {MdOutlineChangeCircle} from 'react-icons/md'
 
 function ProfilePicture({ user }) {
   return (
@@ -44,7 +45,7 @@ function ProfileHeader(props) {
   const [avatar, setAvatar] = useState(profile.img);
   const [selectFile, setSelectFile] = useState();
 
-  console.log(user);
+  // console.log("ProfileHeader", selectFile);
 
   const onChangeUploadFile = (e) => {
     setSelectFile(e.target.files[0]);
@@ -85,20 +86,23 @@ function ProfileHeader(props) {
                 key={"file-upload" + (selectFile || 'none')}
                 onChange={(e) => onChangeUploadFile(e)}
               />
-              <BsUpload/>
+              {selectFile?<MdOutlineChangeCircle/>:<BsUpload/>}
             </label>
-            <label htmlFor="submitbtn" className="avatar-btn">
-            <input
-              id="submitbtn"
-              type="button"
-              onClick={() => handleUploadFile()}
-            />
-              <AiFillSave/>
-            </label>
+            {
+              selectFile&&
+              <label htmlFor="submitbtn" className="avatar-btn">
+              <input
+                id="submitbtn"
+                type="button"
+                onClick={() => handleUploadFile()}
+              />
+                <AiFillSave/>
+              </label>
+            }
         </Form>
         <Card className="order-count-section">
           <Card.Body className="order-count-text h1 bg-light">
-            {user.order.length}📦
+            {user.order.length} 📦
           </Card.Body>
           <Card.Title className="order-count-title">総注文数</Card.Title>
         </Card>

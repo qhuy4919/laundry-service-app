@@ -31,8 +31,8 @@ export default function Shop() {
           dispatch(getShopName(response.data.shop_name));
         }
       } catch (error) {
-        console.log(error);
-        console.log("Fetch fail");
+        // console.log(error);
+        console.log("Shop@Fetch failed.");
       }
     };
     fetchShop();
@@ -81,7 +81,7 @@ export default function Shop() {
           <div className="right-panel">
             <div className="right-panel-header">ご注文</div>
             <div>
-              <OrderItem closeNextButton={false} shopId={shopInfor.id} />
+              <OrderItem closeNextButton={false} shopId={id} />
             </div>
           </div>
         </div>

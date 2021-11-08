@@ -23,12 +23,11 @@ export async function callSignIn(params) {
       localStorage.setItem(ITEM_IN_CART, "");
     })
     .catch((err) => {
-      alert("Something went Wrong");
       console.log("Error while Logging In...");
       console.log(err);
       localStorage.removeItem(SIGNED_IN_USER);
       localStorage.removeItem("TOKEN");
-      localStorage.setItem(ITEM_IN_CART);
+      localStorage.removeItem(ITEM_IN_CART);
     });
   if (statuscode < 300) return true;
   return false;

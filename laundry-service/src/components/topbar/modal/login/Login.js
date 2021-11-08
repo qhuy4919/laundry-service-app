@@ -10,11 +10,20 @@ function Login({ handleClose, onRegisClick, onPwRsClick }) {
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+    if (email==="") {
+      alert("サインインは失敗しました💦\nHINT: Emailを入力してください");
+      return false;
+    }
+    if (password==="") {
+      alert("サインインは失敗しました💦\nHINT: Passwordを入力してください");
+      return false;
+    }
+
     const succeed = await callSignIn({ email, password });
     if (succeed) {
       handleClose();
     } else {
-      alert("Sign In Failed.");
+      alert("サインインは失敗しました💦\nHINT: EmailをNicknameと間違えましたか？");
     }
   };
 

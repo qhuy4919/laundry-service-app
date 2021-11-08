@@ -14,8 +14,8 @@ export async function callPasswordReset(params) {
 	}).then((res) => {
 		// Alert based on status code
 		statuscode = res.status;
-		console.log(res);
-		alert("Mail Sent!");
+		console.log("Password Reset Mail Sent status:", res);
+		// alert("Mail Sent!");
 		return res.json()
 	}).catch((err) => {
 		console.log("Error while Logging In...")

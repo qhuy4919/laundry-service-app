@@ -1,4 +1,5 @@
 import { Card, Row, Col } from 'react-bootstrap';
+import { useHistory } from 'react-router';
 import './RecommendedSection.css';
 
 const images = [
@@ -9,18 +10,18 @@ const images = [
 	'https://discoverormoccity.files.wordpress.com/2017/03/img_2154.jpg?w=900'
 ]
 const names = [
-	'Tiệm giặt ủi siêu tốc',
-	'ABC Laundry Shop',
+	'w😲w LAUNDRY !',
+	'Secret Sauce - Laundry',
 	'Naruto Laundry',
-	'Lightning Washing',
-	'Wash Now Shop',
+	'Lightning Washing ⚡',
+	'青空ランドリー',
 ]
 const descs = [
-	'Ai cần giặt ủi gọi tôi ngay...',
-	'Giặt combo siêu khủng khiếp, combo bột giặt omo + aba siêu mạnh,...',
-	'Giặt với sức mạnh khủng khiếp như Rasengan, đánh bay vết bẩn',
-	'Giặt siêu tốc, giặt sấm sét!',
-	'Trần Xuân Phúc\' favorite washing shop'
+	'信じられないほど速い、信じられないほどきれい、信じられないほど安い!!',
+	'専用の自家製洗剤を使ったランドリー。 汚れは私たちの洗浄力に耐えることができません!',
+	'螺旋丸の力で洗う！',
+	'帯電した水で洗い、バクテリアを取り除きます⚡⚡！',
+	'シンプル。高速。Tran Xuan Phuc様の大好きなランドリーショップ。',
 ]
 function getShop() {
 	let shops = []
@@ -30,6 +31,7 @@ function getShop() {
 				name: names[i],
 				description: descs[i],
 				imgsrc: images[i],
+				shop_id: i+1,
 			}
 		)
 	}
@@ -37,9 +39,17 @@ function getShop() {
 }
 
 function Recommendation({shop}) {
-	const {name, description, imgsrc} = shop;
+	const {name, description, imgsrc, shop_id} = shop;
+	let history = useHistory();
+	const onCardClick = (e) => {
+		let path = '/shop/';
+		history.push({
+			pathname: path+shop_id,
+		})
+	}
+
 	return (
-		<Card style={{ 'maxHeight': '20vh', 'overflow': 'hidden' }}>
+		<Card onClick={onCardClick} style={{ 'maxHeight': '20vh', 'overflow': 'hidden', 'cursor': 'pointer' }}>
 			<Card.Img variant="top" src={imgsrc}/>
 			<Card.ImgOverlay>
 				<Card.Title>{name}</Card.Title>

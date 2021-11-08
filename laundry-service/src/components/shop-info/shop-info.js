@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
 import { AiOutlineUser, AiOutlineUpload } from "react-icons/ai";
 import { Card, Form } from "react-bootstrap";
-import { BsUpload } from "react-icons/bs";
-import { AiFillSave } from "react-icons/ai";
 import "./shop-info.scss";
 
+import { BsUpload } from "react-icons/bs";
+import { AiFillSave } from "react-icons/ai";
+import {MdOutlineChangeCircle} from 'react-icons/md'
+
+import { CommandShopAvatar } from "../../api/shop/index";
+
 export function ShopInfo(props) {
+  var userData = JSON.parse(localStorage.getItem("signed_in_user_data")) || null; // TODO what if userData is null?
+  if (userData){
+    userData = userData.data.user
+  }
+
   const shop_info = props.Information;
   const [avatar, setAvatar] = useState(null);
+  const [selectFile, setSelectFile] = useState();
 
   useEffect(() => {
     if (shop_info) {
@@ -15,7 +25,6 @@ export function ShopInfo(props) {
     }
   }, [shop_info]);
 
-  const [selectFile, setSelectFile] = useState();
 
   const onChangeUploadFile = (e) => {
     setSelectFile(e.target.files[0]);
@@ -24,16 +33,16 @@ export function ShopInfo(props) {
   const handleUploadFile = () => {
     if (selectFile) {
       const formData = new FormData();
-      formData.append("profile_pic", selectFile);
-      // const updateAvatar = async () => {
-      //   const response = await CommandProfile.avatar(formData);
-      //   if (response) {
-      //     setAvatar(response.data);
-      //     setSelectFile(null);
-      //     window.location.reload();
-      //   }
-      // };
-      // updateAvatar();
+      formData.append("shop_pic", selectFile);
+      const updateAvatar = async () => {
+        const response = await CommandShopAvatar.avatar(formData, shop_info.id);
+        if (response) {
+          setAvatar(response.data);
+          setSelectFile(null);
+          window.location.reload();
+        }
+      };
+      updateAvatar();
     } else {
       alert("Please select an image file");
       return false;
@@ -48,27 +57,34 @@ export function ShopInfo(props) {
             src={`${process.env.REACT_APP_API_SERVER}/profile-pic/${avatar}`}
           />
         </Card>
-        <Form className="profile-pic-controll">
-          <label htmlFor="apply" className="avatar-btn">
-            <input
-              type="file"
-              name=""
-              id="apply"
-              accept="image/*"
-              key={"file-upload" + (selectFile || "none")}
-              onChange={(e) => onChangeUploadFile(e)}
-            />
-            <BsUpload />
-          </label>
-          <label htmlFor="submitbtn" className="avatar-btn">
-            <input
-              id="submitbtn"
-              type="button"
-              onClick={() => handleUploadFile()}
-            />
-            <AiFillSave />
-          </label>
-        </Form>
+        {
+          userData && (userData.role === 'admin' || userData.id === shop_info.user_id) 
+          &&
+          <Form className="profile-pic-controll">
+            <label htmlFor="apply" className="avatar-btn">
+              <input
+                type="file"
+                name=""
+                id="apply"
+                accept="image/*"
+                key={"file-upload" + (selectFile || "none")}
+                onChange={(e) => onChangeUploadFile(e)}
+              />
+              {selectFile?<MdOutlineChangeCircle/>:<BsUpload/>}
+            </label>
+            {
+              selectFile &&
+              <label htmlFor="submitbtn" className="avatar-btn">
+                <input
+                  id="submitbtn"
+                  type="button"
+                  onClick={() => handleUploadFile()}
+                />
+                <AiFillSave />
+              </label>
+            }
+          </Form>
+        }
       </div>
       {/* shop information panel */}
       <div className="shop-info">

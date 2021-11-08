@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { Spinner } from 'react-bootstrap';
 import './Register.css';
 
 import {callSignUp} from 'api/account/sign-up';
@@ -7,27 +8,37 @@ import {MdOutlineMarkEmailRead} from 'react-icons/md';
 
 function Register({handleClose, onLoginClick, onPwRsClick, onMailConfClick}) {
     const [formData, setFormData] = useState({nickname:'', email:'', password:'', confirm_password:''})
+    const [signUpBtnClick, setSignUpBtnClick] = useState(false)
 
     const onSubmitHandler = async (e) => {
         e.preventDefault();
+        setSignUpBtnClick(true);
+        await __onSubmitHandler();
+    }
+
+    const __onSubmitHandler = async () => {
         const {nickname, email, password, confirm_password} = formData
-        if (password !== confirm_password) {
-            alert('Password and Confirm Password mismatched')
+        if ( nickname.length * email.length * password.length * confirm_password.length === 0) {
+            setSignUpBtnClick(false);
+            alert('サインアップに失敗しました…\nHINT: Fieldが全部入力してください')
             return false;
         }
-        if ( nickname.length * email.length * password.length === 0) {
-            alert('Please fill all the fields')
+        if (password !== confirm_password) {
+            setSignUpBtnClick(false);
+            alert('サインアップに失敗しました…\nHINT: PasswordとConfirm Passwordが異なります')
             return false;
         }
 
         const succeed = await callSignUp({...formData, username: nickname});
         // const res = await callSignUp(formData);
         if (succeed) {
-            alert("Sign Up Successfully! Please Confirm your Mail")
-            // onMailConfClick();
+            setSignUpBtnClick(false);
+            alert("サインアップに成功しました!\nサインイン前に、Mail介してアカウントを確認してください")
+            // onMailConfClick(); // 
             return true;
         } else {
-            alert("Sign Up Failed..")
+            setSignUpBtnClick(false);
+            alert('サインアップに失敗しました…\nサーバーがリクエストを拒否しました...管理者に連絡してください。')
             return false;
         }
     }
@@ -69,7 +80,8 @@ function Register({handleClose, onLoginClick, onPwRsClick, onMailConfClick}) {
 
                         <Form.Group controlId="formBasicButton" className='modal-field button-panel'>
 							<Button className="login-button" variant="primary" type="submit">
-                                Sign Up
+                                Sign Up  
+                            {signUpBtnClick && <span>  <Spinner animation="border" style={{"display":"inline-block", "height":"15px", "width":"15px"}}/></span>}
 							</Button>
                         </Form.Group>
                     </Form>

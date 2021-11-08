@@ -6,11 +6,22 @@ import { Link } from "react-router-dom";
 import { ITEM_IN_CART } from "../../const/local-storage-key";
 
 import "./order-item.scss";
-export function OrderItem(props) {
+export function OrderItem(props) { // Fix case where OrderItem is in another form, which is invalid HTML
+  console.log("Outer:", props)
+  return (
+    <form action="" className="order-list">
+      <OrderItemInner props={props}/>
+    </form>
+  );
+}
+
+export function OrderItemInner(props) {
+  // console.log("Inner:", props)
   const { closeNextButton, shopId } = props;
   const addToCartItem = useSelector(itemListSelector);
   const [orderItemList, setItemOrderList] = useState([]);
   const [totalAmmount, setTotalAmmount] = useState(null);
+
   useEffect(() => {
     setItemOrderList(Object.keys(addToCartItem.item));
     let total = 0;
@@ -25,8 +36,10 @@ export function OrderItem(props) {
   function saveChoosenItem() {
     localStorage.setItem(ITEM_IN_CART, JSON.stringify(addToCartItem.item));
   }
+  // console.log('Inner', shopId)
+
   return (
-    <form action="" className="order-list">
+    <>
       <Table
         borderless
         hover
@@ -84,7 +97,7 @@ export function OrderItem(props) {
           </div>
           {!closeNextButton && (
             <Link
-              to={`/payment/${shopId}`}
+              to={`/payment/`}
               onClick={() => saveChoosenItem()}
               className="submit-btn-row"
             >
@@ -95,6 +108,6 @@ export function OrderItem(props) {
           )}
         </>
       )}
-    </form>
-  );
+    </>
+  )
 }
