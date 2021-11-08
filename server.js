@@ -41,6 +41,10 @@ const {shop_route, shop_pic_route} = require('./routes/shop/index')
 shop_route(app, __dirname);
 shop_pic_route(app, __dirname);
 
+// -- ORDER routes
+const {order_route} = require('./routes/order/index')
+order_route(app, __dirname);
+
 // -- miscellaneous routes (other routes)
 const {images_route} = require('./routes/misc/index')
 images_route(app, __dirname);

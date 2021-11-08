@@ -24,6 +24,7 @@ CREATE TABLE "user"
  address      json NULL,
  birthday     date NULL,
  active       boolean NOT NULL DEFAULT TRUE,
+ is_hashed	  boolean NOT NULL DEFAULT FALSE,
   
  deleted_at	  TIMESTAMP,
  updated_at   TIMESTAMP DEFAULT CURRENT_TIMESTAMP
