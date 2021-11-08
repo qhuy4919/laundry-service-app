@@ -1,6 +1,6 @@
 {
   "name": "online-laundry-service",
-  "version": "0.4.0",
+  "version": "0.8.0",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
