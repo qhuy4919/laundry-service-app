@@ -1,47 +1,14 @@
-import { useState, useEffect } from "react";
-import "./ProfileHeader.css";
-import { Card, Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Card, Form } from "react-bootstrap";
 import { CommandProfile } from "../../../api/account/profile";
-
-import {BsUpload} from 'react-icons/bs'
-import {AiFillSave} from 'react-icons/ai'
-import {MdOutlineChangeCircle} from 'react-icons/md'
-
-function ProfilePicture({ user }) {
-  return (
-    <Card className="profile-pic clear-fix">
-      <Card.Img src={`${process.env.REACT_APP_API_SERVER}/profile-pic/${user.profile_pic}`} />
-      <Card.Title>{user.name}</Card.Title>
-    </Card>
-  );
-}
-
-function Order({ orderCount }) {
-  return (
-    <Card className="order-count-section">
-      <Card.Body className="order-count-text h1 bg-light">
-        {orderCount} 📦
-      </Card.Body>
-      <Card.Title className="order-count-title">総注文数</Card.Title>
-    </Card>
-  );
-}
-
-function FollowShop() {
-  return (
-    <Card className="shop-follow-count-section ">
-      <Card.Body className="shop-follow-count-text h1 bg-light">
-        {followShopNum} 🏪
-      </Card.Body>
-      <Card.Title className="shop-follow-title">
-        フォローしている店舗数
-      </Card.Title>
-    </Card>
-  );
-}
+import { BsUpload } from "react-icons/bs";
+import { AiFillSave } from "react-icons/ai";
+import { MdOutlineChangeCircle } from "react-icons/md";
+import "./ProfileHeader.css";
 
 function ProfileHeader(props) {
   const { user } = props;
+  console.log(user);
   const [avatar, setAvatar] = useState(profile.img);
   const [selectFile, setSelectFile] = useState();
 
@@ -65,7 +32,7 @@ function ProfileHeader(props) {
       };
       updateAvatar();
     } else {
-      alert("Please select an image file")
+      alert("Please select an image file");
       return false;
     }
   };
@@ -74,31 +41,33 @@ function ProfileHeader(props) {
     <Card className="profile-header-container">
       <Card.Body className="profile-header">
         <Card className="profile-pic clear-fix">
-          <Card.Img 
-            src={`${process.env.REACT_APP_API_SERVER}/profile-pic/${user.info.profile_pic}`} 
+          <Card.Img
+            src={`${process.env.REACT_APP_API_SERVER}/profile-pic/${user.info.profile_pic}`}
           />
           <Card.Title>{user.info.nickname}</Card.Title>
         </Card>
         <Form>
-            <label htmlFor="apply" className="avatar-btn">
-              <input
-                type="file" name="" id="apply" accept="image/*"
-                key={"file-upload" + (selectFile || 'none')}
-                onChange={(e) => onChangeUploadFile(e)}
-              />
-              {selectFile?<MdOutlineChangeCircle/>:<BsUpload/>}
-            </label>
-            {
-              selectFile&&
-              <label htmlFor="submitbtn" className="avatar-btn">
+          <label htmlFor="apply" className="avatar-btn">
+            <input
+              type="file"
+              name=""
+              id="apply"
+              accept="image/*"
+              key={"file-upload" + (selectFile || "none")}
+              onChange={(e) => onChangeUploadFile(e)}
+            />
+            {selectFile ? <MdOutlineChangeCircle /> : <BsUpload />}
+          </label>
+          {selectFile && (
+            <label htmlFor="submitbtn" className="avatar-btn">
               <input
                 id="submitbtn"
                 type="button"
                 onClick={() => handleUploadFile()}
               />
-                <AiFillSave/>
-              </label>
-            }
+              <AiFillSave />
+            </label>
+          )}
         </Form>
         <Card className="order-count-section">
           <Card.Body className="order-count-text h1 bg-light">
@@ -125,7 +94,7 @@ export default ProfileHeader;
 // // const followShopIcon = process.env.PUBLIC_URL + "images/follow.png";
 // const ORDER_COUNT = 5;
 const followShopNum = 5;
- 
+
 const profile = {
   name: "Ông tổ giặt ủi",
   // img: "https://picsum.photos/200/200",

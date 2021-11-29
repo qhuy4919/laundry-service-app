@@ -1,0 +1,15 @@
+.admin-sidebar {
+  padding-top: 5rem;
+  width: var(--sidebar-width);
+
+  .sidebar-content {
+    background-color: #fff;
+
+    .nav-link {
+      border-bottom: 1px black solid;
+      text-align: center;
+      line-height: 50px;
+      height: 4rem;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+.admin-container {
+  .admin-nav {
+    position: fixed;
+    height: 100vh;
+  }
+
+  .admin-content {
+    display: grid;
+    grid-template: auto / 250px auto;
+  }
+}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Button, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { itemListSelector } from "../../store/itemSlice";
@@ -6,11 +6,12 @@ import { Link } from "react-router-dom";
 import { ITEM_IN_CART } from "../../const/local-storage-key";
 
 import "./order-item.scss";
-export function OrderItem(props) { // Fix case where OrderItem is in another form, which is invalid HTML
-  console.log("Outer:", props)
+export function OrderItem(props) {
+  // Fix case where OrderItem is in another form, which is invalid HTML
+  console.log("Outer:", props);
   return (
     <form action="" className="order-list">
-      <OrderItemInner props={props}/>
+      <OrderItemInner props={props} />
     </form>
   );
 }
@@ -80,9 +81,20 @@ export function OrderItemInner(props) {
                 </td>
               </tr>
             ))}
+          <tr>
+            <td colSpan="2">
+              <input
+                type="text"
+                className="sale-code-input input"
+                placeholder="割引コード"
+              />
+            </td>
+            <td>
+              <Button variant="secondary">Ok</Button>
+            </td>
+          </tr>
         </tbody>
       </Table>
-
       {orderItemList.length === 0 ? (
         <p>現在カートにアイテムはありません</p>
       ) : (
@@ -109,5 +121,5 @@ export function OrderItemInner(props) {
         </>
       )}
     </>
-  )
+  );
 }

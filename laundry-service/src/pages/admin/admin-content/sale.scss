@@ -1,0 +1,14 @@
+.sale-container {
+  padding-top: 3rem;
+  margin: 0 3rem;
+
+  .add-sale-button {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      max-width: 202px;
+      width: 100%;
+    }
+  }
+}

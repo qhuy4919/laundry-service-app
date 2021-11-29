@@ -1,12 +1,13 @@
+import { Footer, Topbar } from "./components/index";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import FrontPage from "./pages/front-page/FrontPage";
 import Shop from "./pages/shop/shop";
-import { Footer, Topbar } from "./components/index";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import ProfilePage from "pages/profile-page/ProfilePage";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
 import InfoPage from "pages/info/InfoPage";
-import QuanLyPage from "pages/quanly/QuanLyPage";
 import Paymemt from "pages/payment/payment";
+import Admin from "./pages/admin/admin";
+import QuanLyPage from "pages/quanly/QuanLyPage";
 import "./styles/misc.css";
 import "./App.css";
 
@@ -38,6 +39,9 @@ function App() {
             </Route>
             <Route path="/quanly" exact>
               <QuanLyPage />
+            </Route>
+            <Route path="/admin" exact>
+              <Admin />
             </Route>
           </Switch>
         </div>
