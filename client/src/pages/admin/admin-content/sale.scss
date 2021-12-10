@@ -1,0 +1,53 @@
+.sale-container {
+  padding-top: 3rem;
+  margin: 0 3rem;
+
+  .add-sale-button {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      max-width: 202px;
+      width: 100%;
+    }
+  }
+
+  .sale-table {
+    .sale-action {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      box-sizing: border-box;
+      font-size: 15px;
+
+      .button {
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 4px #95a5a6;
+
+        &:active {
+          box-shadow: 0 5px #95a5a6;
+          transform: translateY(4px);
+        }
+      }
+
+      .update {
+        background-color: #27ae60;
+
+        &:hover {
+          background-color: #2ecc71;
+        }
+      }
+
+      .delete {
+        background-color: #ce2c3c;
+
+        &:hover {
+          background-color: #dd5361;
+        }
+      }
+    }
+  }
+}
