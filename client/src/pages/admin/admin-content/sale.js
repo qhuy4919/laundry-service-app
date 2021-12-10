@@ -14,51 +14,53 @@ export function Sale() {
           New item
         </Button>
       </div>
-      <Table striped bordered hover responsive="lg" className="sale-table">
-        <thead>
-          <tr>
-            <th>番号</th>
-            <th>ID</th>
-            <th>割引コード</th>
-            <th>コード数</th>
-            <th>割引額</th>
-            <th>最小額</th>
-            <th>開始時間</th>
-            <th>アクション</th>
-          </tr>
-        </thead>
-        {/*  */}
-        <tbody>
-          {(discountData ?? []).map((item, index) => (
-            <tr key={index.toString()}>
-              <td>{index}</td>
-              <td>{item.id}</td>
-              <td>{item.code}</td>
-              <td>{item.amount}</td>
-              <td>{item.percent}</td>
-              <td>{item.min_percent}</td>
-              <td>{item.create_date}</td>
-              <td className="sale-action">
-                <button className="update button">
-                  <AiFillEdit />
-                  update
-                </button>
-                <button className="delete button">
-                  <AiFillDelete />
-                  delete
-                </button>
-              </td>
+      <div className="sale-table">
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>番号</th>
+              <th>ID</th>
+              <th>割引コード</th>
+              <th>コード数</th>
+              <th>割引額</th>
+              <th>最小額</th>
+              <th>開始時間</th>
+              <th>アクション</th>
             </tr>
-          ))}
-        </tbody>
-      </Table>
+          </thead>
+          {/*  */}
+          <tbody>
+            {(discountData ?? []).map((item, index) => (
+              <tr key={index.toString()}>
+                <td>{index}</td>
+                <td>{item.id}</td>
+                <td>{item.code}</td>
+                <td>{item.amount}</td>
+                <td>{item.percent}</td>
+                <td>{item.min_percent}</td>
+                <td>{item.create_date}</td>
+                <td className="sale-action">
+                  <button className="update button">
+                    <AiFillEdit />
+                    update
+                  </button>
+                  <button className="delete button">
+                    <AiFillDelete />
+                    delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </div>
     </div>
   );
 }
 const mockData = [
   {
     id: "001",
-    code: "abcxyz001",
+    code: "abcxyz001sdfkjsdhfksdhfkdshfkdsdfsdfdslfkjsldkfjsdfsdfsdfsdfhfkdshfkfkdhfkdshfksh",
     amount: 100,
     percent: "20%",
     min_percent: "5%",
