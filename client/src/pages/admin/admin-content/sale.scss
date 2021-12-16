@@ -1,4 +1,5 @@
 .sale-container {
+  position: relative;
   padding-top: 3rem;
   margin: 0 3rem;
 
@@ -14,8 +15,9 @@
 
   .sale-table {
     font-family: "Open Sans", sans-serif;
-    max-width: 900px;
-    width: 100%;
+    max-width: 1200px;
+    position: relative;
+    width: auto;
     margin: auto;
     border-radius: 0.5rem;
     text-align: center;
@@ -24,38 +26,55 @@
     overflow: auto;
 
     tr {
+      display: flex;
+      justify-content: flex-start;
+
+      @for $i from 1 to 8 {
+        td:nth-child(#{$i}) {
+          flex-grow: 1;
+          flex-basis: 10%;
+        }
+
+        th:nth-child(#{$i}) {
+          flex-grow: 1;
+          flex-basis: 10%;
+        }
+      }
+
       td {
         vertical-align: middle;
+        &:not(:last-child) {
+          overflow: hidden;
+          word-wrap: break-word;
+        }
 
+        &:last-child {
+          position: sticky;
+          flex-basis: 20%;
+        }
+      }
+
+      th {
+        vertical-align: middle;
         &:not(:last-child) {
           word-wrap: break-word;
         }
 
         &:last-child {
-          min-width: 200px;
-          width: 100%;
           position: sticky;
-          right: 0;
-        }
-      }
-
-      th {
-        &:last-child {
-          min-width: 200px;
-          width: 100%;
-          position: sticky;
-          right: 0;
+          flex-basis: 20%;
         }
       }
     }
 
     .sale-action {
       display: flex;
+      flex-direction: row;
       box-sizing: border-box;
-      justify-content: space-around;
+      justify-content: space-between;
       font-size: 15px;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 50px;
+      // width: 200px;
 
       .button {
         outline: none;

@@ -15,7 +15,7 @@ export function Sale() {
         </Button>
       </div>
       <div className="sale-table">
-        <Table striped bordered hover>
+        <Table striped hover>
           <thead>
             <tr>
               <th>番号</th>
@@ -60,7 +60,7 @@ export function Sale() {
 const mockData = [
   {
     id: "001",
-    code: "abcxyz001sdfkjsdhfksdhfkdshfkdsdfsdfdslfkjsldkfjsdfsdfsdfsdfhfkdshfkfkdhfkdshfksh",
+    code: "abcxyz001 abcxyz001 abcxyz001 abcxyz001",
     amount: 100,
     percent: "20%",
     min_percent: "5%",
