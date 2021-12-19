@@ -1,109 +1,123 @@
-.sale-container {
-  position: relative;
-  padding-top: 3rem;
-  margin: 0 3rem;
+.sale-wrapper {
 
-  .add-sale-button {
-    display: flex;
-    justify-content: flex-end;
-
-    button {
-      max-width: 202px;
-      width: 100%;
-    }
-  }
-
-  .sale-table {
-    font-family: "Open Sans", sans-serif;
-    max-width: 1200px;
+  .sale-container {
     position: relative;
-    width: auto;
-    margin: auto;
-    border-radius: 0.5rem;
-    text-align: center;
-    table-layout: auto;
-    white-space: nowrap;
-    overflow: auto;
+    padding-top: 3rem;
+    margin: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    flex: 0 1 auto;
 
-    tr {
+    .add-sale-button {
       display: flex;
-      justify-content: flex-start;
+      justify-content: flex-end;
 
-      @for $i from 1 to 8 {
-        td:nth-child(#{$i}) {
-          flex-grow: 1;
-          flex-basis: 10%;
-        }
-
-        th:nth-child(#{$i}) {
-          flex-grow: 1;
-          flex-basis: 10%;
-        }
-      }
-
-      td {
-        vertical-align: middle;
-        &:not(:last-child) {
-          overflow: hidden;
-          word-wrap: break-word;
-        }
-
-        &:last-child {
-          position: sticky;
-          flex-basis: 20%;
-        }
-      }
-
-      th {
-        vertical-align: middle;
-        &:not(:last-child) {
-          word-wrap: break-word;
-        }
-
-        &:last-child {
-          position: sticky;
-          flex-basis: 20%;
-        }
+      button {
+        max-width: 202px;
+        width: 100%;
       }
     }
 
-    .sale-action {
-      display: flex;
-      flex-direction: row;
-      box-sizing: border-box;
-      justify-content: space-between;
-      font-size: 15px;
-      gap: 50px;
-      // width: 200px;
+    .sale-table {
+      font-family: "Open Sans", sans-serif;
+      // max-width: 1200px;
+      position: relative;
+      width: 100%;
+      margin: auto;
+      border-radius: 0.5rem;
+      text-align: center;
+      table-layout: auto;
+      white-space: nowrap;
+      overflow: auto;
 
-      .button {
-        outline: none;
-        border: none;
-        border-radius: 5px;
-        padding: 10px;
-        box-shadow: 0 4px #95a5a6;
+      tr {
+        display: flex;
+        justify-content: flex-start;
 
-        &:active {
-          box-shadow: 0 5px #95a5a6;
-          transform: translateY(4px);
+        @for $i from 1 to 8 {
+          td:nth-child(#{$i}) {
+            flex-grow: 1;
+            flex-basis: 10%;
+          }
+
+          th:nth-child(#{$i}) {
+            flex-grow: 1;
+            flex-basis: 10%;
+          }
+        }
+
+        td {
+          vertical-align: middle;
+          &:not(:last-child) {
+            overflow: hidden;
+            word-wrap: break-word;
+          }
+
+          &:last-child {
+            position: sticky;
+            flex-basis: 20%;
+          }
+        }
+
+        th {
+          vertical-align: middle;
+          &:not(:last-child) {
+            word-wrap: break-word;
+          }
+
+          &:last-child {
+            position: sticky;
+            flex-basis: 20%;
+          }
         }
       }
 
-      .update {
-        background-color: #27ae60;
+      .sale-action {
+        display: flex;
+        flex-direction: row;
+        box-sizing: border-box;
+        justify-content: space-around;
+        font-size: 15px;
+        gap: 50px;
+        // width: 200px;
 
-        &:hover {
-          background-color: #2ecc71;
+        .button {
+          outline: none;
+          border: none;
+          border-radius: 5px;
+          padding: 10px;
+          box-shadow: 0 4px #95a5a6;
+
+          &:active {
+            box-shadow: 0 5px #95a5a6;
+            transform: translateY(4px);
+          }
         }
-      }
 
-      .delete {
-        background-color: #ce2c3c;
+        .update {
+          background-color: #27ae60;
 
-        &:hover {
-          background-color: #dd5361;
+          &:hover {
+            background-color: #2ecc71;
+          }
+        }
+
+        .delete {
+          background-color: #ce2c3c;
+
+          &:hover {
+            background-color: #dd5361;
+          }
         }
       }
     }
   }
+  .pagination-container {
+    display: flex;
+    justify-content: center;
+    margin: 0 3rem;
+    flex-grow: 0;
+    background-color: none;
+  }
+
 }
