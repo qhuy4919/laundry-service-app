@@ -1,3 +1,4 @@
+const moment = require('moment')
 const path = require('path');
 const multer = require('multer')
 const ROOT_DIR = process.env.ROOT_DIR
@@ -92,7 +93,7 @@ module.exports = function (app, root_path) {
 
 async function getFollowing(props, err) {
     const { user_id } = props;
-    console.log(user_id);
+    // console.log(user_id);
     try {
         const followings = await pool.query(
             `SELECT "fl"."shop_id", "fl"."user_id" AS "owner_id", "ls"."shop_name", "ls"."rating", "ls"."shop_profile_pic" `+
@@ -108,13 +109,38 @@ async function getFollowing(props, err) {
 
 async function getOrderList(props, err) {
     const { user_id } = props;
-    console.log(user_id);
+    // console.log(user_id);
     try {
-        const order_value = await pool.query(
-            `SELECT "id", order_time, total_cost, order_status FROM "order" WHERE user_id = $1 `+
-            `ORDER BY "id" DESC`, [user_id]
-        )
-        return order_value.rows;
+        // const order_value = await pool.query(
+        //     `SELECT "id", order_time, total_cost, order_status FROM "order" WHERE user_id = $1 `+
+        //     `ORDER BY "id" DESC`, [user_id]
+        // )
+        const order_value = await Models.order.findAll({
+            where: {
+                user_id : user_id
+            },
+            raw: true,
+            order: [
+                ['id', 'DESC']
+            ]
+        })
+        // console.log(order_value)
+        var rows = []
+        if (order_value) {
+            order_value.forEach( (order) => {
+                rows.push({
+                    ...order,
+                    order_time: moment(
+                        (""+order.order_time).charAt(order.order_time.length-1) === 'Z' ?
+                        order.order_time :
+                        order.order_time+'Z'
+                    ).local().format("YYYY-MM-DD HH:mm:ss")
+                })
+            })
+        }
+
+        // console.log(rows)
+        return rows;
     } catch (error) {
         console.log(error);
         err.add(error)

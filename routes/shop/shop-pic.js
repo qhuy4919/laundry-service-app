@@ -52,7 +52,7 @@ module.exports = function (app, root_path) {
 			} catch (err) {
 			}
 		}
-		return res.send("NOT FOUND")
+		return res.status(404).send("NOT FOUND")
     })
 };
 

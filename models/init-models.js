@@ -8,6 +8,7 @@ var _order_item = require("./order_item");
 var _order_review = require("./order_review");
 var _shop_category = require("./shop_category");
 var _user = require("./user");
+var _discount = require("./discount");
 
 function initModels(sequelize) {
   var conn_test = _conn_test(sequelize, DataTypes);
@@ -19,6 +20,7 @@ function initModels(sequelize) {
   var order_review = _order_review(sequelize, DataTypes);
   var shop_category = _shop_category(sequelize, DataTypes);
   var user = _user(sequelize, DataTypes);
+  var discount = _discount(sequelize, DataTypes);
 
 
   return {
@@ -31,6 +33,7 @@ function initModels(sequelize) {
     order_review,
     shop_category,
     user,
+    discount,
   };
 }
 module.exports = initModels;

@@ -14,7 +14,19 @@ const token_auth = require(`${ROOT_DIR}/middleware/token-verify`)
 
 module.exports = function (app, root_path) {
     // ---------------- GET method
-    app.get(SHOP_URL+'/:id', /*token_auth,*/ async (req, res) => {
+	
+    app.get(SHOP_URL, /*token_auth,*/ async (req, res) => {
+		try {
+			var Shop = Models.laundry_shop;
+			var shopobj = await Shop.findAll({
+				raw: true
+			})
+			return res.status(200).json({data: shopobj});
+		} catch (err) {
+			return res.status(500).json({msg: err});
+		}
+	})
+    .get(SHOP_URL+'/:id', /*token_auth,*/ async (req, res) => {
 		try {
 			var id = req.params.id;
 

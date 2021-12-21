@@ -11,6 +11,7 @@ const MAIL_CONFIRM_URL = '/mail-confirm'
 const SHOP_URL = '/shop'
 const SHOP_PIC_URL = '/shop-pic'
 const ORDER_URL = '/order'
+const DISCOUNT_URL = '/discount'
 
 module.exports = {
 	SIGN_IN_URL,
@@ -25,4 +26,5 @@ module.exports = {
 	SHOP_URL,
 	SHOP_PIC_URL,
 	ORDER_URL,
+	DISCOUNT_URL,
 }
