@@ -1,5 +1,6 @@
 {
   "name": "online-laundry-service",
+  "homepage": ".",
   "version": "0.8.0",
   "private": true,
   "dependencies": {
