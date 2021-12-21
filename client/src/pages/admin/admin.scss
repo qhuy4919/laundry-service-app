@@ -1,12 +1,9 @@
 .admin-container {
-  .admin-nav {
-    position: fixed;
-    height: 100vh;
-  }
+  overflow: hidden;
+  background-color: #fff;
 
-  .admin-content {
-    width: 100%;
-    display: grid;
-    grid-template: auto / 250px auto;
-  }
+  margin: 10px;
+
+  display: flex;
+  flex-direction: row;
 }

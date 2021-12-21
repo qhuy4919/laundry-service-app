@@ -97,7 +97,7 @@ export function ShopInfo(props) {
             ["follower", "フォロワー数"],
             ["rating", "レーティング"],
           ].map((item, index) => (
-            <div className="shop-info__body" key={index}>
+            <div className="shop-info__body" key={`"shop-information-inline-${index}`}>
               <div className="shop-info__title">{item[1]}</div>
               <div className="shop-info__content">
                 {render_shop_info(shop_info[item[0]])}

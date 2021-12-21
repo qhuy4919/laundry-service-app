@@ -1,8 +1,51 @@
 .admin-sidebar {
-  padding-top: 5rem;
-  width: var(--sidebar-width);
+  // padding-top: 5rem;
+  width: 17vw;
+  min-width: 180px;
+  margin-bottom: -5000px; /* any large number will do */
+  padding-bottom: 5000px; 
+
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  justify-content: space-between;
+
+  .sidebar-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .profile-pic {
+      width: unset;
+      height: unset;
+      border: unset;
+    }
+
+    .avatar-upload-form {
+      display: flex;
+      flex-direction: row;
+      height: 40px;
+      align-items: baseline;
+      // justify-content: space-between;
+
+      .avatar-btn {
+        width: unset;
+        min-width: 2.5rem;
+      }
+      .admin-username {
+        width: auto;
+        margin: auto;
+        font-weight: 600;
+      }
+    }
+  }
 
   .sidebar-content {
+    margin-top: 20px;
     background-color: #fff;
 
     .nav-link {

@@ -1,19 +1,26 @@
+import { useHistory } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Card, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { OrderItemInner } from "../shop";
-import { itemListSelector } from "store/itemSlice";
-import { ITEM_IN_CART, SIGNED_IN_USER } from "../../const/local-storage-key";
+import { itemListSelector, removeCart } from "store/itemSlice";
+import { ITEM_IN_CART, SIGNED_IN_USER, SHOP_INFO, APPLIED_COUPON } from "../../const/local-storage-key";
 import { CommandOrder } from "../../api/order/index";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import "./payment.scss";
 
 export default function Payment() {
   const { register, handleSubmit } = useForm();
   const [userInformation, setUserInformation] = useState({});
+  const addToCartItem = useSelector(itemListSelector);
   const shopState = useSelector(itemListSelector);
   const [shopName, setShopName] = useState(shopState.shopName || "利用不可");
+  const shopObj = localStorage.getItem(SHOP_INFO) ? JSON.parse(localStorage.getItem(SHOP_INFO)) : null;
+  const couponObj = localStorage.getItem(APPLIED_COUPON) ? JSON.parse(localStorage.getItem(APPLIED_COUPON)) : null;
+
+  let history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setUserInformation(
@@ -28,6 +35,8 @@ export default function Payment() {
         ...JSON.parse(localStorage.getItem(ITEM_IN_CART)),
       },
     };
+    if (shopObj) newdata.shop_id = shopObj.shop_id;
+    if (couponObj) newdata.discount_code = couponObj.discount_code;
     console.log(newdata);
 
     const sendOrder = async () => {
@@ -36,12 +45,18 @@ export default function Payment() {
         const response = await CommandOrder.list(newdata);
         if (response) {
           alert(
-            "ご注文でありがとうございました。ショップがemailと電話番号でご連絡いたします。"
+            "Thank you for placing order using our service. Please wait, the Shop will contact you shortly."
           );
         }
+        localStorage.removeItem(SHOP_INFO)
+        localStorage.removeItem(APPLIED_COUPON)
+        localStorage.removeItem(ITEM_IN_CART)
+        history.push("/profile")
+        dispatch(removeCart());
       } catch (error) {
-        alert("ご注文を登録に失敗しました…管理者に連絡してください。");
-        console.log("Send Order Failed");
+        console.error(error)
+        alert("The order cannot be made. Please contact the Administrator.");
+        // console.log("Send Order Failed");
       }
     };
 

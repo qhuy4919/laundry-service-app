@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 import "./ProfileInformation.css";
 
 import { Button } from "react-bootstrap";
@@ -13,6 +14,7 @@ function ProfileInformation(props) {
   const { user, handleUpdateProfile } = props;
   const userInfor = user.info;
   // console.log(userInfor);
+  let history = useHistory();
 
   const [email, setEmail] = useState(userInfor.email || null);
   const [name, setName] = useState(userInfor.name || null);
@@ -33,6 +35,8 @@ function ProfileInformation(props) {
       }
     };
     updateProfile();
+    // history.push('/profile')
+    window.location.href='/profile';
   };
 
   return (

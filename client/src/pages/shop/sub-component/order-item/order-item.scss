@@ -10,10 +10,24 @@ input {
 }
 
 .order-quantity {
-  justify-content: flex-end;
   font-size: 18px;
   font-weight: 600;
   margin: auto;
+
+  .order-quantity__coupon-msg{
+    // padding: 0 15px;
+    color: rgb(75, 75, 75);
+    font-size: medium;
+    font-style: italic;
+
+    &::before {
+      content: "*";
+    }
+  }
+  .order-quantity__coupon-off {
+    // padding: 0 15px;
+    color: red;
+  }
 
   .order-quantity__label {
     padding: 0 15px;

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./shop-item.scss";
 export function ShopItem(props) {
   const { shopId, categoryItem, handleFetchItem } = props;
+  // console.log("Shop-item@", categoryItem)
 
   const [category, setCategory] = useState([
     {

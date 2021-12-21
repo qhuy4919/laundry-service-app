@@ -17,12 +17,15 @@ export const itemListSlice = createSlice({
       } else state.item[action.payload.item_id].count += 1;
       // state.item = [...state.item, action.payload];
     },
+    removeCart: (state, action) => {
+      state.item = {}
+    },
     getShopName: (state, action) => {
       state.shopName = action.payload;
     },
   },
 });
 
-export const { addToCart, getShopName } = itemListSlice.actions;
+export const { addToCart, getShopName, removeCart } = itemListSlice.actions;
 
 export const itemListSelector = (state) => state.itemList;

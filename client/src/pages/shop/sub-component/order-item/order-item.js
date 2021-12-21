@@ -3,12 +3,14 @@ import { Button, Table } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { itemListSelector } from "../../../../store";
 import { Link } from "react-router-dom";
-import { ITEM_IN_CART } from "../../../../const/local-storage-key";
+import { ITEM_IN_CART, APPLIED_COUPON, SHOP_INFO } from "../../../../const/local-storage-key";
+
+import { DiscountAPI } from "../../../../api/discount"
 
 import "./order-item.scss";
 export function OrderItem(props) {
   // Fix case where OrderItem is in another form, which is invalid HTML
-  console.log("Outer:", props);
+  // console.log("Outer:", props);
   return (
     <form action="" className="order-list">
       <OrderItemInner props={props} />
@@ -17,10 +19,33 @@ export function OrderItem(props) {
 }
 
 export function OrderItemInner(props) {
-  const { closeNextButton, shopId } = props;
+  const { closeNextButton, shopId } = (props.props ? props.props : props);
   const addToCartItem = useSelector(itemListSelector);
   const [orderItemList, setItemOrderList] = useState([]);
-  const [totalAmmount, setTotalAmmount] = useState(null);
+  const [totalAmmount, setTotalAmmount] = useState(0.0);
+  const [origTotalAmmount, setOTA] = useState(0.0);
+
+  const tmp_coupon = (localStorage.getItem(APPLIED_COUPON) ? 
+    JSON.parse(localStorage.getItem(APPLIED_COUPON)) :
+    {percentage: 0.0});
+  const [coupon, setCoupon] = useState( tmp_coupon );
+  const [discountCode, setDiscountCode] = useState( tmp_coupon.discount_code ?? "" );
+
+  const checkDiscountCode = async () => {
+    if (! discountCode) {
+      alert("Please input a coupon code");
+      return false;
+    }
+    const res = await DiscountAPI.get(discountCode, origTotalAmmount);
+    if (res && res.data && res.data.length > 0) {
+      setCoupon(res.data[0]);
+      alert("Applying Coupon ["+res.data[0].discount_code+"]");
+      return true;
+    } else {
+      alert("No valid Coupon");
+      return false;
+    }
+  }
 
   //
   useEffect(() => {
@@ -31,11 +56,17 @@ export function OrderItemInner(props) {
       if (!isNaN(parseFloat(tmp.detail.item_price)))
         total += tmp.count * parseFloat(tmp.detail.item_price);
     }
+    setOTA(total);
+    if (coupon.percentage > 0.0) {
+      total *= (1 - coupon.percentage);
+    }
     setTotalAmmount(total);
-  }, [addToCartItem]);
+  }, [addToCartItem, coupon]);
 
   function saveChoosenItem() {
     localStorage.setItem(ITEM_IN_CART, JSON.stringify(addToCartItem.item));
+    localStorage.setItem(APPLIED_COUPON, JSON.stringify(coupon));
+    localStorage.setItem(SHOP_INFO, JSON.stringify({shop_id : shopId}));
   }
 
   return (
@@ -86,10 +117,15 @@ export function OrderItemInner(props) {
                 type="text"
                 className="sale-code-input input"
                 placeholder="割引コード"
+                value={discountCode}
+                onChange={(e) => setDiscountCode(e.target.value)}
+                required
               />
             </td>
             <td>
-              <Button variant="secondary">Ok</Button>
+              <Button variant="secondary"
+                onClick={(e) => checkDiscountCode()}
+              >OK</Button>
             </td>
           </tr>
         </tbody>
@@ -102,20 +138,35 @@ export function OrderItemInner(props) {
             <>
               <span className="order-quantity__label">総量</span>
               <span className="order-quantity__value currency_vnd">
-                {totalAmmount}
+                {totalAmmount.toFixed(2)}
               </span>
+              { coupon.percentage > 0.0 ?
+                <span className="order-quantity__coupon-off">
+                  {`(-${(coupon.percentage*100).toFixed(2)}%)`}
+                </span>
+                :
+                <></>
+              }
+
+              { coupon.percentage > 0.0 ?
+                <p className="order-quantity__coupon-msg"
+                >Currently using [{coupon.discount_code}] coupon</p> 
+                : <></> 
+              }
             </>
           </div>
           {!closeNextButton && (
+            <>
             <Link
               to={`/payment/`}
               onClick={() => saveChoosenItem()}
               className="submit-btn-row"
             >
               <Button variant="secondary" type="submit" className="submit-btn">
-                次
+                Next
               </Button>
             </Link>
+            </>
           )}
         </>
       )}

@@ -14,6 +14,7 @@ function getItemById(itemList, itemId) {
   return res[0];
 }
 export function ShopItemDetail(props) {
+  // console.log("Shop-Item-Detail@", props)
   const { categoryId, categoryItem } = props;
   const [itemList, setItemList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +30,8 @@ export function ShopItemDetail(props) {
     const chossenItem = getItemById(categoryItem.items, itemId);
     dispatch(addToCart(chossenItem));
   }
+
+  // console.log("Shop-Item-Detail@", props)
 
   return (
     <div className="item-list-container">
@@ -65,9 +68,7 @@ export function ShopItemDetail(props) {
                       <Accordion.Item eventKey="0">
                         <Accordion.Header>説明</Accordion.Header>
                         <Accordion.Body>
-                          Anh Phúc đỉnh rứa bây!!!!Anh Phúc đỉnh rứa bây!!!! Anh
-                          Phúc đỉnh rứa bây!!!!Anh Phúc đỉnh rứa bây!!!! Anh Phúc
-                          đỉnh rứa bây!!!!Anh Phúc đỉnh rứa bây!!!!
+                          {item.item_detail}
                         </Accordion.Body>
                       </Accordion.Item>
                     </Accordion>

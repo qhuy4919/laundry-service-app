@@ -64,6 +64,15 @@ function ModalButton() {
     </>
   ) : (
     <>
+      {
+        signed_in_user_cred.data.user.role && signed_in_user_cred.data.user.role.toLowerCase() === 'admin' 
+          &&
+          <Button variant="dark" type="button"
+            onClick={(e) => {
+              window.location.href = '/admin';
+            }}
+          > Admin Page </Button>
+      }
       <Link to="/profile">
         <Button
           className="greeting-btn"
@@ -81,7 +90,8 @@ function ModalButton() {
           signed_in_user_cred = undefined;
           localStorage.removeItem(SIGNED_IN_USER);
           localStorage.removeItem("TOKEN");
-          window.location.reload();
+          // window.location.reload();
+          window.location.href = '/';
         }}
       >
         {" "}

@@ -4,10 +4,12 @@ import { Card, Table } from "react-bootstrap";
 function ProfileOrder({ order }) {
   const { id, order_time, total_cost, order_status } = order;
   return (
-    <tr>
+    <tr onClick={() => {
+      alert(`Order Details:\n - ID=${id}\n - Order Time: ${order_time}\n - Total Cost: ${total_cost}\n - Order Status: ${order_status}\n - Note: \n${order.note}`)
+    }}>
       <td>{id}</td>
       <td>{(new Date(order_time)).toLocaleString()}</td>
-      <td>{total_cost}</td>
+      <td>{!total_cost ? 'NaN' : parseFloat(total_cost).toFixed(2)}</td>
       <td>{order_status}</td>
     </tr>
   );
@@ -43,9 +45,9 @@ function ProfileOrderSection({ orders }) {
             }
           </tbody>
         </Table>
-        <div className='see-more-box'>
+        {/* <div className='see-more-box'>
 					<a href='https://example.org/'>もっと見る</a>
-				</div>
+				</div> */}
       </Card.Body>
     </Card>
   );

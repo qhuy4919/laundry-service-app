@@ -15,6 +15,8 @@ export default function Shop() {
   const [categoryId, setCategoryId] = useState(null);
   const dispatch = useDispatch();
 
+  let cateIdToIdxMap = {};
+
   useEffect(() => {
     const fetchShop = async () => {
       try {
@@ -23,6 +25,13 @@ export default function Shop() {
           setShopInfo(response.data);
           setIsloading(false);
           dispatch(getShopName(response.data.shop_name));
+
+          cateIdToIdxMap = {}
+          // console.log(shopInfor.categories)
+          shopInfor.categories.forEach( (cate, indx) => {
+            // console.log(indx, cate.category_id)
+            cateIdToIdxMap[cate.category_id] = indx; 
+          });
         }
       } catch (error) {
         // console.log(error);
@@ -35,6 +44,8 @@ export default function Shop() {
   const handleFetchItem = (categoryId) => {
     setCategoryId(categoryId);
   };
+  // console.log('Shop@', shopInfor.categories)
+  // console.log('Shop@', cateIdToIdxMap)
   return (
     <div className="">
       {isLoading ? (
@@ -59,7 +70,7 @@ export default function Shop() {
                 <div className="shop-item__detail">
                   <ShopItemDetail
                     categoryId={categoryId}
-                    categoryItem={shopInfor.categories[categoryId - 1]}
+                    categoryItem={shopInfor.categories.find( (cate) => { return cate.category_id === categoryId; })}
                   />
                 </div>
               ) : (

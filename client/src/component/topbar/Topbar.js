@@ -25,7 +25,7 @@ export function Topbar() {
           <Form className="d-flex navBarSearchForm">
             <FormControl
               type="search"
-              placeholder=""
+              placeholder="Not implemented"
               className="mr-2 navbarInputSearch"
               aria-label="Search"
             />
